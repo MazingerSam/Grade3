@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>康軒版 國小三年級上學期（3上）數學互動學習樂園</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- 頂部導覽列 -->
+  <header class="top-header">
+    <div class="header-inner">
+      <div class="brand-area">
+        <span class="brand-badge">康軒版 3上</span>
+        <h1 class="brand-title">🎯 國小三年級數學互動學習樂園</h1>
+      </div>
+      <div class="score-bar">
+        <div class="star-counter" title="完成互動挑戰獲得星星！">
+          <span>⭐ 學習星星：</span>
+          <span id="starCount">0</span>
+        </div>
+        <button id="soundToggleBtn" class="sound-btn" onclick="toggleSound()">🔊 音效：開</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 5大單元主選單 (切換) -->
+  <nav class="unit-nav" aria-label="單元選單">
+    <button class="unit-tab active" onclick="switchUnit(1)" id="unitTab1">
+      <span class="unit-num">第 1 單元</span>
+      <span class="unit-icon">🧮</span>
+      <span class="unit-name">10000以內的數</span>
+      <span class="unit-desc">積木錢幣拖拉・比大小・數線</span>
+    </button>
+    <button class="unit-tab" onclick="switchUnit(2)" id="unitTab2">
+      <span class="unit-num">第 2 單元</span>
+      <span class="unit-icon">🚂</span>
+      <span class="unit-name">四位數的加減</span>
+      <span class="unit-desc">直式進退位動畫・熱量估算滑桿</span>
+    </button>
+    <button class="unit-tab" onclick="switchUnit(3)" id="unitTab3">
+      <span class="unit-num">第 3 單元</span>
+      <span class="unit-icon">📏</span>
+      <span class="unit-name">毫米 (mm)</span>
+      <span class="unit-desc">拖拉直尺實測・放大鏡・長度計算</span>
+    </button>
+    <button class="unit-tab" onclick="switchUnit(4)" id="unitTab4">
+      <span class="unit-num">第 4 單元</span>
+      <span class="unit-icon">🎪</span>
+      <span class="unit-name">乘 法</span>
+      <span class="unit-desc">位值陣列・直式乘法・連乘線段圖</span>
+    </button>
+    <button class="unit-tab" onclick="switchUnit(5)" id="unitTab5">
+      <span class="unit-num">第 5 單元</span>
+      <span class="unit-icon">📐</span>
+      <span class="unit-name">角與形狀</span>
+      <span class="unit-desc">扇子張開角・三角板疊合・畫方格</span>
+    </button>
+  </nav>
+
+  <!-- 主內容區 -->
+  <main class="main-container">
+
+    <!-- ==========================================
+         第 1 單元：10000以內的數
+         ========================================== -->
+    <section id="unit1" class="unit-section active">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🧮 第 1 單元：10000 以內的數</h2>
+          <p>結合康軒課本「蘭嶼飛魚季、露營用品店、台灣高山比高、青蛙跳數線」情境！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchSubmode(1, 'A', this)">1-1 & 1-2 積木與錢幣拖拉</button>
+          <button class="submode-btn" onclick="switchSubmode(1, 'B', this)">1-3 台灣高山比大小</button>
+          <button class="submode-btn" onclick="switchSubmode(1, 'C', this)">1-4 整數數線大冒險</button>
+        </div>
+      </div>
+
+      <!-- 1-A: 位值積木與錢幣拖拉合成台 -->
+      <div id="u1-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本案例任務</span>
+              <span id="u1TaskText">【露營用品店】爸爸買了一個 <strong>4235</strong> 元的帳篷，請把積木或錢幣<strong>拖拉</strong>到下方定位板，湊出 <strong>4235</strong>！</span>
+            </div>
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setU1Preset(4235, '【露營用品店】爸爸買了一個 4235 元的帳篷，請湊出 4235！')">⛺ 帳篷 4235元</button>
+              <button class="btn btn-Amber" onclick="setU1Preset(2145, '【露營用品店】買一組休閒桌椅 2145 元，請湊出 2145！')">🪑 桌椅 2145元</button>
+              <button class="btn btn-Amber" onclick="setU1Preset(5063, '【練習百分百】媽媽買了一臺 5063 元的多功能烤箱，請湊出 5063！')">🍞 烤箱 5063元</button>
+              <button class="btn btn-primary" onclick="randomU1Task()">🎲 隨機出題</button>
+            </div>
+          </div>
+
+          <div class="u1-top-controls">
+            <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+              <strong>切換教具模式：</strong>
+              <div class="rep-toggle">
+                <button id="repBlocksBtn" class="active" onclick="setU1RepMode('blocks')">🧊 位值積木 (千/百/十/一)</button>
+                <button id="repMoneyBtn" onclick="setU1RepMode('money')">💵 新臺幣錢幣 (1000/100/10/1)</button>
+              </div>
+            </div>
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              <button class="btn btn-green" onclick="regroupU1Board()">✨ 滿十自動換錢/進位化聚</button>
+              <button class="btn btn-outline" onclick="clearU1Board()">🗑️ 清空定位板</button>
+            </div>
+          </div>
+
+          <!-- 拖拉教具來源區 -->
+          <p style="font-size:0.9rem; color:#475569; margin-bottom:0.4rem;">👇 <strong>拖拉 (Drag)</strong> 或 <strong>點選 (Click)</strong> 下方圖卡放入定位板（點選定位板內的圖卡可移除）：</p>
+          <div class="manipulative-bank" id="u1Bank">
+            <!-- 由 JS 動態渲染積木或錢幣 SVG -->
+          </div>
+
+          <!-- 千百十個定位板 -->
+          <div class="place-value-board">
+            <div class="pv-column" data-place="1000" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="handleU1Drop(event, 1000)">
+              <div class="pv-header">
+                <span>千位 (1000)</span>
+                <span id="pvCount1000" style="font-size:0.85rem; background:rgba(0,0,0,0.2); padding:2px 8px; border-radius:99px;">0 個千</span>
+              </div>
+              <div class="pv-digit-display" id="pvDigit1000">0</div>
+              <div class="pv-dropzone" id="pvZone1000"></div>
+              <div class="pv-footer">
+                <button class="btn btn-outline" style="padding:0.25rem 0.65rem;" onclick="changeU1Count(1000, 1)">＋1</button>
+                <button class="btn btn-outline" style="padding:0.25rem 0.65rem;" onclick="changeU1Count(1000, -1)">－1</button>
+              </div>
+            </div>
+
+            <div class="pv-column" data-place="100" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="handleU1Drop(event, 100)">
+              <div class="pv-header">
+                <span>百位 (100)</span>
+                <span id="pvCount100" style="font-size:0.85rem; background:rgba(0,0,0,0.2); padding:2px 8px; border-radius:99px;">0 個百</span>
+              </div>
+              <div class="pv-digit-display" id="pvDigit100">0</div>
+              <div class="pv-dropzone" id="pvZone100"></div>
+              <div class="pv-footer">
+                <button class="btn btn-outline" style="padding:0.25rem 0.65rem;" onclick="changeU1Count(100, 1)">＋1</button>
+                <button class="btn btn-outline" style="padding:0.25rem 0.65rem;" onclick="changeU1Count(100, -1)">－1</button>
+              </div>
+            </div>
+
+            <div class="pv-column" data-place="10" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="handleU1Drop(event, 10)">
+              <div class="pv-header">
+                <span>十位 (10)</span>
+                <span id="pvCount10" style="font-size:0.85rem; background:rgba(0,0,0,0.2); padding:2px 8px; border-radius:99px;">0 個十</span>
+              </div>
+              <div class="pv-digit-display" id="pvDigit10">0</div>
+              <div class="pv-dropzone" id="pvZone10"></div>
+              <div class="pv-footer">
+                <button class="btn btn-outline" style="padding:0.25rem 0.65rem;" onclick="changeU1Count(10, 1)">＋1</button>
+                <button class="btn btn-outline" style="padding:0.25rem 0.65rem;" onclick="changeU1Count(10, -1)">－1</button>
+              </div>
+            </div>
+
+            <div class="pv-column" data-place="1" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="handleU1Drop(event, 1)">
+              <div class="pv-header">
+                <span>個位 (1)</span>
+                <span id="pvCount1" style="font-size:0.85rem; background:rgba(0,0,0,0.2); padding:2px 8px; border-radius:99px;">0 個一</span>
+              </div>
+              <div class="pv-digit-display" id="pvDigit1">0</div>
+              <div class="pv-dropzone" id="pvZone1"></div>
+              <div class="pv-footer">
+                <button class="btn btn-outline" style="padding:0.25rem 0.65rem;" onclick="changeU1Count(1, 1)">＋1</button>
+                <button class="btn btn-outline" style="padding:0.25rem 0.65rem;" onclick="changeU1Count(1, -1)">－1</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 總和與國字讀法顯示 -->
+          <div class="readout-box">
+            <div>
+              <div style="font-size:0.9rem; font-weight:700; color:#4338CA;">目前合成的數量：</div>
+              <div class="readout-number" id="u1TotalNum">0</div>
+              <div id="u1ExpandedText" style="font-size:0.95rem; color:#475569; font-weight:700;">0 個千 + 0 個百 + 0 個十 + 0 個一</div>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:0.4rem;">
+              <span style="font-size:0.85rem; font-weight:700; color:#4338CA;">國字讀作（零的讀法自動標示）：</span>
+              <div class="readout-chinese" id="u1ChineseRead">零</div>
+            </div>
+          </div>
+
+          <div class="feedback-banner" id="u1Feedback">
+            💡 試試看：媽媽的錢包有 2 張 1000 元、12 張 100 元、5 個 10 元和 9 個 1 元，點選「＋1」讓百位變成 12 個百，再按「✨ 滿十自動換錢」看看會變成多少！
+          </div>
+        </div>
+      </div>
+
+      <!-- 1-B: 台灣高山比大小與抽數字卡挑戰 -->
+      <div id="u1-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 1-3 比大小</span>
+              <span>佳雯的爸爸熱愛爬山！點選任兩座台灣高山，觀察定位板由左（千位）到右比較大小！</span>
+            </div>
+            <button class="btn btn-primary" onclick="randomComparePair()">🎲 隨機抽兩數比大小</button>
+          </div>
+
+          <!-- 四座台灣高山卡片 -->
+          <div class="mountain-grid">
+            <div class="mountain-card selected" onclick="selectMountain(0, 3952, '玉山')" id="mtCard0">
+              <div style="font-size:2rem;">⛰️</div>
+              <div style="font-weight:900; font-size:1.15rem; color:#14532D;">玉 山</div>
+              <div style="font-family:'Fredoka'; font-size:1.5rem; font-weight:900; color:#15803D;">3952 公尺</div>
+              <span style="font-size:0.8rem; color:#475569;">點選設為左邊數字</span>
+            </div>
+            <div class="mountain-card selected" onclick="selectMountain(1, 3560, '奇萊山')" id="mtCard1">
+              <div style="font-size:2rem;">🏔️</div>
+              <div style="font-weight:900; font-size:1.15rem; color:#14532D;">奇萊山</div>
+              <div style="font-family:'Fredoka'; font-size:1.5rem; font-weight:900; color:#15803D;">3560 公尺</div>
+              <span style="font-size:0.8rem; color:#475569;">點選設為右邊數字</span>
+            </div>
+            <div class="mountain-card" onclick="selectMountain(2, 3418, '小霸尖山')" id="mtCard2">
+              <div style="font-size:2rem;">🗻</div>
+              <div style="font-weight:900; font-size:1.15rem; color:#14532D;">小霸尖山</div>
+              <div style="font-family:'Fredoka'; font-size:1.5rem; font-weight:900; color:#15803D;">3418 公尺</div>
+              <span style="font-size:0.8rem; color:#475569;">點選切換比較</span>
+            </div>
+            <div class="mountain-card" onclick="selectMountain(3, 2981, '鹿山')" id="mtCard3">
+              <div style="font-size:2rem;">🌲</div>
+              <div style="font-weight:900; font-size:1.15rem; color:#14532D;">鹿 山</div>
+              <div style="font-family:'Fredoka'; font-size:1.5rem; font-weight:900; color:#15803D;">2981 公尺</div>
+              <span style="font-size:0.8rem; color:#475569;">點選切換比較</span>
+            </div>
+          </div>
+
+          <div class="compare-arena">
+            <div>
+              <div id="cmpLabelA" style="text-align:center; font-weight:800; color:#475569; margin-bottom:0.3rem;">玉山</div>
+              <div class="compare-num-box" id="cmpNumA">3952</div>
+            </div>
+
+            <div style="display:flex; gap:0.6rem;">
+              <button class="sign-btn" onclick="checkCompare('>')">＞</button>
+              <button class="sign-btn" onclick="checkCompare('=')">＝</button>
+              <button class="sign-btn" onclick="checkCompare('<')">＜</button>
+            </div>
+
+            <div>
+              <div id="cmpLabelB" style="text-align:center; font-weight:800; color:#475569; margin-bottom:0.3rem;">奇萊山</div>
+              <div class="compare-num-box" id="cmpNumB">3560</div>
+            </div>
+          </div>
+
+          <div id="cmpPlaceTableWrap" style="max-width:560px; margin:1rem auto;"></div>
+
+          <div class="feedback-banner" id="u1CompareFeedback">
+            👆 請點選中間的「＞」、「＝」或「＜」符號來比較兩數大小！課本排序：3952 ＞ 3560 ＞ 3418 ＞ 2981。
+          </div>
+        </div>
+      </div>
+
+      <!-- 1-C: 整數數線與青蛙跳躍加減 -->
+      <div id="u1-subC" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 1-4 整數數線</span>
+              <span>青蛙與螞蟻在數線上跳躍！<strong>往右跳是加 (＋)</strong>，<strong>往左跳是減 (－)</strong>，拉動滑桿或切換刻度間隔觀察吧！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setNumberLinePreset(1, 8, 6)">🐸 課本題：8 往右跳 6 格</button>
+              <button class="btn btn-Amber" onclick="setNumberLinePreset(1, 14, -5)">🐜 課本題：14 往左移 5 格</button>
+              <button class="btn btn-primary" onclick="setNumberLinePreset(100, 300, 400)">💯 間隔 100 數線</button>
+              <button class="btn btn-primary" onclick="setNumberLinePreset(1000, 2000, 5000)">🚀 間隔 1000 數線</button>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+              <div>
+                <label style="font-weight:800;">1️⃣ 數線每格間隔：</label>
+                <select id="nlStepSelect" onchange="updateNumberLine()" style="padding:0.4rem 0.8rem; border-radius:8px; font-weight:800; font-size:1rem; border:2px solid #94A3B8;">
+                  <option value="1">每 1 格 = 1</option>
+                  <option value="2">每 1 格 = 2</option>
+                  <option value="5">每 1 格 = 5</option>
+                  <option value="10">每 1 格 = 10</option>
+                  <option value="100">每 1 格 = 100</option>
+                  <option value="1000">每 1 格 = 1000</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-weight:800;">2️⃣ 起點位置 (<span id="nlStartValLabel">8</span>)：</label>
+                <input type="range" id="nlStartSlider" class="edu-slider" min="0" max="15" value="8" oninput="updateNumberLine()" />
+              </div>
+              <div>
+                <label style="font-weight:800;">3️⃣ 移動格數 (<span id="nlJumpValLabel">往右 +6 格</span>)：</label>
+                <input type="range" id="nlJumpSlider" class="edu-slider" min="-10" max="10" value="6" oninput="updateNumberLine()" />
+              </div>
+            </div>
+          </div>
+
+          <!-- SVG 動態數線視覺化 -->
+          <div style="background:white; border:2px solid #CBD5E1; border-radius:16px; padding:1rem; overflow-x:auto;">
+            <svg id="numberLineSvg" viewBox="0 0 920 210" style="width:100%; min-width:680px; height:auto;"></svg>
+          </div>
+
+          <div class="feedback-banner success" id="nlEquationBanner">
+            🐸 算式紀錄：8 ＋ 6 ＝ 14（在數線上，越右邊的數越大，越左邊的數越小！）
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         第 2 單元：四位數的加減
+         ========================================== -->
+    <section id="unit2" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🚂 第 2 單元：四位數的加減</h2>
+          <p>跟著豆豆全家去臺南旅遊！透過直式進退位逐步拆解與健康飲食熱量滑桿，掌握四位數加減與估算！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchSubmode(2, 'A', this)">2-1 ~ 2-3 直式進位與連退位機</button>
+          <button class="submode-btn" onclick="switchSubmode(2, 'B', this)">2-4 飲食熱量與鐵馬路程估算</button>
+        </div>
+      </div>
+
+      <!-- 2-A: 直式加減互動機 -->
+      <div id="u2-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">臺南旅遊直式解題</span>
+              <span id="u2StoryPrompt">點擊下方課本例題，再按「下一步驟拆解」觀察個位、十位、百位、千位如何<strong>滿十進位</strong>或<strong>向高位借位（連退位）</strong>！</span>
+            </div>
+            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="loadU2Problem(891, '+', 446, '【火車票】全票 891 元 ＋ 孩童票 446 元，共要付多少元？')">🎫 891＋446 (進位)</button>
+              <button class="btn btn-Amber" onclick="loadU2Problem(1227, '+', 878, '【臺南孔廟】昨天 1227 人 ＋ 今天 878 人，兩天共幾人？')">🏯 1227＋878 (連續進位)</button>
+              <button class="btn btn-Amber" onclick="loadU2Problem(500, '-', 247, '【古蹟拼圖】思妤有 500 元，買了 247 元拼圖，還剩多少元？')">🧩 500－247 (跨0退位)</button>
+              <button class="btn btn-Amber" onclick="loadU2Problem(6000, '-', 2685, '【健走步數】爺爺每天走 6000 步，已走 2685 步，還要走幾步？')">👟 6000－2685 (三個0退位)</button>
+            </div>
+          </div>
+
+          <div class="vertical-math-stage">
+            <!-- 左側：直式定位板與逐步控制 -->
+            <div class="vertical-grid-box">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+                <div style="display:flex; gap:0.4rem; align-items:center;">
+                  <input type="number" id="u2InputA" value="891" min="1" max="9999" style="width:90px; padding:0.4rem; font-size:1.1rem; font-weight:800; border-radius:8px; border:2px solid #CBD5E1;" onchange="customU2Problem()" />
+                  <select id="u2OpSelect" onchange="customU2Problem()" style="padding:0.4rem; font-size:1.1rem; font-weight:900; border-radius:8px; border:2px solid #CBD5E1;">
+                    <option value="+">＋</option>
+                    <option value="-">－</option>
+                  </select>
+                  <input type="number" id="u2InputB" value="446" min="1" max="9999" style="width:90px; padding:0.4rem; font-size:1.1rem; font-weight:800; border-radius:8px; border:2px solid #CBD5E1;" onchange="customU2Problem()" />
+                </div>
+                <div style="display:flex; gap:0.4rem;">
+                  <button class="btn btn-primary" onclick="stepU2Vertical()">▶️ 下一步驟 (<span id="u2StepCounter">0/4</span>)</button>
+                  <button class="btn btn-green" onclick="showAllU2Vertical()">⚡ 全部顯示</button>
+                </div>
+              </div>
+
+              <table class="v-table" id="u2VerticalTable">
+                <!-- 由 JS 渲染直式進退位表格 -->
+              </table>
+            </div>
+
+            <!-- 右側：步驟講解與位值籌碼圖解 -->
+            <div style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:16px; padding:1.25rem;">
+              <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.75rem;">🔍 直式算則與位值圖解說明</h3>
+              <div id="u2StepExplanation" style="font-size:1.05rem; font-weight:700; color:#334155; min-height:110px; background:white; padding:1rem; border-radius:12px; border:2px solid #E2E8F0; margin-bottom:1rem;">
+              </div>
+              <div id="u2ChipVisual" style="display:grid; grid-template-columns:repeat(4,1fr); gap:0.5rem; text-align:center;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-B: 飲食熱量與鐵馬之旅估算 -->
+      <div id="u2-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 2-4 加減估算</span>
+              <span>拖拉下方數線滑桿，觀察數字<strong>比較接近哪一個整百或整千</strong>，並幫豆豆搭配晚餐（目標約 <strong>600 大卡</strong>）！</span>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+              <strong>🎯 數線估算互動滑桿（拉動滑桿看看它最接近哪個整百 / 整千）：</strong>
+              <div style="display:flex; gap:0.4rem;">
+                <button class="btn btn-outline" onclick="setEstSlider(108, 100)">🥛 牛奶 108大卡</button>
+                <button class="btn btn-outline" onclick="setEstSlider(193, 100)">🍞 花生吐司 193大卡</button>
+                <button class="btn btn-outline" onclick="setEstSlider(3852, 1000)">🚲 億載金城 3852公尺</button>
+                <button class="btn btn-outline" onclick="setEstSlider(2123, 1000)">🏰 安平古堡 2123公尺</button>
+              </div>
+            </div>
+            <input type="range" id="estSlider" class="edu-slider" min="0" max="1000" value="193" oninput="updateEstVisualizer()" />
+            <svg id="estLineSvg" viewBox="0 0 800 130" style="width:100%; height:auto; background:white; border-radius:12px; border:1px solid #CBD5E1;"></svg>
+            <div id="estResultText" style="margin-top:0.65rem; font-weight:900; font-size:1.1rem; color:#1D4ED8; text-align:center;"></div>
+          </div>
+
+          <!-- 豆豆晚餐搭配互動點選 -->
+          <div style="background:#FFFBEB; border:2px solid #F59E0B; border-radius:16px; padding:1.25rem; margin-top:1.25rem;">
+            <h3 style="color:#92400E; font-size:1.15rem; margin-bottom:0.5rem;">🍽️ 課本挑戰：幫豆豆點晚餐（目標：大約 600 大卡）</h3>
+            <p style="font-size:0.95rem; color:#78350F; margin-bottom:1rem;">豆豆一天需要約 1600 大卡，早餐吃了約 400 大卡、午餐吃了 613 大卡（約 600 大卡），晚餐還需要約 <strong>1600 － 1000 ＝ 600 大卡</strong>！請點選 1 道前菜 ＋ 1 道主餐：</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+              <div>
+                <div style="font-weight:900; margin-bottom:0.5rem; color:#B45309;">🥗 選擇一道前菜：</div>
+                <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                  <button class="btn btn-outline" id="starterBtn0" onclick="selectDinner(0, 0)" style="justify-content:space-between;">
+                    <span>🌽 玉米濃湯 (198 大卡)</span><span style="color:#2563EB;">約 200 大卡</span>
+                  </button>
+                  <button class="btn btn-outline" id="starterBtn1" onclick="selectDinner(0, 1)" style="justify-content:space-between;">
+                    <span>🍎 水果沙拉 (295 大卡)</span><span style="color:#2563EB;">約 300 大卡</span>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <div style="font-weight:900; margin-bottom:0.5rem; color:#B45309;">🍝 選擇一道主餐：</div>
+                <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                  <button class="btn btn-outline" id="mainBtn0" onclick="selectDinner(1, 0)" style="justify-content:space-between;">
+                    <span>🍄 野菇燉飯 (389 大卡)</span><span style="color:#2563EB;">約 400 大卡</span>
+                  </button>
+                  <button class="btn btn-outline" id="mainBtn1" onclick="selectDinner(1, 1)" style="justify-content:space-between;">
+                    <span>🍕 夏威夷披薩 (305 大卡)</span><span style="color:#2563EB;">約 300 大卡</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="feedback-banner" id="dinnerFeedback" style="margin-top:1rem;">
+              👆 請在上方各點選一道前菜與一道主餐，看看估算加起來是不是大約 600 大卡！
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         第 3 單元：毫米 (mm)
+         ========================================== -->
+    <section id="unit3" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📏 第 3 單元：毫米 (mm)</h2>
+          <p>尺上的一小格是 1 毫米，<strong>1 公分 ＝ 10 毫米</strong>！拖拉直尺實測課本小物，並挑戰複名數長度計算！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchSubmode(3, 'A', this)">3-1 拖拉直尺實測與畫線</button>
+          <button class="submode-btn" onclick="switchSubmode(3, 'B', this)">3-2 公分與毫米加減與紙帶重疊</button>
+        </div>
+      </div>
+
+      <!-- 3-A: 拖拉直尺與畫線 -->
+      <div id="u3-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 3-1 實測體驗</span>
+              <span>用滑鼠或手指<strong>拖拉下方透明直尺</strong>，將刻度 0 對齊物品左端，讀出它的長度！還可以拉動繪圖滑桿畫出指定毫米數！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setU3Object(0)">✏️ 李健竹大師筆雕 (5毫米)</button>
+              <button class="btn btn-Amber" onclick="setU3Object(1)">🦎 迷你變色龍 (2公分9毫米)</button>
+              <button class="btn btn-Amber" onclick="setU3Object(2)">🦗 蚱蜢跳遠 (46毫米)</button>
+              <button class="btn btn-Amber" onclick="setU3Object(3)">🖍️ 藍色螢光筆線 (7公分2毫米)</button>
+            </div>
+          </div>
+
+          <!-- 可拖拉直尺畫布 -->
+          <div class="ruler-canvas-wrap" id="u3RulerArena">
+            <svg id="u3SvgCanvas" viewBox="0 0 900 320" style="width:100%; height:100%;"></svg>
+          </div>
+
+          <!-- 畫線滑桿與單位自動換算器 -->
+          <div class="slider-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+              <label style="font-weight:900; font-size:1.05rem;">✏️ 自己畫一條直線（拖拉滑桿調整長度）：</label>
+              <div id="u3ConversionBadge" style="font-size:1.25rem; font-weight:900; color:#047857; background:#D1FAE5; padding:0.3rem 1rem; border-radius:99px;">
+                29 毫米 ＝ 2 公分 9 毫米
+              </div>
+            </div>
+            <input type="range" id="u3DrawSlider" class="edu-slider" min="1" max="100" value="29" oninput="updateU3DrawLine(this.value)" />
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:#64748B; font-weight:700;">
+              <span>1 mm</span>
+              <span>10 mm (1 cm)</span>
+              <span>50 mm (5 cm)</span>
+              <span>95 mm (課本練習題)</span>
+              <span>100 mm (10 cm)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-B: 公分與毫米的加減與紙帶重疊動動腦 -->
+      <div id="u3-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 3-2 長度的計算</span>
+              <span>當毫米相加滿 10 毫米就換成 1 公分；不夠減時把 1 公分換成 10 毫米！來看看課本經典案例與紙帶黏貼動動腦！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setU3CalcCase(0)">🧋 漂浮紅茶 (4cm9mm＋11cm5mm)</button>
+              <button class="btn btn-Amber" onclick="setU3CalcCase(1)">🌱 番茄苗長高 (4cm3mm＋28mm)</button>
+              <button class="btn btn-Amber" onclick="setU3CalcCase(2)">🎀 紅藍緞帶相差 (20cm6mm－18cm8mm)</button>
+            </div>
+          </div>
+
+          <div id="u3CalcDisplay" style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:16px; padding:1.25rem; margin-bottom:1.25rem;">
+            <!-- 由 JS 渲染複名數直式與視覺化長條 -->
+          </div>
+
+          <!-- 課本動動腦：兩條紙帶重疊黏貼 -->
+          <div style="background:#EFF6FF; border:2px solid #60A5FA; border-radius:16px; padding:1.25rem;">
+            <h3 style="color:#1E3A8A; font-size:1.15rem; margin-bottom:0.4rem;">🧠 課本動動腦：把兩條各長 5 公分 5 毫米 (55 毫米) 的紙帶黏起來，總長是多少？</h3>
+            <p style="font-size:0.95rem; color:#334155; margin-bottom:0.75rem;">拉動下方「中間重疊黏貼長度」滑桿，看看為什麼黏起來後<strong>不會剛好是 11 公分</strong>！</p>
+            <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+              <label style="font-weight:800;">中間重疊黏貼：<span id="overlapValLabel" style="color:#DC2626;">0 毫米（頭尾接排）</span></label>
+              <input type="range" id="overlapSlider" class="edu-slider" style="max-width:320px;" min="0" max="25" value="8" oninput="updateOverlapStrip()" />
+            </div>
+            <svg id="overlapSvg" viewBox="0 0 800 120" style="width:100%; height:auto; background:white; border-radius:12px; border:1px solid #BFDBFE;"></svg>
+            <div class="feedback-banner" id="overlapFeedback" style="margin-top:0.75rem;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         第 4 單元：乘 法
+         ========================================== -->
+    <section id="unit4" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🎪 第 4 單元：乘 法</h2>
+          <p>結合夜市彈珠臺、園遊會烤肉、農產品市集與連乘兩步驟問題，把乘法直式與倍數線段圖變簡單！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchSubmode(4, 'A', this)">4-1 & 4-2 乘法直式與位值陣列</button>
+          <button class="submode-btn" onclick="switchSubmode(4, 'B', this)">4-3 連乘兩步驟與倍數線段圖</button>
+          <button class="submode-btn" onclick="switchSubmode(4, 'C', this)">4-4 錢夠不夠？乘法估算</button>
+        </div>
+      </div>
+
+      <!-- 4-A: 乘法直式與位值分解陣列 -->
+      <div id="u4-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 4-1 & 4-2</span>
+              <span id="u4StoryText">點選課本情境題，觀察「個位×乘數」、「十位×乘數」、「百位×乘數」如何合成最終的積！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="loadU4Problem(43, 2, '【園遊會】一隻小玩偶賣 43 元，買 2 隻要花多少元？')">🧸 43 × 2 (不進位)</button>
+              <button class="btn btn-Amber" onclick="loadU4Problem(36, 4, '【園遊會】一串烤肉賣 36 元，賣出 4 串收到多少元？')">🍢 36 × 4 (一次進位)</button>
+              <button class="btn btn-Amber" onclick="loadU4Problem(158, 5, '【農產品市集】手工皂 158 元，精油是手工皂的 5 倍，是多少元？')">🧼 158 × 5 (多次進位)</button>
+              <button class="btn btn-Amber" onclick="loadU4Problem(205, 8, '【插秧】一排插 205 株秧苗，插了 8 排，共插幾株？')">🌾 205 × 8 (十位是0)</button>
+            </div>
+          </div>
+
+          <div class="vertical-math-stage">
+            <div class="vertical-grid-box">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+                <div style="display:flex; align-items:center; gap:0.4rem;">
+                  <input type="number" id="u4InputA" value="36" min="10" max="999" style="width:90px; padding:0.4rem; font-size:1.1rem; font-weight:800; border-radius:8px; border:2px solid #CBD5E1;" onchange="customU4Problem()" />
+                  <span style="font-weight:900; font-size:1.3rem;">×</span>
+                  <input type="number" id="u4InputB" value="4" min="2" max="9" style="width:65px; padding:0.4rem; font-size:1.1rem; font-weight:800; border-radius:8px; border:2px solid #CBD5E1;" onchange="customU4Problem()" />
+                </div>
+                <div style="display:flex; gap:0.4rem;">
+                  <button class="btn btn-outline" id="u4ModeToggleBtn" onclick="toggleU4DetailMode()">🔄 切換：展開式 / 簡便直式</button>
+                </div>
+              </div>
+              <div id="u4VerticalRender"></div>
+            </div>
+
+            <div>
+              <h3 style="font-size:1.1rem; color:#1E3A8A; margin-bottom:0.5rem;">🧱 位值分解視覺化（每一行代表 1 倍）</h3>
+              <div class="array-grid-container" id="u4ArrayVisual"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4-B: 連乘兩步驟與倍數線段圖 -->
+      <div id="u4-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 4-3 連乘問題</span>
+              <span>連乘兩步驟問題有<strong>兩種不同的思考順序</strong>，算出來的答案都一樣喔！切換下方按鈕比較奇奇與妙妙的想法！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setU4TwoStepCase(0)">🎈 課本氣球題 (20顆×4間×2層樓)</button>
+              <button class="btn btn-Amber" onclick="setU4TwoStepCase(1)">🧣 課本倍數線段圖 (髮夾35元×2倍×3倍)</button>
+            </div>
+          </div>
+
+          <div id="u4TwoStepContent"></div>
+        </div>
+      </div>
+
+      <!-- 4-C: 錢帶得夠不夠？乘法估算 -->
+      <div id="u4-subC" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 4-4 乘法估算學習單</span>
+              <span>不用紙筆精算！先把單價<strong>估成接近的整十或整百</strong>，再乘以數量，就能快速判斷錢帶得夠不夠！</span>
+            </div>
+            <button class="btn btn-primary" onclick="drawU4Card()">🃏 抽一張數量卡 (3~9盒)</button>
+          </div>
+
+          <div id="u4EstimationGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1rem;">
+            <!-- 由 JS 渲染課本學習單 4 個商品估算挑戰 -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         第 5 單元：角與形狀
+         ========================================== -->
+    <section id="unit5" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📐 第 5 單元：角與形狀</h2>
+          <p>動手打開扇子認識銳角、直角與鈍角；拖拉旋轉三角板驗證直角；並在方格紙上畫出正方形與長方形！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchSubmode(5, 'A', this)">5-1 ~ 5-3 扇子張開角與邊長實驗</button>
+          <button class="submode-btn" onclick="switchSubmode(5, 'B', this)">5-3 拖拉三角板找直角・銳角・鈍角</button>
+          <button class="submode-btn" onclick="switchSubmode(5, 'C', this)">5-4 方格紙畫正方形與長方形</button>
+        </div>
+      </div>
+
+      <!-- 5-A: 扇子張開角滑桿 + 邊長無關實驗 -->
+      <div id="u5-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 5-1 ~ 5-3</span>
+              <span>角是由 <strong>1 個頂點</strong>和 <strong>2 條直線邊</strong>組成的！拉動下方兩個滑桿驗證：<strong>角的大小只跟張開程度有關，跟邊的長短無關！</strong></span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-outline" onclick="setFanAngle(45)">銳角 (45°)</button>
+              <button class="btn btn-green" onclick="setFanAngle(90)">直角 (90° ∟)</button>
+              <button class="btn btn-outline" onclick="setFanAngle(135)">鈍角 (135°)</button>
+            </div>
+          </div>
+
+          <div class="vertical-math-stage">
+            <div class="slider-box" style="margin:0;">
+              <div style="margin-bottom:1rem;">
+                <label style="font-weight:900; font-size:1.05rem;">🪭 1. 拉動滑桿打開扇子（改變張開角度）：<span id="fanDegText" style="color:#2563EB;">60°</span></label>
+                <input type="range" id="fanAngleSlider" class="edu-slider" min="15" max="165" value="60" oninput="updateFanVisual()" />
+              </div>
+              <div style="margin-bottom:1rem;">
+                <label style="font-weight:900; font-size:1.05rem;">📏 2. 改變角的邊長（驗證妮妮的迷思：邊變長，角有變大嗎？）：</label>
+                <input type="range" id="fanArmSlider" class="edu-slider" min="70" max="170" value="125" oninput="updateFanVisual()" />
+              </div>
+              <div>
+                <label style="font-weight:900; font-size:1.05rem;">🔄 3. 旋轉角的開口方向（開口朝向不同，角一樣大嗎？）：</label>
+                <input type="range" id="fanRotSlider" class="edu-slider" min="0" max="360" value="0" oninput="updateFanVisual()" />
+              </div>
+
+              <div style="margin-top:1.25rem; padding:1rem; background:white; border-radius:12px; border:2px solid #E2E8F0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <div>
+                  <span style="font-weight:800; color:#475569;">目前角的分類：</span>
+                  <span id="angleTypeBadge" class="angle-badge angle-acute">銳角（比直角小）</span>
+                </div>
+                <div style="font-size:0.9rem; color:#64748B; font-weight:700;">
+                  💡 虛線 L 為 90° 標準直角參考線
+                </div>
+              </div>
+            </div>
+
+            <div style="background:white; border:3px solid #CBD5E1; border-radius:16px; display:flex; justify-content:center; align-items:center; padding:0.5rem;">
+              <svg id="fanSvg" viewBox="0 0 420 320" style="width:100%; max-width:420px; height:auto;"></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5-B: 拖拉三角板比對小房子圖形中的 6 個角 -->
+      <div id="u5-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 5-3 小房子找角</span>
+              <span><strong>拖拉畫面上的透明三角板</strong>到小房子的 ∠1 ～ ∠6 頂點比比看，也可以點選下方角編號自動對齊並分類！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="rotateSetSquare(15)">↻ 順時針轉 15°</button>
+              <button class="btn btn-primary" onclick="rotateSetSquare(-15)">↺ 逆時針轉 15°</button>
+              <button class="btn btn-outline" onclick="resetSetSquare()">🔄 重置三角板</button>
+            </div>
+          </div>
+
+          <div class="geometry-board" id="u5HouseBoard">
+            <svg id="u5HouseSvg" viewBox="0 0 860 390" style="width:100%; height:100%;"></svg>
+          </div>
+
+          <div style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; justify-content:space-between;">
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <span style="font-weight:900; align-self:center;">快速把三角板直角移到：</span>
+              <button class="btn btn-outline" onclick="snapSquareToHouseAngle(1)">∠1 (屋簷左)</button>
+              <button class="btn btn-outline" onclick="snapSquareToHouseAngle(2)">∠2 (牆角左下)</button>
+              <button class="btn btn-outline" onclick="snapSquareToHouseAngle(3)">∠3 (煙囪右)</button>
+              <button class="btn btn-outline" onclick="snapSquareToHouseAngle(4)">∠4 (煙囪頂)</button>
+              <button class="btn btn-outline" onclick="snapSquareToHouseAngle(5)">∠5 (煙囪左)</button>
+              <button class="btn btn-outline" onclick="snapSquareToHouseAngle(6)">∠6 (屋頂尖端)</button>
+            </div>
+          </div>
+
+          <div class="feedback-banner" id="u5HouseFeedback">
+            📐 課本解答對照：∠2 是<strong>直角</strong>（做上 ∟ 記號）；∠3、∠4 比直角小是<strong>銳角</strong>；∠1、∠5、∠6 比直角大是<strong>鈍角</strong>！
+          </div>
+        </div>
+      </div>
+
+      <!-- 5-C: 方格紙畫正方形與長方形 & 菱形動動腦 -->
+      <div id="u5-subC" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 5-4 正方形與長方形</span>
+              <span>在每格 1 公分的方格紙上，<strong>拖拉四個藍色頂點</strong>畫出指定的正方形或長方形！電腦會即時檢查 4 條邊與 4 個直角！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setGridTarget('sq3', '請畫出「邊長 3 公分的正方形」')">🟦 任務1：邊長 3cm 正方形</button>
+              <button class="btn btn-Amber" onclick="setGridTarget('sq4', '請畫出「邊長 4 公分的正方形」')">🟦 任務2：邊長 4cm 正方形</button>
+              <button class="btn btn-Amber" onclick="setGridTarget('rect53', '請畫出「長邊 5 公分、短邊 3 公分的長方形」')">🟩 任務3：5cm × 3cm 長方形</button>
+              <button class="btn btn-primary" onclick="setDiamondChallenge()">💎 課本動動腦：4條邊一樣長一定是正方形嗎？</button>
+            </div>
+          </div>
+
+          <div style="margin-bottom:0.75rem; font-weight:900; font-size:1.1rem; color:#1E3A8A;" id="u5GridMissionTitle">
+            🎯 當前挑戰：請拖拉頂點，畫出「邊長 3 公分的正方形」
+          </div>
+
+          <div class="grid-canvas-board">
+            <svg id="u5GridSvg" viewBox="0 0 600 360" style="width:100%; max-width:600px; height:auto;"></svg>
+          </div>
+
+          <div class="feedback-banner" id="u5GridFeedback">
+            👆 拖拉方格紙上的 4 個圓點頂點，觀察邊長與直角記號 ∟ 的變化！
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
