@@ -51,9 +51,11 @@ function toggleSound() {
 /* 單元與子模式切換 */
 function switchUnit(unitNum) {
   playTone(440, 0.08);
-  for (let i = 1; i <= 5; i++) {
-    document.getElementById(`unitTab${i}`).classList.toggle('active', i === unitNum);
-    document.getElementById(`unit${i}`).classList.toggle('active', i === unitNum);
+  for (let i = 1; i <= 9; i++) {
+    const tab = document.getElementById(`unitTab${i}`);
+    const sec = document.getElementById(`unit${i}`);
+    if (tab) tab.classList.toggle('active', i === unitNum);
+    if (sec) sec.classList.toggle('active', i === unitNum);
   }
 }
 
@@ -1533,6 +1535,621 @@ function initU5GridDrag() {
   });
 }
 
+/* =========================================================
+   第 6 單元：面 積（平方公分 cm²）
+   ========================================================= */
+let u6State = {
+  brush: 'full', // 'full' | 'half-tl' | 'half-tr' | 'empty'
+  cells: Array(60).fill('empty'),
+  estCaseIdx: 0,
+  showOuterBound: false
+};
+
+function setU6Brush(b) {
+  u6State.brush = b;
+  playTone(493.88, 0.06);
+  document.getElementById('u6BrushFull').className = b === 'full' ? 'btn btn-primary' : 'btn btn-outline';
+  document.getElementById('u6BrushHalfTL').className = b === 'half-tl' ? 'btn btn-primary' : 'btn btn-outline';
+  document.getElementById('u6BrushHalfTR').className = b === 'half-tr' ? 'btn btn-primary' : 'btn btn-outline';
+  document.getElementById('u6BrushErase').className = b === 'empty' ? 'btn btn-primary' : 'btn btn-outline';
+}
+
+function clearU6Grid() {
+  u6State.cells.fill('empty');
+  playTone(330, 0.08);
+  renderU6Grid();
+}
+
+function loadU6Preset(name) {
+  u6State.cells.fill('empty');
+  const setCell = (r, c, val = 'full') => {
+    u6State.cells[r * 10 + c] = val;
+  };
+  if (name === 'card15') {
+    for (let r = 1; r <= 3; r++) {
+      for (let c = 2; c <= 6; c++) setCell(r, c, 'full');
+    }
+  } else if (name === 'cross13') {
+    setCell(0, 4);
+    for (let c = 3; c <= 5; c++) setCell(1, c);
+    for (let c = 2; c <= 6; c++) setCell(2, c);
+    for (let c = 3; c <= 5; c++) setCell(3, c);
+    setCell(4, 4);
+  } else if (name === 'boat') {
+    // 3整格 + 2半格 = 4 cm²
+    setCell(2, 3, 'half-tr');
+    setCell(2, 4, 'full');
+    setCell(2, 5, 'full');
+    setCell(2, 6, 'half-tl');
+    setCell(3, 4, 'full');
+  } else if (name === 'heart') {
+    // 課本愛心ㄇ：4整格 + 4半格 = 6 cm²
+    setCell(1, 3, 'half-tr');
+    setCell(1, 4, 'half-tl');
+    setCell(1, 5, 'half-tr');
+    setCell(1, 6, 'half-tl');
+    setCell(2, 3, 'full');
+    setCell(2, 4, 'full');
+    setCell(2, 5, 'full');
+    setCell(2, 6, 'full');
+  }
+  playTone(587.33, 0.09);
+  renderU6Grid();
+}
+
+function clickU6Cell(idx) {
+  if (u6State.cells[idx] === u6State.brush) {
+    u6State.cells[idx] = 'empty';
+  } else {
+    u6State.cells[idx] = u6State.brush;
+  }
+  playTone(523.25, 0.05);
+  renderU6Grid();
+}
+
+function renderU6Grid() {
+  const board = document.getElementById('u6GridBoard');
+  let fullCount = 0;
+  let halfCount = 0;
+
+  board.innerHTML = u6State.cells.map((st, idx) => {
+    if (st === 'full') fullCount++;
+    else if (st.startsWith('half')) halfCount++;
+    return `<div class="cm2-cell ${st}" onclick="clickU6Cell(${idx})">${st === 'full' ? '1cm²' : ''}</div>`;
+  }).join('');
+
+  const totalArea = fullCount + halfCount * 0.5;
+  document.getElementById('u6AreaBadge').textContent = `目前面積：${totalArea} 平方公分 (${totalArea} cm²)`;
+  document.getElementById('u6Feedback').innerHTML =
+    `🟦 完整方格有 <strong>${fullCount} 格</strong>（${fullCount} cm²），📐 半格有 <strong>${halfCount} 個</strong>（可湊成 <strong>${halfCount * 0.5} 個整格</strong>），合起來總面積 ＝ <strong>${totalArea} 平方公分 (cm²)</strong>！`;
+}
+
+function setU6EstCase(idx) {
+  u6State.estCaseIdx = idx;
+  playTone(523.25, 0.08);
+  renderU6LeafEst();
+}
+
+function toggleU6BoundHighlight() {
+  u6State.showOuterBound = !u6State.showOuterBound;
+  playTone(587.33, 0.08);
+  renderU6LeafEst();
+}
+
+function renderU6LeafEst() {
+  const svg = document.getElementById('u6LeafSvg');
+  const cell = 38, ox = 35, oy = 25;
+  const cols = 8, rows = 6;
+
+  let rects = '';
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      let isInner = false;
+      let isOuter = false;
+      if (u6State.estCaseIdx === 0) {
+        // 妙妙的圖案：內部 4x3=12格 (c:2..5, r:1..3)，外部 6x5=30格 (c:1..6, r:0..4)
+        isInner = c >= 2 && c <= 5 && r >= 1 && r <= 3;
+        isOuter = c >= 1 && c <= 6 && r >= 0 && r <= 4;
+      } else {
+        // 課本樹葉：內部完整 6 格 (c:3..4, r:1..3)，外部含不完整共 18 格
+        isInner = c >= 2 && c <= 4 && r >= 2 && r <= 3;
+        isOuter = c >= 1 && c <= 5 && r >= 1 && r <= 4;
+      }
+      let fill = 'white';
+      if (!u6State.showOuterBound && isInner) fill = 'rgba(59, 130, 246, 0.35)';
+      if (u6State.showOuterBound && isOuter) fill = 'rgba(245, 158, 11, 0.32)';
+      rects += `<rect x="${ox + c * cell}" y="${oy + r * cell}" width="${cell}" height="${cell}" fill="${fill}" stroke="#94A3B8" stroke-width="1.5"/>`;
+    }
+  }
+
+  const shapeSvg = u6State.estCaseIdx === 0
+    ? `<ellipse cx="${ox + 4 * cell}" cy="${oy + 2.5 * cell}" rx="${2.85 * cell}" ry="${2.35 * cell}" fill="rgba(16, 185, 129, 0.35)" stroke="#047857" stroke-width="3.5"/>`
+    : `<path d="M ${ox + 1.2 * cell} ${oy + 3.8 * cell} Q ${ox + 2.5 * cell} ${oy + 0.8 * cell} ${ox + 5.8 * cell} ${oy + 1.3 * cell} Q ${ox + 4.8 * cell} ${oy + 4.8 * cell} ${ox + 1.2 * cell} ${oy + 3.8 * cell} Z" fill="rgba(16, 185, 129, 0.45)" stroke="#065F46" stroke-width="3.5"/>`;
+
+  svg.innerHTML = `
+    ${rects}
+    ${shapeSvg}
+    <text x="210" y="282" font-size="14" font-weight="900" fill="#1E293B" text-anchor="middle">
+      ${u6State.showOuterBound ? '🔶 橘色：能完整包住圖案的外圍方格' : '🟦 藍色：完全在圖案內部的完整方格'}
+    </text>
+  `;
+
+  if (u6State.estCaseIdx === 0) {
+    document.getElementById('u6EstTitle').textContent = '☁️ 課本例題：妙妙的不規則圖案面積';
+    document.getElementById('u6EstDesc').innerHTML = `
+      1️⃣ <strong>先數內部完整的 1 平方公分（藍格）</strong>：一排有 4 格、共 3 排，4 × 3 ＝ <strong>12 平方公分</strong>，所以圖案面積<strong>比 12 平方公分大</strong>。<br/>
+      2️⃣ <strong>再看包住圖案的大長方形（橘格）</strong>：一排有 6 格、共 5 排，6 × 5 ＝ <strong>30 平方公分</strong>，所以圖案面積<strong>比 30 平方公分小</strong>！
+    `;
+  } else {
+    document.getElementById('u6EstTitle').textContent = '🍃 課本動動腦：樹葉在平方公分板上的面積範圍';
+    document.getElementById('u6EstDesc').innerHTML = `
+      1️⃣ <strong>完全在樹葉內的完整方格（藍格）</strong>：共有 <strong>6 格</strong>（6 平方公分）。<br/>
+      2️⃣ <strong>加上不完整的邊緣方格（橘格）</strong>：共有 <strong>20 格</strong>（20 平方公分）。<br/>
+      👉 因此這片樹葉的面積<strong>大於 6 平方公分、小於 20 平方公分</strong>（大約 12～14 平方公分）！
+    `;
+  }
+}
+
+function checkCardEst(val) {
+  const ans = document.getElementById('u6CardEstAns');
+  if (val === 50) {
+    addStar(1);
+    ans.style.color = '#059669';
+    ans.innerHTML = '✅ 答對了！健保卡大約長 8.5 公分、寬 5.4 公分，面積大約是 50 平方公分！';
+  } else {
+    playTone(261.63, 0.15, 'sawtooth');
+    ans.style.color = '#DC2626';
+    ans.innerHTML = '🤔 想一想：1 個大拇指指甲約 1 平方公分，健保卡大約可以排滿近 50 個指甲，所以是 50 平方公分喔！';
+  }
+}
+
+/* =========================================================
+   第 7 單元：除 法
+   ========================================================= */
+let u7Emoji = '🍓';
+
+function setU7Visual(dividend, divisor, emoji) {
+  u7Emoji = emoji || '🍓';
+  document.getElementById('u7DividendSlider').value = dividend;
+  document.getElementById('u7DivisorSlider').value = divisor;
+  playTone(523.25, 0.08);
+  updateU7Visual();
+}
+
+function updateU7Visual() {
+  const dividend = parseInt(document.getElementById('u7DividendSlider').value, 10);
+  const divisor = parseInt(document.getElementById('u7DivisorSlider').value, 10);
+  const quotient = Math.floor(dividend / divisor);
+  const remainder = dividend % divisor;
+
+  document.getElementById('u7DividendLabel').textContent = dividend;
+  document.getElementById('u7DivisorLabel').textContent = divisor;
+
+  const container = document.getElementById('u7PlatesContainer');
+  let html = '';
+  for (let p = 0; p < quotient; p++) {
+    html += `
+      <div class="div-plate">
+        <div style="font-size:0.8rem; font-weight:900; color:#B45309;">第 ${p + 1} 盤 (${divisor}個)</div>
+        <div class="div-plate-items">${u7Emoji.repeat(divisor)}</div>
+      </div>
+    `;
+  }
+  if (remainder > 0) {
+    html += `
+      <div class="div-plate" style="background:#FEF2F2; border-color:#EF4444;">
+        <div style="font-size:0.8rem; font-weight:900; color:#DC2626;">剩下的（餘數 ${remainder}）</div>
+        <div class="div-plate-items">${u7Emoji.repeat(remainder)}</div>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+
+  document.getElementById('u7EquationBox').innerHTML = `
+    <div>
+      <div style="font-size:0.9rem; font-weight:800; color:#4338CA;">除法算式紀錄：</div>
+      <div class="readout-number">${dividend} ÷ ${divisor} ＝ ${quotient}${remainder > 0 ? ` … ${remainder}` : '（整除）'}</div>
+    </div>
+    <div style="font-size:0.95rem; font-weight:800; color:#1E293B; background:white; padding:0.6rem 1rem; border-radius:12px; border:2px solid #C7D2FE;">
+      被除數 <strong>${dividend}</strong> ｜ 除數 <strong>${divisor}</strong> ｜ 商 <strong>${quotient}</strong> ｜ 餘數 <strong>${remainder}</strong>（餘數 ${remainder} ＜ 除數 ${divisor}）
+    </div>
+  `;
+}
+
+function renderU7Vertical() {
+  const a = Math.min(89, Math.max(6, parseInt(document.getElementById('u7VertA').value, 10) || 29));
+  const b = Math.min(9, Math.max(2, parseInt(document.getElementById('u7VertB').value, 10) || 6));
+  const q = Math.floor(a / b);
+  const prod = b * q;
+  const rem = a - prod;
+
+  document.getElementById('u7VerticalBox').innerHTML = `
+    <div style="background:white; padding:1.25rem; border-radius:14px; border:2px solid #CBD5E1; font-family:'Fredoka', sans-serif; max-width:320px; margin:0 auto;">
+      <div style="text-align:right; font-size:2rem; font-weight:900; color:#1D4ED8; padding-right:1.5rem;">${q} <span style="font-size:0.9rem; color:#64748B;">← 商</span></div>
+      <div style="display:flex; align-items:center; justify-content:flex-end; font-size:2rem; font-weight:900; border-top:4px solid #1E293B; padding-top:0.2rem; margin-left:3rem; padding-right:1.5rem;">
+        <span style="margin-right:auto; margin-left:-2.2rem; border-right:4px solid #1E293B; padding-right:0.5rem;">${b}</span>
+        <span>${a}</span>
+      </div>
+      <div style="text-align:right; font-size:2rem; font-weight:900; color:#059669; border-bottom:4px solid #1E293B; padding-right:1.5rem;">
+        － &nbsp; ${prod} <span style="font-size:0.85rem; color:#64748B;">(${b}×${q})</span>
+      </div>
+      <div style="text-align:right; font-size:2.1rem; font-weight:900; color:#DC2626; padding-right:1.5rem; margin-top:0.25rem;">
+        ${rem} <span style="font-size:0.9rem;">← 餘數 (${rem}＜${b})</span>
+      </div>
+    </div>
+  `;
+}
+
+function checkU7RemainderQuiz(isMiaomiao) {
+  const fb = document.getElementById('u7QuizFeedback');
+  if (isMiaomiao) {
+    addStar(1);
+    fb.className = 'feedback-banner success';
+    fb.innerHTML = '✅ 答對了！妙妙說得對！因為奇奇剩下的 10 公分比 8 公分大，還可以再剪成 1 段！<strong>餘數一定要比除數小（2 ＜ 8）</strong>！';
+  } else {
+    playTone(261.63, 0.15, 'sawtooth');
+    fb.className = 'feedback-banner warning';
+    fb.innerHTML = '🤔 想想看：奇奇剩下 10 公分，但每 8 公分就能再剪 1 段，10 公分還夠不夠再剪 1 段呢？餘數不能大於或等於除數喔！';
+  }
+}
+
+const u7WordProblems = [
+  {
+    title: '🧁 1. 王媽媽裝點心（商數不用加 1）',
+    story: '王媽媽做了 32 個點心，每 6 個裝滿一盒，最多可以裝滿幾盒？',
+    eq: '32 ÷ 6 ＝ 5（盒）… 2（個）',
+    needPlusOne: false,
+    ans: 5,
+    explain: '剩下的 2 個點心不夠裝滿 1 盒，所以最多只能裝滿 5 盒（商數不用加 1）！'
+  },
+  {
+    title: '🦢 2. 坐天鵝船遊湖（商數要加 1）',
+    story: '有 34 個小朋友要坐天鵝船，一艘天鵝船可以坐 4 個人，最少需要幾艘天鵝船才夠全部的人坐？',
+    eq: '34 ÷ 4 ＝ 8（艘）… 2（人）',
+    needPlusOne: true,
+    ans: 9,
+    explain: '剩下的 2 個小朋友也需要坐 1 艘天鵝船，所以 8 ＋ 1 ＝ 9，最少需要 9 艘船（商數要加 1）！'
+  },
+  {
+    title: '🍮 3. 老師請吃布丁（商數要加 1）',
+    story: '老師請 46 個小朋友吃布丁，一人吃 1 個。一盒布丁有 6 個，老師最少要買幾盒布丁才夠分？',
+    eq: '46 ÷ 6 ＝ 7（盒）… 4（個）',
+    needPlusOne: true,
+    ans: 8,
+    explain: '買 7 盒只有 42 個布丁，還差 4 個不夠分，必須再買 1 盒：7 ＋ 1 ＝ 8 盒（商數要加 1）！'
+  }
+];
+
+function renderU7WordProblems() {
+  const grid = document.getElementById('u7WordProblemsGrid');
+  grid.innerHTML = u7WordProblems.map((wp, idx) => `
+    <div style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:16px; padding:1.1rem;">
+      <div style="font-weight:900; color:#1E3A8A; font-size:1.05rem;">${wp.title}</div>
+      <p style="font-size:0.95rem; margin:0.5rem 0; color:#334155; font-weight:700;">${wp.story}</p>
+      <div style="background:white; padding:0.5rem 0.75rem; border-radius:8px; border:1px dashed #94A3B8; font-weight:900; color:#1D4ED8; margin-bottom:0.75rem;">
+        算式：${wp.eq}
+      </div>
+      <div style="display:flex; gap:0.5rem;">
+        <button class="btn btn-outline" style="flex:1; justify-content:center;" onclick="checkU7WordAns(${idx}, false)">不用加 1</button>
+        <button class="btn btn-outline" style="flex:1; justify-content:center;" onclick="checkU7WordAns(${idx}, true)">商數要 ＋1</button>
+      </div>
+      <div id="u7WpFeedback${idx}" style="margin-top:0.6rem; font-size:0.9rem; font-weight:800;"></div>
+    </div>
+  `).join('');
+}
+
+function checkU7WordAns(idx, userPlusOne) {
+  const wp = u7WordProblems[idx];
+  const el = document.getElementById(`u7WpFeedback${idx}`);
+  if (userPlusOne === wp.needPlusOne) {
+    addStar(1);
+    el.style.color = '#059669';
+    el.innerHTML = `✅ 答對了！${wp.explain} 答案是 <strong>${wp.ans}</strong>！`;
+  } else {
+    playTone(261.63, 0.15, 'sawtooth');
+    el.style.color = '#DC2626';
+    el.innerHTML = `🤔 再想一下：${wp.explain}`;
+  }
+}
+
+/* =========================================================
+   第 8 單元：公升和毫升（L 與 mL）
+   ========================================================= */
+let u8VolumeMl = 1200;
+
+function setBeakerVolume(val) {
+  u8VolumeMl = Math.max(0, Math.min(2000, parseInt(val, 10) || 0));
+  document.getElementById('u8VolumeSlider').value = u8VolumeMl;
+  playTone(523.25, 0.05);
+  renderU8Beaker();
+}
+
+function pourIntoBeaker(deltaMl) {
+  u8VolumeMl = Math.min(2000, u8VolumeMl + deltaMl);
+  document.getElementById('u8VolumeSlider').value = u8VolumeMl;
+  addStar(1);
+  renderU8Beaker();
+}
+
+function renderU8Beaker() {
+  const svg = document.getElementById('u8BeakerSvg');
+  const bx = 95, by = 30, bw = 220, bh = 270;
+  const fillRatio = u8VolumeMl / 2000;
+  const fillH = fillRatio * (bh - 20);
+  const fillY = by + bh - fillH;
+
+  let ticks = '';
+  for (let v = 0; v <= 2000; v += 100) {
+    const ty = by + bh - (v / 2000) * (bh - 20);
+    const isMajor = v % 500 === 0;
+    const tw = isMajor ? 28 : 14;
+    ticks += `<line x1="${bx + bw - tw}" y1="${ty}" x2="${bx + bw}" y2="${ty}" stroke="#1E293B" stroke-width="${isMajor ? 3 : 1.5}"/>`;
+    if (isMajor && v > 0) {
+      ticks += `<text x="${bx + bw - 35}" y="${ty + 5}" font-size="13" font-weight="900" fill="#0F172A" text-anchor="end">${v}mL (${v / 1000}L)</text>`;
+    }
+  }
+
+  svg.innerHTML = `
+    <!-- 量杯水體 -->
+    <rect x="${bx + 3}" y="${fillY}" width="${bw - 6}" height="${fillH}" rx="4" fill="rgba(56, 189, 248, 0.68)"/>
+    ${u8VolumeMl > 0 ? `<line x1="${bx + 3}" y1="${fillY}" x2="${bx + bw - 3}" y2="${fillY}" stroke="#0284C7" stroke-width="3"/>` : ''}
+
+    <!-- 量杯外框 -->
+    <path d="M ${bx - 12} ${by} L ${bx} ${by + 12} L ${bx} ${by + bh} Q ${bx} ${by + bh + 8} ${bx + 8} ${by + bh + 8} L ${bx + bw - 8} ${by + bh + 8} Q ${bx + bw} ${by + bh + 8} ${bx + bw} ${by + bh} L ${bx + bw} ${by} Z" fill="none" stroke="#1E3A8A" stroke-width="4.5"/>
+
+    <!-- 刻度線 -->
+    ${ticks}
+
+    <!-- 當前液面指標 -->
+    <text x="${bx + 18}" y="${Math.max(by + 25, fillY - 8)}" font-size="15" font-weight="900" fill="#0369A1">
+      💧 目前水量：${u8VolumeMl} mL
+    </text>
+  `;
+
+  const liters = Math.floor(u8VolumeMl / 1000);
+  const mls = u8VolumeMl % 1000;
+  document.getElementById('u8MlReadout').textContent = `${u8VolumeMl} 毫升 (mL)`;
+  document.getElementById('u8CompoundReadout').textContent =
+    liters > 0 ? `${liters} 公升 ${mls} 毫升` : `${mls} 毫升`;
+}
+
+const u8CalcCases = [
+  {
+    title: '🧴 課本例題 1：兩瓶沐浴乳共幾公升幾毫升？',
+    q: '一瓶沐浴乳是 1250 毫升，另一瓶是 350 毫升，合起來共是幾公升幾毫升？',
+    s1: '方法一（先相加再換算）：1250 mL ＋ 350 mL ＝ 1600 mL ＝ 1 公升 600 毫升',
+    s2: '方法二（先換成複名數）：1 公升 250 毫升 ＋ 350 毫升 ＝ 1 公升 600 毫升',
+    ans: '1 公升 600 毫升'
+  },
+  {
+    title: '🍼 課本例題 2：大小保溫瓶共可裝多少水？',
+    q: '小保溫瓶有 1 公升 480 毫升，大保溫瓶有 2 公升 150 毫升，合起來共可裝幾公升幾毫升？',
+    s1: '先算毫升：480 毫升 ＋ 150 毫升 ＝ 630 毫升',
+    s2: '再算公升：1 公升 ＋ 2 公升 ＝ 3 公升',
+    ans: '3 公升 630 毫升'
+  },
+  {
+    title: '🥤 課本例題 3：冬瓜茶還剩下幾公升幾毫升？',
+    q: '一桶冬瓜茶有 3 公升 500 毫升，喝掉 1 公升 225 毫升後，還剩下幾公升幾毫升？',
+    s1: '先算毫升：500 毫升 － 225 毫升 ＝ 275 毫升',
+    s2: '再算公升：3 公升 － 1 公升 ＝ 2 公升',
+    ans: '2 公升 275 毫升'
+  },
+  {
+    title: '🍲 課本例題 4：鍋子和水壺的容量相差多少毫升？',
+    q: '桌上的鍋子容量是 1370 mL，水壺容量是 1 公升 450 毫升，兩者相差多少毫升？',
+    s1: '先把單位換成一樣：水壺 1 公升 450 毫升 ＝ 1450 毫升',
+    s2: '再相減：1450 毫升 － 1370 毫升 ＝ 80 毫升',
+    ans: '80 毫升 (mL)'
+  }
+];
+
+function setU8CalcCase(idx) {
+  playTone(523.25, 0.08);
+  const c = u8CalcCases[idx];
+  document.getElementById('u8CalcDisplay').innerHTML = `
+    <div style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:16px; padding:1.25rem;">
+      <h3 style="color:#1E3A8A; margin-bottom:0.4rem;">${c.title}</h3>
+      <p style="font-weight:700; color:#334155; margin-bottom:1rem;">${c.q}</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:0.75rem;">
+        <div style="background:white; padding:0.9rem; border-radius:12px; border:2px solid #93C5FD; font-weight:800;">
+          ${c.s1}
+        </div>
+        <div style="background:white; padding:0.9rem; border-radius:12px; border:2px solid #6EE7B7; font-weight:800;">
+          ${c.s2}
+        </div>
+        <div style="background:#FEF3C7; padding:0.9rem; border-radius:12px; border:2px solid #F59E0B;">
+          <div style="font-size:0.85rem; font-weight:800; color:#B45309;">計算結果：</div>
+          <div style="font-size:1.35rem; font-weight:900; color:#92400E;">${c.ans}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* =========================================================
+   第 9 單元：分 數
+   ========================================================= */
+let u9PieState = {
+  denom: 8,
+  selected: [true, true, true, false, false, false, false, false]
+};
+
+function setU9PiePreset(denom, numCount) {
+  u9PieState.denom = denom;
+  u9PieState.selected = Array.from({ length: denom }, (_, i) => i < numCount);
+  document.getElementById('u9DenomSlider').value = denom;
+  document.getElementById('u9DenomLabel').textContent = denom;
+  playTone(523.25, 0.08);
+  renderU9Pie();
+}
+
+function changeU9Denom(val) {
+  const d = parseInt(val, 10);
+  u9PieState.denom = d;
+  u9PieState.selected = Array.from({ length: d }, (_, i) => i < Math.min(d, 3));
+  document.getElementById('u9DenomLabel').textContent = d;
+  playTone(493.88, 0.05);
+  renderU9Pie();
+}
+
+function toggleU9Slice(idx) {
+  u9PieState.selected[idx] = !u9PieState.selected[idx];
+  playTone(587.33, 0.06);
+  renderU9Pie();
+}
+
+function renderU9Pie() {
+  const svg = document.getElementById('u9PieSvg');
+  const d = u9PieState.denom;
+  const cx = 160, cy = 160, r = 130;
+  let paths = '';
+
+  for (let i = 0; i < d; i++) {
+    const startAngle = (i * 2 * Math.PI) / d - Math.PI / 2;
+    const endAngle = ((i + 1) * 2 * Math.PI) / d - Math.PI / 2;
+    const x1 = cx + r * Math.cos(startAngle);
+    const y1 = cy + r * Math.sin(startAngle);
+    const x2 = cx + r * Math.cos(endAngle);
+    const y2 = cy + r * Math.sin(endAngle);
+    const midAngle = (startAngle + endAngle) / 2;
+    const tx = cx + (r * 0.62) * Math.cos(midAngle);
+    const ty = cy + (r * 0.62) * Math.sin(midAngle);
+
+    const active = u9PieState.selected[i];
+    paths += `
+      <path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2} Z"
+        fill="${active ? '#F59E0B' : '#FEF3C7'}"
+        stroke="#78350F" stroke-width="3"
+        onclick="toggleU9Slice(${i})"/>
+      <text x="${tx}" y="${ty + 5}" font-size="14" font-weight="900" fill="${active ? 'white' : '#92400E'}" text-anchor="middle" pointer-events="none">
+        1/${d}
+      </text>
+    `;
+  }
+
+  svg.innerHTML = paths;
+  const num = u9PieState.selected.filter(Boolean).length;
+  document.getElementById('u9FractionReadout').innerHTML = `
+    <div>
+      <div style="font-size:0.9rem; font-weight:800; color:#4338CA;">塗色部分占全部的：</div>
+      <div class="readout-number">${num} / ${d} ${num === d ? '（＝ 1 整個！）' : ''}</div>
+      <div style="font-size:0.95rem; font-weight:700; color:#334155;">
+        平分成 <strong>${d} 份（分母）</strong>，塗色其中的 <strong>${num} 份（分子）</strong>，也就是 <strong>${num} 個 1/${d}</strong> 合起來的！
+      </div>
+    </div>
+    <div class="readout-chinese">讀作：${numberToChinese(d)}分之${numberToChinese(num)}</div>
+  `;
+}
+
+function checkU9EqualMyth(correct) {
+  const el = document.getElementById('u9MythFeedback');
+  if (correct) {
+    addStar(1);
+    el.style.color = '#059669';
+    el.innerHTML = '✅ 答對了！分數一定要在「平分（每一份一樣大）」的前提下才成立！把檸檬派平分成一樣大後其實是 8 片，所以宇翔吃了 1/8 個檸檬派！';
+  } else {
+    playTone(261.63, 0.15, 'sawtooth');
+    el.style.color = '#DC2626';
+    el.innerHTML = '🤔 注意看喔！這 6 片檸檬派大小不一樣（沒有平分），不能直接說其中 1 片是 1/6 個喔！';
+  }
+}
+
+/* 9-B: 離散量一盒 10 個果凍 */
+let u9Jellies = ['dabao', 'dabao', 'dabao', 'xiaobao', 'xiaobao', 'xiaobao', 'xiaobao', 'none', 'none', 'none'];
+
+function setU9JellyPreset() {
+  u9Jellies = ['dabao', 'dabao', 'dabao', 'xiaobao', 'xiaobao', 'xiaobao', 'xiaobao', 'none', 'none', 'none'];
+  playTone(523.25, 0.08);
+  renderU9Jellies();
+}
+
+function resetU9Jellies() {
+  u9Jellies.fill('none');
+  playTone(330, 0.08);
+  renderU9Jellies();
+}
+
+function toggleU9Jelly(idx) {
+  const order = ['none', 'dabao', 'xiaobao'];
+  const next = order[(order.indexOf(u9Jellies[idx]) + 1) % 3];
+  u9Jellies[idx] = next;
+  playTone(587.33, 0.05);
+  renderU9Jellies();
+}
+
+function renderU9Jellies() {
+  const grid = document.getElementById('u9JellyGrid');
+  grid.innerHTML = u9Jellies.map((owner, idx) => {
+    const label = owner === 'dabao' ? '👦大寶' : owner === 'xiaobao' ? '👧小寶' : '未吃';
+    return `
+      <div class="jelly-cup ${owner}" onclick="toggleU9Jelly(${idx})">
+        <div style="font-size:1.6rem;">🍮</div>
+        <div style="font-size:0.78rem; font-weight:900;">${label}</div>
+        <div style="font-size:0.7rem; color:#64748B;">1/10盒</div>
+      </div>
+    `;
+  }).join('');
+
+  const dabaoCnt = u9Jellies.filter(x => x === 'dabao').length;
+  const xiaobaoCnt = u9Jellies.filter(x => x === 'xiaobao').length;
+  const remCnt = 10 - dabaoCnt - xiaobaoCnt;
+
+  document.getElementById('u9JellySummary').innerHTML = `
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; font-weight:900; font-size:1.05rem;">
+      <span style="color:#1D4ED8;">👦 大寶吃了：${dabaoCnt} 個 ＝ <strong>${dabaoCnt}/10 盒</strong></span>
+      <span style="color:#B45309;">👧 小寶吃了：${xiaobaoCnt} 個 ＝ <strong>${xiaobaoCnt}/10 盒</strong></span>
+      <span style="color:#047857;">🍮 還剩下：${remCnt} 個 ＝ <strong>${remCnt}/10 盒</strong></span>
+    </div>
+  `;
+}
+
+/* 9-C: 同分母分數彩帶比大小 */
+function setU9ComparePreset(den, a, b) {
+  document.getElementById('u9CmpDenSlider').value = den;
+  document.getElementById('u9CmpNumASlider').max = den;
+  document.getElementById('u9CmpNumBSlider').max = den;
+  document.getElementById('u9CmpNumASlider').value = a;
+  document.getElementById('u9CmpNumBSlider').value = b;
+  playTone(523.25, 0.08);
+  updateU9Compare();
+}
+
+function updateU9Compare() {
+  const den = parseInt(document.getElementById('u9CmpDenSlider').value, 10);
+  const sliderA = document.getElementById('u9CmpNumASlider');
+  const sliderB = document.getElementById('u9CmpNumBSlider');
+  sliderA.max = den;
+  sliderB.max = den;
+  const a = Math.min(den, parseInt(sliderA.value, 10));
+  const b = Math.min(den, parseInt(sliderB.value, 10));
+
+  document.getElementById('u9CmpDenLabel').textContent = den;
+  document.getElementById('u9CmpNumALabel').textContent = a;
+  document.getElementById('u9CmpNumBLabel').textContent = b;
+
+  const svg = document.getElementById('u9CompareSvg');
+  const startX = 130, totalW = 640, cellW = totalW / den;
+
+  const drawBar = (y, count, color, label) => {
+    let cells = `<text x="20" y="${y + 26}" font-size="15" font-weight="900" fill="#1E293B">${label} (${count}/${den})</text>`;
+    for (let i = 0; i < den; i++) {
+      cells += `<rect x="${startX + i * cellW}" y="${y}" width="${cellW}" height="38" fill="${i < count ? color : '#F8FAFC'}" stroke="#475569" stroke-width="2"/>`;
+      cells += `<text x="${startX + (i + 0.5) * cellW}" y="${y + 24}" font-size="12" font-weight="800" fill="${i < count ? 'white' : '#94A3B8'}" text-anchor="middle">1/${den}</text>`;
+    }
+    return cells;
+  };
+
+  svg.innerHTML = `
+    ${drawBar(30, a, '#3B82F6', '藍色')}
+    ${drawBar(105, b, '#10B981', '綠色')}
+  `;
+
+  const sign = a > b ? '＞' : a < b ? '＜' : '＝';
+  document.getElementById('u9CompareFeedback').innerHTML =
+    `🎀 同分母分數比大小：<strong>${a}/${den}</strong> 是 ${a} 個 1/${den}，<strong>${b}/${den}</strong> 是 ${b} 個 1/${den}，所以 <strong>${a}/${den} ${sign} ${b}/${den}</strong>！`;
+}
+
 /* 初始化所有單元互動元件 */
 window.addEventListener('DOMContentLoaded', () => {
   // Unit 1
@@ -1562,4 +2179,23 @@ window.addEventListener('DOMContentLoaded', () => {
   initU5SetSquareDrag();
   renderGridPolygon();
   initU5GridDrag();
+
+  // Unit 6
+  loadU6Preset('card15');
+  renderU6LeafEst();
+
+  // Unit 7
+  updateU7Visual();
+  renderU7Vertical();
+  renderU7WordProblems();
+
+  // Unit 8
+  renderU8Beaker();
+  setU8CalcCase(0);
+
+  // Unit 9
+  renderU9Pie();
+  renderU9Jellies();
+  updateU9Compare();
 });
+

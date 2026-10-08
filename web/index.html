@@ -25,37 +25,61 @@
     </div>
   </header>
 
-  <!-- 5大單元主選單 (切換) -->
+  <!-- 9大單元主選單 (切換) -->
   <nav class="unit-nav" aria-label="單元選單">
     <button class="unit-tab active" onclick="switchUnit(1)" id="unitTab1">
       <span class="unit-num">第 1 單元</span>
       <span class="unit-icon">🧮</span>
       <span class="unit-name">10000以內的數</span>
-      <span class="unit-desc">積木錢幣拖拉・比大小・數線</span>
+      <span class="unit-desc">積木錢幣・比大小・數線</span>
     </button>
     <button class="unit-tab" onclick="switchUnit(2)" id="unitTab2">
       <span class="unit-num">第 2 單元</span>
       <span class="unit-icon">🚂</span>
       <span class="unit-name">四位數的加減</span>
-      <span class="unit-desc">直式進退位動畫・熱量估算滑桿</span>
+      <span class="unit-desc">直式進退位・熱量估算</span>
     </button>
     <button class="unit-tab" onclick="switchUnit(3)" id="unitTab3">
       <span class="unit-num">第 3 單元</span>
       <span class="unit-icon">📏</span>
       <span class="unit-name">毫米 (mm)</span>
-      <span class="unit-desc">拖拉直尺實測・放大鏡・長度計算</span>
+      <span class="unit-desc">拖拉直尺・畫線・長度計算</span>
     </button>
     <button class="unit-tab" onclick="switchUnit(4)" id="unitTab4">
       <span class="unit-num">第 4 單元</span>
       <span class="unit-icon">🎪</span>
       <span class="unit-name">乘 法</span>
-      <span class="unit-desc">位值陣列・直式乘法・連乘線段圖</span>
+      <span class="unit-desc">位值陣列・直式・連乘線段</span>
     </button>
     <button class="unit-tab" onclick="switchUnit(5)" id="unitTab5">
       <span class="unit-num">第 5 單元</span>
       <span class="unit-icon">📐</span>
       <span class="unit-name">角與形狀</span>
-      <span class="unit-desc">扇子張開角・三角板疊合・畫方格</span>
+      <span class="unit-desc">扇子張開・三角板・畫方格</span>
+    </button>
+    <button class="unit-tab" onclick="switchUnit(6)" id="unitTab6">
+      <span class="unit-num">第 6 單元</span>
+      <span class="unit-icon">🟩</span>
+      <span class="unit-name">面 積</span>
+      <span class="unit-desc">平方公分板・半格拼湊・樹葉估測</span>
+    </button>
+    <button class="unit-tab" onclick="switchUnit(7)" id="unitTab7">
+      <span class="unit-num">第 7 單元</span>
+      <span class="unit-icon">🎃</span>
+      <span class="unit-name">除 法</span>
+      <span class="unit-desc">平分分裝・直式餘數・天鵝船+1</span>
+    </button>
+    <button class="unit-tab" onclick="switchUnit(8)" id="unitTab8">
+      <span class="unit-num">第 8 單元</span>
+      <span class="unit-icon">🥛</span>
+      <span class="unit-name">公升和毫升</span>
+      <span class="unit-desc">互動量杯倒水・化聚・容量加減</span>
+    </button>
+    <button class="unit-tab" onclick="switchUnit(9)" id="unitTab9">
+      <span class="unit-num">第 9 單元</span>
+      <span class="unit-icon">🍕</span>
+      <span class="unit-name">分 數</span>
+      <span class="unit-desc">蔥油餅平分・果凍離散量・比大小</span>
     </button>
   </nav>
 
@@ -741,6 +765,418 @@
           <div class="feedback-banner" id="u5GridFeedback">
             👆 拖拉方格紙上的 4 個圓點頂點，觀察邊長與直角記號 ∟ 的變化！
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         第 6 單元：面 積
+         ========================================== -->
+    <section id="unit6" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🟩 第 6 單元：面 積（平方公分 cm²）</h2>
+          <p>邊長 1 公分的正方形面積是「1 平方公分 (1 cm²)」！透過點選塗色、2 個半格湊成 1 整格，以及平方公分板估算樹葉面積！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchSubmode(6, 'A', this)">6-1 & 6-2 平方公分板與半格拼湊</button>
+          <button class="submode-btn" onclick="switchSubmode(6, 'B', this)">6-3 不規則圖案與樹葉面積估測</button>
+        </div>
+      </div>
+
+      <!-- 6-A: 平方公分板點選與半格拼湊 -->
+      <div id="u6-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 6-1 & 6-2</span>
+              <span>每一小格都是 <strong>1 平方公分 (1 cm²)</strong>，<strong>2 個半格可以合成 1 個整格</strong>！點選課本圖形或自己塗色創作吧！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="loadU6Preset('card15')">🎴 課本小卡片 (5×3=15 cm²)</button>
+              <button class="btn btn-Amber" onclick="loadU6Preset('cross13')">➕ 課本十字圖 (13 cm²)</button>
+              <button class="btn btn-Amber" onclick="loadU6Preset('boat')">⛵ 課本梯形船 (含半格 4 cm²)</button>
+              <button class="btn btn-Amber" onclick="loadU6Preset('heart')">💛 課本愛心ㄇ (含半格 6 cm²)</button>
+              <button class="btn btn-outline" onclick="clearU6Grid()">🗑️ 清空畫布</button>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+              <strong>🖌️ 選擇畫筆模式（點擊方格塗色）：</strong>
+              <button class="btn btn-primary" id="u6BrushFull" onclick="setU6Brush('full')">🟦 整格 (1 cm²)</button>
+              <button class="btn btn-outline" id="u6BrushHalfTL" onclick="setU6Brush('half-tl')">📐 左上半格 (0.5 cm²)</button>
+              <button class="btn btn-outline" id="u6BrushHalfTR" onclick="setU6Brush('half-tr')">📐 右上半格 (0.5 cm²)</button>
+              <button class="btn btn-outline" id="u6BrushErase" onclick="setU6Brush('empty')">橡皮擦</button>
+            </div>
+            <div id="u6AreaBadge" style="font-size:1.25rem; font-weight:900; color:#1E40AF; background:#DBEAFE; padding:0.4rem 1.1rem; border-radius:999px; border:2px solid #60A5FA;">
+              目前面積：15 平方公分 (15 cm²)
+            </div>
+          </div>
+
+          <div class="cm2-grid-wrap" id="u6GridBoard"></div>
+
+          <div class="feedback-banner success" id="u6Feedback">
+            💡 點選上方「課本梯形船」或「課本愛心ㄇ」，看看「整格數量」加上「半格湊整格」如何算出總面積！
+          </div>
+        </div>
+      </div>
+
+      <!-- 6-B: 估估看面積有多大（妙妙的雲朵與樹葉平方公分板夾擊法） -->
+      <div id="u6-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 6-3 估估看面積</span>
+              <span>妙妙把透明平方公分板蓋在圖案上！切換下方按鈕觀察<strong>「內部完整方格」</strong>與<strong>「外部圍住方格」</strong>的面積範圍！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setU6EstCase(0)">☁️ 妙妙的圓弧圖案 (12 ~ 30 cm²)</button>
+              <button class="btn btn-Amber" onclick="setU6EstCase(1)">🍃 課本動動腦：樹葉面積估測</button>
+              <button class="btn btn-primary" onclick="toggleU6BoundHighlight()">🔍 切換顯示：內部完整格 / 外圍總格數</button>
+            </div>
+          </div>
+
+          <div class="vertical-math-stage">
+            <div style="background:white; border:3px solid #CBD5E1; border-radius:16px; padding:1rem; text-align:center;">
+              <svg id="u6LeafSvg" viewBox="0 0 420 300" style="width:100%; max-width:420px; height:auto;"></svg>
+            </div>
+            <div style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:16px; padding:1.25rem;">
+              <h3 id="u6EstTitle" style="color:#1E3A8A; margin-bottom:0.65rem;">☁️ 妙妙的圖案面積範圍推理</h3>
+              <div id="u6EstDesc" style="font-size:1rem; font-weight:700; color:#334155; line-height:1.7;"></div>
+              <div style="margin-top:1rem; padding:1rem; background:#FFFBEB; border:2px solid #F59E0B; border-radius:12px;">
+                <div style="font-weight:900; color:#92400E; margin-bottom:0.5rem;">🤚 生活量感小挑戰：</div>
+                <p style="font-size:0.95rem; color:#78350F; margin-bottom:0.6rem;">小朋友的「大拇指指甲」面積大約是 <strong>1 平方公分</strong>！那麼一張<strong>健保卡</strong>的面積大約是多少呢？</p>
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                  <button class="btn btn-outline" onclick="checkCardEst(5)">5 平方公分</button>
+                  <button class="btn btn-outline" onclick="checkCardEst(50)">50 平方公分</button>
+                  <button class="btn btn-outline" onclick="checkCardEst(500)">500 平方公分</button>
+                </div>
+                <div id="u6CardEstAns" style="margin-top:0.5rem; font-weight:800; font-size:0.95rem;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         第 7 單元：除 法
+         ========================================== -->
+    <section id="unit7" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🎃 第 7 單元：除 法</h2>
+          <p>結合萬聖節裝蛋糕、分草莓、直式除法與「餘數一定比除數小」，以及天鵝船「商數要不要加 1」應用題！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchSubmode(7, 'A', this)">7-1 & 7-2 萬聖節分裝與平分</button>
+          <button class="submode-btn" onclick="switchSubmode(7, 'B', this)">7-3 除法直式與餘數小於除數</button>
+          <button class="submode-btn" onclick="switchSubmode(7, 'C', this)">7-4 商數要不要加 1？(天鵝船挑戰)</button>
+        </div>
+      </div>
+
+      <!-- 7-A: 萬聖節包含除與等分除視覺化 -->
+      <div id="u7-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 7-1 & 7-2</span>
+              <span>調整滑桿或點選課本例題，觀察<strong>「幾個裝一盤（包含除）」</strong>與<strong>「平分給幾人（等分除）」</strong>如何分裝並留下餘數！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setU7Visual(12, 3, '🧁')">🧁 12個蛋糕，每3個裝一盤</button>
+              <button class="btn btn-Amber" onclick="setU7Visual(13, 3, '🍓')">🍓 13顆草莓，每3顆裝一盤</button>
+              <button class="btn btn-Amber" onclick="setU7Visual(29, 6, '🍅')">🍅 29顆小番茄，每人分6顆</button>
+              <button class="btn btn-Amber" onclick="setU7Visual(40, 5, '🍪')">🍪 40片餅乾，平分裝5盤</button>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">
+              <div>
+                <label style="font-weight:900;">🎃 總數量（被除數）：<span id="u7DividendLabel" style="color:#2563EB;">13</span> 個</label>
+                <input type="range" id="u7DividendSlider" class="edu-slider" min="5" max="45" value="13" oninput="updateU7Visual()" />
+              </div>
+              <div>
+                <label style="font-weight:900;">🍽️ 每盤幾個 / 平分幾盤（除數）：<span id="u7DivisorLabel" style="color:#059669;">3</span></label>
+                <input type="range" id="u7DivisorSlider" class="edu-slider" min="2" max="9" value="3" oninput="updateU7Visual()" />
+              </div>
+            </div>
+          </div>
+
+          <div id="u7PlatesContainer" class="div-plates-grid"></div>
+
+          <div class="readout-box" id="u7EquationBox"></div>
+        </div>
+      </div>
+
+      <!-- 7-B: 除法直式計算機與「餘數小於除數」迷思診斷 -->
+      <div id="u7-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 7-3 除法直式與餘數關係</span>
+              <span>重要觀念：<strong>餘數一定要比除數小！</strong>看看課本中奇奇和妙妙剪彩帶（每 8 公分剪一段），誰算得才對？</span>
+            </div>
+          </div>
+
+          <div class="vertical-math-stage">
+            <div class="vertical-grid-box">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap;">
+                <div style="display:flex; align-items:center; gap:0.4rem;">
+                  <span style="font-weight:800;">被除數：</span>
+                  <input type="number" id="u7VertA" value="29" min="6" max="89" style="width:75px; padding:0.4rem; font-size:1.1rem; font-weight:800; border-radius:8px; border:2px solid #CBD5E1;" onchange="renderU7Vertical()" />
+                  <span style="font-weight:900; font-size:1.3rem;">÷</span>
+                  <span style="font-weight:800;">除數：</span>
+                  <input type="number" id="u7VertB" value="6" min="2" max="9" style="width:65px; padding:0.4rem; font-size:1.1rem; font-weight:800; border-radius:8px; border:2px solid #CBD5E1;" onchange="renderU7Vertical()" />
+                </div>
+              </div>
+              <div id="u7VerticalBox"></div>
+            </div>
+
+            <div style="background:#FFFBEB; border:2px solid #F59E0B; border-radius:16px; padding:1.25rem;">
+              <h3 style="color:#92400E; margin-bottom:0.5rem;">🧐 課本診斷室：每 8 公分剪成一段，誰說得對？</h3>
+              <p style="font-size:0.95rem; color:#78350F; margin-bottom:0.85rem;">一條長 34 公分的彩帶，每 8 公分剪成一段：</p>
+              <div style="display:flex; flex-direction:column; gap:0.65rem;">
+                <button class="btn btn-outline" onclick="checkU7RemainderQuiz(false)" style="text-align:left; justify-content:flex-start;">
+                  👦 奇奇說：「34 ÷ 8 ＝ 3 … 10，可以剪成 3 段，還剩下 10 公分！」
+                </button>
+                <button class="btn btn-outline" onclick="checkU7RemainderQuiz(true)" style="text-align:left; justify-content:flex-start;">
+                  👧 妙妙說：「34 ÷ 8 ＝ 4 … 2，可以剪成 4 段，只剩下 2 公分！」
+                </button>
+              </div>
+              <div class="feedback-banner" id="u7QuizFeedback" style="margin-top:0.85rem;">
+                👆 點選上方奇奇或妙妙的說法，檢查看看誰算得正確！
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7-C: 除法應用：商數要不要加 1？ -->
+      <div id="u7-subC" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 7-4 商數加1與不加1</span>
+              <span>算出餘數後，要仔細看題目問什麼！<strong>「最多可裝滿幾盒」不用加 1</strong>；<strong>「最少要幾艘天鵝船才夠坐」要加 1</strong>！</span>
+            </div>
+          </div>
+
+          <div id="u7WordProblemsGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         第 8 單元：公升和毫升
+         ========================================== -->
+    <section id="unit8" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🥛 第 8 單元：公升和毫升（L 與 mL）</h2>
+          <p><strong>1 公升 (L) ＝ 1000 毫升 (mL)</strong>！動手把飲料倒入 2000mL 大量杯觀察液面上升，並練習公升與毫升的加減計算！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchSubmode(8, 'A', this)">8-1 & 8-2 互動倒水量杯與單位化聚</button>
+          <button class="submode-btn" onclick="switchSubmode(8, 'B', this)">8-3 容量的複名數加減計算</button>
+        </div>
+      </div>
+
+      <!-- 8-A: 互動倒水量杯模擬器 -->
+      <div id="u8-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 8-1 & 8-2 量杯實測</span>
+              <span>點選右方的課本容器把水<strong>倒進量杯</strong>裡，或是直接拉動液面滑桿，觀察「幾公升幾毫升」和「幾毫升」的轉換！</span>
+            </div>
+            <button class="btn btn-outline" onclick="setBeakerVolume(0)">🫗 清空量杯 (0 mL)</button>
+          </div>
+
+          <div class="beaker-stage">
+            <!-- 左側：SVG 動態水位量杯 -->
+            <div style="background:#F0F9FF; border:3px solid #BAE6FD; border-radius:16px; padding:1rem; text-align:center;">
+              <svg id="u8BeakerSvg" viewBox="0 0 420 340" style="width:100%; max-width:420px; height:auto;"></svg>
+              <input type="range" id="u8VolumeSlider" class="edu-slider" min="0" max="2000" step="10" value="1200" oninput="setBeakerVolume(this.value)" />
+            </div>
+
+            <!-- 右側：課本倒水按鈕與即時化聚 -->
+            <div>
+              <h3 style="color:#1E3A8A; margin-bottom:0.65rem;">🫗 點選容器倒入量杯（可累加）：</h3>
+              <div class="pour-item-grid">
+                <button class="btn btn-outline" onclick="pourIntoBeaker(10)">🧪 含氟漱口水 (+10 mL)</button>
+                <button class="btn btn-outline" onclick="pourIntoBeaker(150)">🍼 爸爸泡牛奶 (+150 mL)</button>
+                <button class="btn btn-outline" onclick="pourIntoBeaker(250)">🥛 玻璃杯裝水 (+250 mL)</button>
+                <button class="btn btn-outline" onclick="pourIntoBeaker(375)">🧃 豆豆的鮮乳 (+375 mL)</button>
+                <button class="btn btn-primary" onclick="pourIntoBeaker(1000)">🍾 1公升水瓶 (+1000 mL)</button>
+                <button class="btn btn-Amber" onclick="setBeakerVolume(1200)">🍵 課本例題：1200 mL 茶</button>
+              </div>
+
+              <div class="readout-box" style="margin-top:1.25rem;">
+                <div>
+                  <div style="font-size:0.9rem; font-weight:800; color:#4338CA;">單名數表示（毫升 mL）：</div>
+                  <div class="readout-number" id="u8MlReadout">1200 mL</div>
+                </div>
+                <div>
+                  <div style="font-size:0.9rem; font-weight:800; color:#4338CA;">複名數表示（公升 L・毫升 mL）：</div>
+                  <div class="readout-chinese" id="u8CompoundReadout">1 公升 200 毫升</div>
+                </div>
+              </div>
+
+              <div class="feedback-banner success" style="margin-top:1rem;" id="u8BeakerFeedback">
+                💡 1000 毫升 ＝ 1 公升！所以 1200 毫升也可以說是「1 公升 200 毫升」！
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8-B: 容量的複名數加減計算 -->
+      <div id="u8-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 8-3 容量的加減</span>
+              <span>點選課本生活案例，觀察「公升」與「毫升」分開對齊相加減，以及<strong>滿 1000 毫升換 1 公升</strong>的計算過程！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setU8CalcCase(0)">🧴 兩瓶沐浴乳 (1250mL＋350mL)</button>
+              <button class="btn btn-Amber" onclick="setU8CalcCase(1)">保温瓶合起來 (1L 480mL＋2L 150mL)</button>
+              <button class="btn btn-Amber" onclick="setU8CalcCase(2)">🥤 喝掉冬瓜茶 (3L 500mL－1L 225mL)</button>
+              <button class="btn btn-Amber" onclick="setU8CalcCase(3)">🍲 鍋子與水壺相差 (1L 450mL－1370mL)</button>
+            </div>
+          </div>
+
+          <div id="u8CalcDisplay"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         第 9 單元：分 數
+         ========================================== -->
+    <section id="unit9" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🍕 第 9 單元：分 數</h2>
+          <p>認識<strong>「平分」</strong>才有分數！透過蔥油餅與披薩點選塗色、果凍離散量互動，以及 1 公尺彩帶比較同分母分數大小！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchSubmode(9, 'A', this)">9-1 蔥油餅與披薩平分塗色</button>
+          <button class="submode-btn" onclick="switchSubmode(9, 'B', this)">9-2 一盒果凍與甜甜圈(離散量)</button>
+          <button class="submode-btn" onclick="switchSubmode(9, 'C', this)">9-3 & 9-4 分數彩帶與比大小</button>
+        </div>
+      </div>
+
+      <!-- 9-A: 蔥油餅與披薩連續量平分 + 檸檬派等分迷思 -->
+      <div id="u9-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 9-1 幾分之幾(一)</span>
+              <span>拉動滑桿調整平分的份數（分母），再<strong>直接點選圓餅切片塗色</strong>（分子），觀察它是幾個單位分數合起來的！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setU9PiePreset(4, 2)">🫓 蔥油餅平分 4 片，吃 2 片 (2/4)</button>
+              <button class="btn btn-Amber" onclick="setU9PiePreset(8, 3)">🍕 披薩平分 8 片，品妍吃 3 片 (3/8)</button>
+              <button class="btn btn-green" onclick="setU9PiePreset(4, 4)">✨ 4/4 張蔥油餅 ＝ 1 張</button>
+            </div>
+          </div>
+
+          <div class="vertical-math-stage">
+            <div style="background:white; border:3px solid #CBD5E1; border-radius:16px; padding:1rem; text-align:center;">
+              <div style="margin-bottom:0.5rem;">
+                <label style="font-weight:900;">🔪 平分成幾等分（分母）：<span id="u9DenomLabel" style="color:#2563EB;">8</span> 片</label>
+                <input type="range" id="u9DenomSlider" class="edu-slider" min="2" max="12" value="8" oninput="changeU9Denom(this.value)" />
+              </div>
+              <svg id="u9PieSvg" viewBox="0 0 320 320" style="width:100%; max-width:300px; height:auto; cursor:pointer;"></svg>
+              <div style="font-size:0.85rem; color:#64748B; font-weight:700;">👆 直接點選上方圓餅的每一片來塗色或取消塗色！</div>
+            </div>
+
+            <div>
+              <div class="readout-box" id="u9FractionReadout" style="margin-bottom:1rem;"></div>
+
+              <!-- 課本檸檬派與王爺爺菜園「有沒有平分」迷思辨析 -->
+              <div style="background:#FFFBEB; border:2px solid #F59E0B; border-radius:16px; padding:1.25rem;">
+                <h3 style="color:#92400E; font-size:1.1rem; margin-bottom:0.5rem;">🍋 課本迷思挑戰：切檸檬派與王爺爺的菜園</h3>
+                <p style="font-size:0.95rem; color:#78350F; margin-bottom:0.75rem;">
+                  宇翔把檸檬派切成 <strong>6 片大小不一樣</strong>的切片（其中大片的占 1/4、小片的占 1/8），宇翔吃了 1 小片，可以說他吃了 1/6 個檸檬派嗎？
+                </p>
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                  <button class="btn btn-outline" onclick="checkU9EqualMyth(false)">⭕ 可以說是 1/6 個</button>
+                  <button class="btn btn-outline" onclick="checkU9EqualMyth(true)">❌ 不可以！因為沒有「平分」，平分後其實是 1/8 個</button>
+                </div>
+                <div id="u9MythFeedback" style="margin-top:0.65rem; font-weight:800; font-size:0.95rem;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9-B: 離散量分數（一盒 10 個果凍 & 甜甜圈整體 1 不變） -->
+      <div id="u9-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 9-2 幾分之幾(二) 離散量</span>
+              <span>一盒果凍有 <strong>10 個</strong>！點選下方果凍分給<strong>大寶（藍色）</strong>或<strong>小寶（橘色）</strong>，看看各自占幾分之幾盒！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setU9JellyPreset()">🍮 課本例題：大寶吃3個(3/10盒)、小寶吃4個(4/10盒)</button>
+              <button class="btn btn-outline" onclick="resetU9Jellies()">🔄 重置果凍盒</button>
+            </div>
+          </div>
+
+          <div class="jelly-grid" id="u9JellyGrid"></div>
+
+          <div class="readout-box" id="u9JellySummary"></div>
+
+          <div style="background:#EFF6FF; border:2px solid #60A5FA; border-radius:16px; padding:1.1rem; margin-top:1rem;">
+            <h3 style="color:#1E3A8A; font-size:1.05rem; margin-bottom:0.4rem;">🍩 課本動動腦：一盒甜甜圈有 6 個，哥哥先拿走 1 個（1/6 盒），妹妹再拿走 1 個，妹妹拿走的是 1/6 盒還是 1/5 盒？</h3>
+            <p style="font-size:0.95rem; color:#1E40AF; font-weight:700;">
+              💡 解答：是 <strong>1/6 盒</strong>！因為「整體 1 盒」原本就是裝 6 個甜甜圈，不會因為哥哥先拿走 1 個就變成 5 個一盒喔！
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9-C: 1 公尺彩帶分數序列與同分母分數比大小 -->
+      <div id="u9-subC" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">課本 9-3 & 9-4 分數比大小</span>
+              <span>拉動下方兩條彩帶的滑桿，比較兩個<strong>同分母分數</strong>的大小！看看是幾個單位分數在比大小！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setU9ComparePreset(10, 7, 3)">🎀 課本緞帶：7/10 公尺 vs 3/10 公尺</button>
+              <button class="btn btn-Amber" onclick="setU9ComparePreset(5, 2, 4)">🍣 課本壽司卷：2/5 條 vs 4/5 條</button>
+              <button class="btn btn-Amber" onclick="setU9ComparePreset(9, 5, 3)">🥧 課本檸檬塔：5/9 盒 vs 3/9 盒</button>
+            </div>
+          </div>
+
+          <div class="slider-box">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+              <div>
+                <label style="font-weight:900;">1️⃣ 平分總份數（分母）：<span id="u9CmpDenLabel">10</span> 等分</label>
+                <input type="range" id="u9CmpDenSlider" class="edu-slider" min="3" max="12" value="10" oninput="updateU9Compare()" />
+              </div>
+              <div>
+                <label style="font-weight:900;">2️⃣ 藍色緞帶份數（分子 A）：<span id="u9CmpNumALabel">7</span> 份</label>
+                <input type="range" id="u9CmpNumASlider" class="edu-slider" min="1" max="10" value="7" oninput="updateU9Compare()" />
+              </div>
+              <div>
+                <label style="font-weight:900;">3️⃣ 綠色緞帶份數（分子 B）：<span id="u9CmpNumBLabel">3</span> 份</label>
+                <input type="range" id="u9CmpNumBSlider" class="edu-slider" min="1" max="10" value="3" oninput="updateU9Compare()" />
+              </div>
+            </div>
+          </div>
+
+          <svg id="u9CompareSvg" viewBox="0 0 820 185" style="width:100%; height:auto; background:white; border:2px solid #CBD5E1; border-radius:16px; padding:0.5rem;"></svg>
+
+          <div class="feedback-banner success" id="u9CompareFeedback" style="margin-top:1rem;"></div>
         </div>
       </div>
     </section>
