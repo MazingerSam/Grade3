@@ -126,19 +126,19 @@ body {
   transform: translateY(-1px);
 }
 
-/* 9大單元主導覽按鈕 */
+/* 9大單元 + 線上測驗中心主導覽按鈕 (雙排5欄對齊) */
 .unit-nav {
   max-width: 1280px;
   margin: 1.25rem auto 0.5rem;
   padding: 0 1rem;
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  gap: 0.55rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.65rem;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 950px) {
   .unit-nav {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-width: 850px) {

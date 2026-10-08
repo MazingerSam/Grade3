@@ -16,6 +16,7 @@
         <h1 class="brand-title">🎯 國小三年級數學互動學習樂園</h1>
       </div>
       <div class="score-bar">
+        <button class="btn btn-Amber" style="padding:0.4rem 0.95rem; border-radius:999px; font-size:0.95rem;" onclick="switchUnit(10)">📝 線上測驗中心 (45份卷)</button>
         <div class="star-counter" title="完成互動挑戰獲得星星！">
           <span>⭐ 學習星星：</span>
           <span id="starCount">0</span>
@@ -25,7 +26,7 @@
     </div>
   </header>
 
-  <!-- 9大單元主選單 (切換) -->
+  <!-- 9大單元 + 線上測驗中心主選單 (切換) -->
   <nav class="unit-nav" aria-label="單元選單">
     <button class="unit-tab active" onclick="switchUnit(1)" id="unitTab1">
       <span class="unit-num">第 1 單元</span>
@@ -80,6 +81,12 @@
       <span class="unit-icon">🍕</span>
       <span class="unit-name">分 數</span>
       <span class="unit-desc">蔥油餅平分・果凍離散量・比大小</span>
+    </button>
+    <button class="unit-tab" onclick="switchUnit(10)" id="unitTab10" style="border-color:#F59E0B; background:#FFFBEB;">
+      <span class="unit-num" style="background:#D97706; color:white;">自動批改評量</span>
+      <span class="unit-icon">📝</span>
+      <span class="unit-name">線上測驗中心</span>
+      <span class="unit-desc">每單元5卷・成績紀錄・RDQ診斷</span>
     </button>
   </nav>
 
@@ -1181,8 +1188,23 @@
       </div>
     </section>
 
+    <!-- ==========================================
+         第 10 專區：線上測驗中心 (9單元 × 5份測驗卷 ＝ 45份卷)
+         ========================================== -->
+    <section id="unit10" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📝 康軒版 3上 線上測驗中心（全冊 9 單元 × 每單元 5 份測驗卷）</h2>
+          <p>參考「康軒版 04卷類」題庫與 RDQ 診斷測驗設計流程，支援學生姓名登錄、自動批改給分、錯題詳解與成績匯出！</p>
+        </div>
+      </div>
+
+      <div id="quizAppRoot"></div>
+    </section>
+
   </main>
 
   <script src="app.js"></script>
+  <script src="quiz.js"></script>
 </body>
 </html>

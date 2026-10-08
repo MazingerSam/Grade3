@@ -51,11 +51,18 @@ function toggleSound() {
 /* 單元與子模式切換 */
 function switchUnit(unitNum) {
   playTone(440, 0.08);
-  for (let i = 1; i <= 9; i++) {
+  for (let i = 1; i <= 10; i++) {
     const tab = document.getElementById(`unitTab${i}`);
     const sec = document.getElementById(`unit${i}`);
     if (tab) tab.classList.toggle('active', i === unitNum);
     if (sec) sec.classList.toggle('active', i === unitNum);
+  }
+}
+
+function openUnitQuiz(unitNum) {
+  switchUnit(10);
+  if (typeof selectQuizUnit === 'function') {
+    selectQuizUnit(unitNum);
   }
 }
 

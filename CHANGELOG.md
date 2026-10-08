@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 新增 `web/quiz.js` 康軒版 3上 線上測驗中心（參考 `康軒版/02數學/04卷類` 與 RDQ 測驗設計流程，為全冊 9 單元各設計 5 份線上測驗卷，共 45 份測驗卷、225 道精選題），支援記錄學生班級/座號/姓名、自動批改給分、錯題詳解與 CSV 成績單匯出
 - 擴充 `web/` 康軒版國小三年級上學期（3上）後半學期第 6～9 單元互動教學模組（第6單元：面積、第7單元：除法、第8單元：公升和毫升、第9單元：分數），達成 3上 全冊 9 大單元完整涵蓋並重新部署至 Cloudflare Pages (`https://kangxuan-grade3-math.pages.dev/`)
 - 新增 `web/` 康軒版國小三年級上學期（3上）前 5 單元數學互動教學網頁（[index.html](file:///c:/Users/sam09/OneDrive/文件/AiAgent/Grade3/web/index.html), [styles.css](file:///c:/Users/sam09/OneDrive/文件/AiAgent/Grade3/web/styles.css), [app.js](file:///c:/Users/sam09/OneDrive/文件/AiAgent/Grade3/web/app.js)），支援拖拉、點選、切換、滑桿與 SVG 幾何視覺化
 - 新增 `AGENTS.md` 與 `wrangler.jsonc` 部署設定
