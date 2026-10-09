@@ -187,7 +187,7 @@ function handleU1Drop(ev, targetPlace) {
   }
 }
 
-function numberToChinese(num) {
+function numberToChinese(num, isFraction = false) {
   if (num === 0) return '零';
   if (num === 10000) return '一萬';
   const digits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
@@ -206,6 +206,12 @@ function numberToChinese(num) {
         zeroFlag = false;
       }
       str += digits[n] + units[pos];
+    }
+  }
+  // 分數念法或 10~19 的十位念作「十」而非「一十」（例如：十分之幾、十一、十二）
+  if (isFraction || (num >= 10 && num < 20)) {
+    if (str.startsWith('一十')) {
+      str = str.slice(1);
     }
   }
   return str;
@@ -668,7 +674,7 @@ function renderU2Vertical() {
   `).join('');
 }
 
-/* 2-B: 數線估算滑桿與豆豆晚餐搭配 */
+/* 2-B: 數線估算滑桿與小思晚餐搭配 */
 let estModeUnit = 100; // 100 or 1000
 function setEstSlider(val, unit) {
   estModeUnit = unit;
@@ -740,7 +746,7 @@ function selectDinner(type, idx) {
   if (sumEst === 600) {
     addStar(1);
     fb.className = 'feedback-banner success';
-    fb.innerHTML = `✅ 完美搭配！【${s.name} ${s.exact}大卡 ≈ ${s.est}】＋【${m.name} ${m.exact}大卡 ≈ ${m.est}】＝ 大約 <strong>${sumEst} 大卡</strong>，剛好符合豆豆晚餐需要的 600 大卡！`;
+    fb.innerHTML = `✅ 完美搭配！【${s.name} ${s.exact}大卡 ≈ ${s.est}】＋【${m.name} ${m.exact}大卡 ≈ ${m.est}】＝ 大約 <strong>${sumEst} 大卡</strong>，剛好符合小思晚餐需要的 600 大卡！`;
   } else {
     playTone(349.23, 0.12);
     fb.className = 'feedback-banner warning';
@@ -752,7 +758,7 @@ function selectDinner(type, idx) {
    第 3 單元：毫米 (mm) - 可拖拉直尺與複名數計算
    ========================================================= */
 const u3Objects = [
-  { name: '李健竹大師鉛筆芯微雕作品', mm: 5, color: '#F59E0B', desc: '尺上 1 小格是 1 毫米 (mm)，5 小格就是 5 毫米！' },
+  { name: '微雕藝術家鉛筆芯工藝品', mm: 5, color: '#F59E0B', desc: '尺上 1 小格是 1 毫米 (mm)，5 小格就是 5 毫米！' },
   { name: '馬達加斯加迷你變色龍', mm: 29, color: '#10B981', desc: '2 公分又 9 毫米 ＝ 20 毫米 ＋ 9 毫米 ＝ 29 毫米！' },
   { name: '蚱蜢跳遠紀錄', mm: 46, color: '#8B5CF6', desc: '46 毫米 ＝ 4 公分 6 毫米！' },
   { name: '藍色螢光筆畫出的直線', mm: 72, color: '#3B82F6', desc: '7 公分 2 毫米 ＝ 72 毫米！' }
@@ -1078,62 +1084,260 @@ function renderU4Multiplication() {
 }
 
 /* 4-B: 連乘兩步驟與倍數線段圖 */
-function setU4TwoStepCase(idx) {
-  playTone(523.25, 0.08);
-  const box = document.getElementById('u4TwoStepContent');
-  if (idx === 0) {
-    box.innerHTML = `
-      <div style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:16px; padding:1.25rem;">
-        <h3 style="color:#1E3A8A; margin-bottom:0.75rem;">🎈 題目：一間教室外面布置 20 顆氣球，每層樓有 4 間教室，2 層樓總共布置幾顆氣球？</h3>
-        <!-- 增加奇奇與妙妙的圖示視覺化 -->
-        <div style="background:white; border:2px solid #CBD5E1; border-radius:14px; padding:0.75rem; margin-bottom:1rem; overflow-x:auto;">
-          <svg viewBox="0 0 760 160" style="width:100%; min-width:620px; height:auto;">
-            <!-- 2樓 -->
-            <rect x="20" y="20" width="720" height="52" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
-            <text x="35" y="52" font-size="14" font-weight="900" fill="#1D4ED8">2 樓</text>
-            <rect x="85" y="27" width="145" height="38" rx="6" fill="#DBEAFE" stroke="#93C5FD"/>
-            <text x="157" y="51" font-size="13" font-weight="900" fill="#1E40AF" text-anchor="middle">教室一 🎈20顆</text>
-            <rect x="245" y="27" width="145" height="38" rx="6" fill="#DBEAFE" stroke="#93C5FD"/>
-            <text x="317" y="51" font-size="13" font-weight="900" fill="#1E40AF" text-anchor="middle">教室二 🎈20顆</text>
-            <rect x="405" y="27" width="145" height="38" rx="6" fill="#DBEAFE" stroke="#93C5FD"/>
-            <text x="477" y="51" font-size="13" font-weight="900" fill="#1E40AF" text-anchor="middle">教室三 🎈20顆</text>
-            <rect x="565" y="27" width="145" height="38" rx="6" fill="#DBEAFE" stroke="#93C5FD"/>
-            <text x="637" y="51" font-size="13" font-weight="900" fill="#1E40AF" text-anchor="middle">教室四 🎈20顆</text>
+let u4BalloonView = 'both'; // 'both' | 'xiaosi' | 'xiaoda'
 
-            <!-- 1樓 -->
-            <rect x="20" y="88" width="720" height="52" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
-            <text x="35" y="120" font-size="14" font-weight="900" fill="#047857">1 樓</text>
-            <rect x="85" y="95" width="145" height="38" rx="6" fill="#DCFCE7" stroke="#86EFAC"/>
-            <text x="157" y="119" font-size="13" font-weight="900" fill="#065F46" text-anchor="middle">教室一 🎈20顆</text>
-            <rect x="245" y="95" width="145" height="38" rx="6" fill="#DCFCE7" stroke="#86EFAC"/>
-            <text x="317" y="119" font-size="13" font-weight="900" fill="#065F46" text-anchor="middle">教室二 🎈20顆</text>
-            <rect x="405" y="95" width="145" height="38" rx="6" fill="#DCFCE7" stroke="#86EFAC"/>
-            <text x="477" y="119" font-size="13" font-weight="900" fill="#065F46" text-anchor="middle">教室三 🎈20顆</text>
-            <rect x="565" y="95" width="145" height="38" rx="6" fill="#DCFCE7" stroke="#86EFAC"/>
-            <text x="637" y="119" font-size="13" font-weight="900" fill="#065F46" text-anchor="middle">教室四 🎈20顆</text>
+function setU4BalloonTab(mode) {
+  u4BalloonView = mode;
+  playTone(587.33, 0.05);
+  renderU4BalloonCase();
+}
+
+function renderU4BalloonCase() {
+  const box = document.getElementById('u4TwoStepContent');
+  if (!box) return;
+
+  const isBoth = u4BalloonView === 'both';
+  const isSi = u4BalloonView === 'xiaosi';
+  const isDa = u4BalloonView === 'xiaoda';
+
+  let diagramHtml = '';
+
+  if (isBoth) {
+    diagramHtml = `
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1rem; margin-bottom:1.25rem;">
+        <!-- 小思的想法圖示（橫向分層分群） -->
+        <div style="background:white; border:3px solid #3B82F6; border-radius:14px; padding:0.9rem;">
+          <div style="font-weight:900; color:#1D4ED8; font-size:1.05rem; margin-bottom:0.4rem;">
+            👦 小思的視圖：先算 1 層樓 (4 間)，再算 2 層樓
+          </div>
+          <div style="font-size:0.85rem; color:#475569; margin-bottom:0.6rem;">
+            💡 <strong>思考特色：</strong>把「橫向一層樓」打包成一大群 (20×4＝80顆)！
+          </div>
+          <svg viewBox="0 0 380 170" style="width:100%; height:auto;">
+            <!-- 2樓大群組 -->
+            <rect x="10" y="15" width="360" height="62" rx="10" fill="#DBEAFE" stroke="#2563EB" stroke-width="3" stroke-dasharray="6,4"/>
+            <text x="20" y="36" font-size="12" font-weight="900" fill="#1D4ED8">【第 1 大群：2 樓】</text>
+            <rect x="25" y="42" width="75" height="28" rx="5" fill="#93C5FD"/>
+            <text x="62" y="60" font-size="11" font-weight="900" fill="#1E3A8A" text-anchor="middle">201室 🎈20</text>
+            <rect x="110" y="42" width="75" height="28" rx="5" fill="#93C5FD"/>
+            <text x="147" y="60" font-size="11" font-weight="900" fill="#1E3A8A" text-anchor="middle">202室 🎈20</text>
+            <rect x="195" y="42" width="75" height="28" rx="5" fill="#93C5FD"/>
+            <text x="232" y="60" font-size="11" font-weight="900" fill="#1E3A8A" text-anchor="middle">203室 🎈20</text>
+            <rect x="280" y="42" width="75" height="28" rx="5" fill="#93C5FD"/>
+            <text x="317" y="60" font-size="11" font-weight="900" fill="#1E3A8A" text-anchor="middle">204室 🎈20</text>
+            <text x="350" y="34" font-size="12" font-weight="900" fill="#1E40AF" text-anchor="end">一層樓＝80顆</text>
+
+            <!-- 1樓大群組 -->
+            <rect x="10" y="90" width="360" height="62" rx="10" fill="#DBEAFE" stroke="#2563EB" stroke-width="3" stroke-dasharray="6,4"/>
+            <text x="20" y="111" font-size="12" font-weight="900" fill="#1D4ED8">【第 2 大群：1 樓】</text>
+            <rect x="25" y="117" width="75" height="28" rx="5" fill="#93C5FD"/>
+            <text x="62" y="135" font-size="11" font-weight="900" fill="#1E3A8A" text-anchor="middle">101室 🎈20</text>
+            <rect x="110" y="117" width="75" height="28" rx="5" fill="#93C5FD"/>
+            <text x="147" y="135" font-size="11" font-weight="900" fill="#1E3A8A" text-anchor="middle">102室 🎈20</text>
+            <rect x="195" y="117" width="75" height="28" rx="5" fill="#93C5FD"/>
+            <text x="232" y="135" font-size="11" font-weight="900" fill="#1E3A8A" text-anchor="middle">103室 🎈20</text>
+            <rect x="280" y="117" width="75" height="28" rx="5" fill="#93C5FD"/>
+            <text x="317" y="135" font-size="11" font-weight="900" fill="#1E3A8A" text-anchor="middle">104室 🎈20</text>
+            <text x="350" y="109" font-size="12" font-weight="900" fill="#1E40AF" text-anchor="end">一層樓＝80顆</text>
           </svg>
+          <div style="background:#EFF6FF; border-radius:8px; padding:0.6rem; font-size:0.92rem; color:#1E3A8A; line-height:1.5;">
+            <strong>算式：</strong>20 × 4 ＝ 80（1層樓80顆）<br/>
+            <strong>　　　</strong>80 × 2 ＝ <strong>160（顆）</strong>
+          </div>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
-          <div style="background:white; border:3px solid #60A5FA; border-radius:14px; padding:1rem;">
-            <div style="font-weight:900; color:#1D4ED8; font-size:1.1rem; margin-bottom:0.5rem;">👦 奇奇的做法（先算 1 層樓有幾顆）：</div>
-            <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:0.5rem; margin-bottom:0.5rem; font-size:0.9rem;">
-              🎨 <strong>圖示概念：</strong>把橫向 1 整排（1 層樓）框起來算！
-            </div>
-            <p>① 先算 1 層樓（4 間教室）有幾顆氣球：<br/><strong>20 × 4 ＝ 80（顆）</strong></p>
-            <p style="margin-top:0.4rem;">② 再算 2 層樓共有幾顆氣球：<br/><strong>80 × 2 ＝ 160（顆）</strong></p>
+        <!-- 小達的想法圖示（先盤點總間數陣列） -->
+        <div style="background:white; border:3px solid #10B981; border-radius:14px; padding:0.9rem;">
+          <div style="font-weight:900; color:#047857; font-size:1.05rem; margin-bottom:0.4rem;">
+            👧 小達的視圖：先算全校總教室數 (4×2=8間)，再乘每間氣球
           </div>
-          <div style="background:white; border:3px solid #34D399; border-radius:14px; padding:1rem;">
-            <div style="font-weight:900; color:#047857; font-size:1.1rem; margin-bottom:0.5rem;">👧 妙妙的做法（先算共有幾間教室）：</div>
-            <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; padding:0.5rem; margin-bottom:0.5rem; font-size:0.9rem;">
-              🎨 <strong>圖示概念：</strong>先點算整棟大樓一共有 8 間教室！
-            </div>
-            <p>① 先算 2 層樓共有幾間教室：<br/><strong>4 × 2 ＝ 8（間）</strong></p>
-            <p style="margin-top:0.4rem;">② 再算 8 間教室共有幾顆氣球：<br/><strong>20 × 8 ＝ 160（顆）</strong></p>
+          <div style="font-size:0.85rem; color:#475569; margin-bottom:0.6rem;">
+            💡 <strong>思考特色：</strong>把整棟樓看成 4間 × 2層 ＝ 8 間教室的陣列，每間都是 20 顆！
+          </div>
+          <svg viewBox="0 0 380 170" style="width:100%; height:auto;">
+            <!-- 8間教室獨立編號 -->
+            <!-- 2樓4間 -->
+            <rect x="18" y="20" width="76" height="56" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+            <circle cx="34" cy="34" r="10" fill="#059669"/>
+            <text x="34" y="38" font-size="11" font-weight="900" fill="white" text-anchor="middle">①</text>
+            <text x="56" y="48" font-size="11" font-weight="900" fill="#065F46">🎈20顆</text>
+
+            <rect x="108" y="20" width="76" height="56" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+            <circle cx="124" cy="34" r="10" fill="#059669"/>
+            <text x="124" y="38" font-size="11" font-weight="900" fill="white" text-anchor="middle">②</text>
+            <text x="146" y="48" font-size="11" font-weight="900" fill="#065F46">🎈20顆</text>
+
+            <rect x="198" y="20" width="76" height="56" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+            <circle cx="214" cy="34" r="10" fill="#059669"/>
+            <text x="214" y="38" font-size="11" font-weight="900" fill="white" text-anchor="middle">③</text>
+            <text x="236" y="48" font-size="11" font-weight="900" fill="#065F46">🎈20顆</text>
+
+            <rect x="288" y="20" width="76" height="56" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+            <circle cx="304" cy="34" r="10" fill="#059669"/>
+            <text x="304" y="38" font-size="11" font-weight="900" fill="white" text-anchor="middle">④</text>
+            <text x="326" y="48" font-size="11" font-weight="900" fill="#065F46">🎈20顆</text>
+
+            <!-- 1樓4間 -->
+            <rect x="18" y="88" width="76" height="56" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+            <circle cx="34" cy="102" r="10" fill="#059669"/>
+            <text x="34" y="106" font-size="11" font-weight="900" fill="white" text-anchor="middle">⑤</text>
+            <text x="56" y="116" font-size="11" font-weight="900" fill="#065F46">🎈20顆</text>
+
+            <rect x="108" y="88" width="76" height="56" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+            <circle cx="124" cy="102" r="10" fill="#059669"/>
+            <text x="124" y="106" font-size="11" font-weight="900" fill="white" text-anchor="middle">⑥</text>
+            <text x="146" y="116" font-size="11" font-weight="900" fill="#065F46">🎈20顆</text>
+
+            <rect x="198" y="88" width="76" height="56" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+            <circle cx="214" cy="102" r="10" fill="#059669"/>
+            <text x="214" y="106" font-size="11" font-weight="900" fill="white" text-anchor="middle">⑦</text>
+            <text x="236" y="116" font-size="11" font-weight="900" fill="#065F46">🎈20顆</text>
+
+            <rect x="288" y="88" width="76" height="56" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+            <circle cx="304" cy="102" r="10" fill="#059669"/>
+            <text x="304" y="106" font-size="11" font-weight="900" fill="white" text-anchor="middle">⑧</text>
+            <text x="326" y="116" font-size="11" font-weight="900" fill="#065F46">🎈20顆</text>
+
+            <text x="190" y="160" font-size="12" font-weight="900" fill="#047857" text-anchor="middle">✨ 先算間數：一層 4 間 × 2 層 ＝ 8 間教室！</text>
+          </svg>
+          <div style="background:#F0FDF4; border-radius:8px; padding:0.6rem; font-size:0.92rem; color:#065F46; line-height:1.5;">
+            <strong>算式：</strong>4 × 2 ＝ 8（全校共8間教室）<br/>
+            <strong>　　　</strong>20 × 8 ＝ <strong>160（顆）</strong>
           </div>
         </div>
       </div>
     `;
+  } else if (isSi) {
+    diagramHtml = `
+      <div style="background:white; border:3px solid #3B82F6; border-radius:14px; padding:1.25rem; margin-bottom:1.25rem;">
+        <div style="font-weight:900; color:#1D4ED8; font-size:1.2rem; margin-bottom:0.5rem;">
+          👦 小思的想法特寫：先算「一層樓有幾顆氣球」
+        </div>
+        <p style="color:#334155; margin-bottom:0.8rem; font-size:0.95rem;">
+          小思看著學校的大樓，直覺地<strong>一層樓一層樓算</strong>！他先看到 2 樓有 4 間教室，每間教室外面掛 20 顆氣球：
+        </p>
+        <svg viewBox="0 0 760 180" style="width:100%; height:auto;">
+          <!-- 2樓 -->
+          <rect x="20" y="20" width="720" height="66" rx="12" fill="#DBEAFE" stroke="#2563EB" stroke-width="3" stroke-dasharray="8,5"/>
+          <text x="35" y="45" font-size="14" font-weight="900" fill="#1D4ED8">【2 樓一大包】4 間教室</text>
+          <rect x="180" y="30" width="125" height="42" rx="8" fill="#93C5FD"/>
+          <text x="242" y="56" font-size="13" font-weight="900" fill="#1E3A8A" text-anchor="middle">201室 🎈20顆</text>
+          <rect x="320" y="30" width="125" height="42" rx="8" fill="#93C5FD"/>
+          <text x="382" y="56" font-size="13" font-weight="900" fill="#1E3A8A" text-anchor="middle">202室 🎈20顆</text>
+          <rect x="460" y="30" width="125" height="42" rx="8" fill="#93C5FD"/>
+          <text x="522" y="56" font-size="13" font-weight="900" fill="#1E3A8A" text-anchor="middle">203室 🎈20顆</text>
+          <rect x="600" y="30" width="125" height="42" rx="8" fill="#93C5FD"/>
+          <text x="662" y="56" font-size="13" font-weight="900" fill="#1E3A8A" text-anchor="middle">204室 🎈20顆</text>
+
+          <!-- 1樓 -->
+          <rect x="20" y="98" width="720" height="66" rx="12" fill="#DBEAFE" stroke="#2563EB" stroke-width="3" stroke-dasharray="8,5"/>
+          <text x="35" y="123" font-size="14" font-weight="900" fill="#1D4ED8">【1 樓一大包】4 間教室</text>
+          <rect x="180" y="108" width="125" height="42" rx="8" fill="#93C5FD"/>
+          <text x="242" y="134" font-size="13" font-weight="900" fill="#1E3A8A" text-anchor="middle">101室 🎈20顆</text>
+          <rect x="320" y="108" width="125" height="42" rx="8" fill="#93C5FD"/>
+          <text x="382" y="134" font-size="13" font-weight="900" fill="#1E3A8A" text-anchor="middle">102室 🎈20顆</text>
+          <rect x="460" y="108" width="125" height="42" rx="8" fill="#93C5FD"/>
+          <text x="522" y="134" font-size="13" font-weight="900" fill="#1E3A8A" text-anchor="middle">103室 🎈20顆</text>
+          <rect x="600" y="108" width="125" height="42" rx="8" fill="#93C5FD"/>
+          <text x="662" y="134" font-size="13" font-weight="900" fill="#1E3A8A" text-anchor="middle">104室 🎈20顆</text>
+        </svg>
+        <div style="margin-top:0.8rem; background:#EFF6FF; border-left:5px solid #2563EB; padding:0.85rem 1rem; border-radius:8px;">
+          <strong style="color:#1D4ED8; font-size:1.05rem;">小思的兩步驟計算：</strong><br/>
+          第 ① 步：先算 1 層樓 4 間教室的氣球數 👉 <strong>20 × 4 ＝ 80（顆）</strong><br/>
+          第 ② 步：整棟樓有 2 層樓，所以再乘以 2 👉 <strong>80 × 2 ＝ 160（顆）</strong><br/>
+          <span style="color:#64748B; font-size:0.9rem;">綜合算式記作：<strong>(20 × 4) × 2 ＝ 80 × 2 ＝ 160（顆）</strong></span>
+        </div>
+      </div>
+    `;
+  } else {
+    diagramHtml = `
+      <div style="background:white; border:3px solid #10B981; border-radius:14px; padding:1.25rem; margin-bottom:1.25rem;">
+        <div style="font-weight:900; color:#047857; font-size:1.2rem; margin-bottom:0.5rem;">
+          👧 小達的想法特寫：先算「整棟大樓共有幾間教室」
+        </div>
+        <p style="color:#334155; margin-bottom:0.8rem; font-size:0.95rem;">
+          小達的想法不一樣！他想：「每間教室都是 20 顆氣球，那我何不<strong>先算出一共有幾間教室</strong>呢？」
+        </p>
+        <svg viewBox="0 0 760 180" style="width:100%; height:auto;">
+          <!-- 8間教室獨立網格與醒目編號 -->
+          <!-- 2樓 -->
+          <rect x="30" y="20" width="160" height="66" rx="10" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+          <circle cx="55" cy="40" r="14" fill="#059669"/>
+          <text x="55" y="45" font-size="13" font-weight="900" fill="white" text-anchor="middle">①</text>
+          <text x="110" y="57" font-size="14" font-weight="900" fill="#065F46">🎈 20 顆</text>
+
+          <rect x="210" y="20" width="160" height="66" rx="10" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+          <circle cx="235" cy="40" r="14" fill="#059669"/>
+          <text x="235" y="45" font-size="13" font-weight="900" fill="white" text-anchor="middle">②</text>
+          <text x="290" y="57" font-size="14" font-weight="900" fill="#065F46">🎈 20 顆</text>
+
+          <rect x="390" y="20" width="160" height="66" rx="10" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+          <circle cx="415" cy="40" r="14" fill="#059669"/>
+          <text x="415" y="45" font-size="13" font-weight="900" fill="white" text-anchor="middle">③</text>
+          <text x="470" y="57" font-size="14" font-weight="900" fill="#065F46">🎈 20 顆</text>
+
+          <rect x="570" y="20" width="160" height="66" rx="10" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+          <circle cx="595" cy="40" r="14" fill="#059669"/>
+          <text x="595" y="45" font-size="13" font-weight="900" fill="white" text-anchor="middle">④</text>
+          <text x="650" y="57" font-size="14" font-weight="900" fill="#065F46">🎈 20 顆</text>
+
+          <!-- 1樓 -->
+          <rect x="30" y="98" width="160" height="66" rx="10" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+          <circle cx="55" cy="118" r="14" fill="#059669"/>
+          <text x="55" y="123" font-size="13" font-weight="900" fill="white" text-anchor="middle">⑤</text>
+          <text x="110" y="135" font-size="14" font-weight="900" fill="#065F46">🎈 20 顆</text>
+
+          <rect x="210" y="98" width="160" height="66" rx="10" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+          <circle cx="235" cy="118" r="14" fill="#059669"/>
+          <text x="235" y="123" font-size="13" font-weight="900" fill="white" text-anchor="middle">⑥</text>
+          <text x="290" y="135" font-size="14" font-weight="900" fill="#065F46">🎈 20 顆</text>
+
+          <rect x="390" y="98" width="160" height="66" rx="10" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+          <circle cx="415" cy="118" r="14" fill="#059669"/>
+          <text x="415" y="123" font-size="13" font-weight="900" fill="white" text-anchor="middle">⑦</text>
+          <text x="470" y="135" font-size="14" font-weight="900" fill="#065F46">🎈 20 顆</text>
+
+          <rect x="570" y="98" width="160" height="66" rx="10" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+          <circle cx="595" cy="118" r="14" fill="#059669"/>
+          <text x="595" y="123" font-size="13" font-weight="900" fill="white" text-anchor="middle">⑧</text>
+          <text x="650" y="135" font-size="14" font-weight="900" fill="#065F46">🎈 20 顆</text>
+        </svg>
+        <div style="margin-top:0.8rem; background:#F0FDF4; border-left:5px solid #059669; padding:0.85rem 1rem; border-radius:8px;">
+          <strong style="color:#047857; font-size:1.05rem;">小達的兩步驟計算：</strong><br/>
+          第 ① 步：先算一層 4 間、共 2 層樓的總間數 👉 <strong>4 × 2 ＝ 8（間教室）</strong><br/>
+          第 ② 步：每間教室 20 顆，共有 8 間教室 👉 <strong>20 × 8 ＝ 160（顆）</strong><br/>
+          <span style="color:#64748B; font-size:0.9rem;">綜合算式記作：<strong>20 × (4 × 2) ＝ 20 × 8 ＝ 160（顆）</strong></span>
+        </div>
+      </div>
+    `;
+  }
+
+  box.innerHTML = `
+    <div style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:16px; padding:1.25rem;">
+      <h3 style="color:#1E3A8A; margin-bottom:0.6rem;">🎈 題目：一間教室外面布置 20 顆氣球，每層樓有 4 間教室，2 層樓總共布置幾顆氣球？</h3>
+      <div style="margin-bottom:1rem; display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+        <span style="font-weight:900; color:#334155;">選擇你想看誰的思考圖示：</span>
+        <button class="btn ${isBoth ? 'btn-primary' : 'btn-outline'}" onclick="setU4BalloonTab('both')">👥 兩人對照比較</button>
+        <button class="btn ${isSi ? 'btn-primary' : 'btn-outline'}" onclick="setU4BalloonTab('xiaosi')">👦 小思的想法（先算一層樓）</button>
+        <button class="btn ${isDa ? 'btn-primary' : 'btn-outline'}" onclick="setU4BalloonTab('xiaoda')">👧 小達的想法（先算總間數）</button>
+      </div>
+
+      ${diagramHtml}
+
+      <div style="background:#FFFBEB; border:2px solid #FCD34D; border-radius:12px; padding:0.85rem 1rem; color:#92400E; font-size:0.95rem;">
+        🌟 <strong>數學大發現（乘法結合律）：</strong><br/>
+        無論是先算一層樓的 <code>(20 × 4) × 2 ＝ 160</code>，還是先算總教室數的 <code>20 × (4 × 2) ＝ 160</code>，<strong>最後算出來的總氣球數都一樣是 160 顆！</strong>
+      </div>
+    </div>
+  `;
+}
+
+function setU4TwoStepCase(idx) {
+  playTone(523.25, 0.08);
+  const box = document.getElementById('u4TwoStepContent');
+  if (idx === 0) {
+    u4BalloonView = 'both';
+    renderU4BalloonCase();
   } else {
     box.innerHTML = `
       <div style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:16px; padding:1.25rem;">
@@ -1313,12 +1517,12 @@ let sqState = {
 };
 
 const houseAngles = {
-  1: { x: 160, y: 170, rot: 0, name: '∠1 (屋簷左角)', type: '鈍角（比三角板的直角大）' },
-  2: { x: 160, y: 320, rot: 0, name: '∠2 (左下牆角)', type: '直角 ∟（跟三角板的直角完全疊合！）' },
-  3: { x: 360, y: 170, rot: -90, name: '∠3 (屋簷右角)', type: '銳角（比三角板的直角小）' },
-  4: { x: 330, y: 95, rot: 90, name: '∠4 (煙囪右上角)', type: '銳角（比三角板的直角小）' },
-  5: { x: 290, y: 75, rot: 0, name: '∠5 (煙囪左上角)', type: '鈍角（比三角板的直角大）' },
-  6: { x: 260, y: 80, rot: 135, name: '∠6 (屋頂尖端角)', type: '鈍角（比三角板的直角大）' }
+  1: { x: 160, y: 170, rot: 0, name: '∠1 (屋簷左角)', type: '鈍角（135°，比三角板的直角大）' },
+  2: { x: 160, y: 320, rot: 0, name: '∠2 (左下牆角)', type: '直角 ∟（90°，跟三角板的直角完全疊合！）' },
+  3: { x: 360, y: 170, rot: -90, name: '∠3 (屋簷右角)', type: '銳角（45°，比三角板的直角小）' },
+  4: { x: 330, y: 88, rot: 90, name: '∠4 (煙囪右上角)', type: '銳角（比三角板的直角小）' },
+  5: { x: 290, y: 70, rot: 0, name: '∠5 (煙囪左上角)', type: '鈍角（比三角板的直角大）' },
+  6: { x: 260, y: 70, rot: 135, name: '∠6 (屋頂尖端角)', type: '直角 ∟（90°，跟三角板的直角完全疊合！）' }
 };
 
 function rotateSetSquare(delta) {
@@ -1350,24 +1554,26 @@ function snapSquareToHouseAngle(id) {
 function renderHouseAngleBoard() {
   const svg = document.getElementById('u5HouseSvg');
   svg.innerHTML = `
-    <!-- 課本小房子幾何圖形 -->
+    <!-- 小房子幾何圖形 -->
     <g stroke="#1E293B" stroke-width="4" fill="#F8FAFC" stroke-linejoin="round">
       <!-- 煙囪 -->
-      <polygon points="290,115 290,75 330,95 330,138" fill="#FEE2E2"/>
-      <!-- 房子主體 -->
-      <polygon points="160,320 360,320 360,170 260,80 160,170" fill="#EFF6FF"/>
+      <polygon points="290,100 290,70 330,88 330,135" fill="#FEE2E2"/>
+      <!-- 房子主體（屋頂頂角為 90 度直角：(160,170) -> (260,70) -> (360,170)） -->
+      <polygon points="160,320 360,320 360,170 260,70 160,170" fill="#EFF6FF"/>
     </g>
 
-    <!-- 直角記號 ∠2 -->
+    <!-- 直角記號 ∠2 (牆角) 與 ∠6 (屋頂頂端 90度) -->
     <polyline points="160,298 182,298 182,320" fill="none" stroke="#DC2626" stroke-width="3"/>
+    <!-- ∠6 屋頂直角記號（旋轉45度的小正方形記號） -->
+    <polyline points="248,82 260,94 272,82" fill="none" stroke="#DC2626" stroke-width="3"/>
 
     <!-- ∠1 ~ ∠6 標籤 -->
     <text x="175" y="185" font-size="16" font-weight="900" fill="#B45309">∠1</text>
-    <text x="188" y="312" font-size="16" font-weight="900" fill="#DC2626">∠2</text>
+    <text x="188" y="312" font-size="16" font-weight="900" fill="#DC2626">∠2 (直角∟)</text>
     <text x="325" y="172" font-size="16" font-weight="900" fill="#15803D">∠3</text>
-    <text x="305" y="108" font-size="15" font-weight="900" fill="#15803D">∠4</text>
-    <text x="295" y="94" font-size="15" font-weight="900" fill="#B45309">∠5</text>
-    <text x="248" y="108" font-size="16" font-weight="900" fill="#B45309">∠6</text>
+    <text x="305" y="103" font-size="15" font-weight="900" fill="#15803D">∠4</text>
+    <text x="295" y="88" font-size="15" font-weight="900" fill="#B45309">∠5</text>
+    <text x="260" y="118" font-size="16" font-weight="900" fill="#DC2626" text-anchor="middle">∠6 (直角∟)</text>
 
     <!-- 可拖拉旋轉透明三角板 (直角頂點在 (0,0)) -->
     <g transform="translate(${sqState.x}, ${sqState.y}) rotate(${sqState.rot})" style="cursor:grab;">
@@ -1717,13 +1923,13 @@ function renderU6LeafEst() {
   `;
 
   if (u6State.estCaseIdx === 0) {
-    document.getElementById('u6EstTitle').textContent = '☁️ 課本例題：妙妙的不規則圖案面積';
+    document.getElementById('u6EstTitle').textContent = '☁️ 雲朵造形的不規則圖案面積估算';
     document.getElementById('u6EstDesc').innerHTML = `
       1️⃣ <strong>先數內部完整的 1 平方公分（藍格）</strong>：一排有 4 格、共 3 排，4 × 3 ＝ <strong>12 平方公分</strong>，所以圖案面積<strong>比 12 平方公分大</strong>。<br/>
       2️⃣ <strong>再看包住圖案的大長方形（橘格）</strong>：一排有 6 格、共 5 排，6 × 5 ＝ <strong>30 平方公分</strong>，所以圖案面積<strong>比 30 平方公分小</strong>！
     `;
   } else {
-    document.getElementById('u6EstTitle').textContent = '🍃 課本動動腦：樹葉在平方公分板上的面積範圍';
+    document.getElementById('u6EstTitle').textContent = '🍃 樹葉在平方公分板上的面積範圍';
     document.getElementById('u6EstDesc').innerHTML = `
       1️⃣ <strong>完全在樹葉內的完整方格（藍格）</strong>：共有 <strong>6 格</strong>（6 平方公分）。<br/>
       2️⃣ <strong>加上不完整的邊緣方格（橘格）</strong>：共有 <strong>20 格</strong>（20 平方公分）。<br/>
@@ -1822,23 +2028,23 @@ function renderU7Vertical() {
   `;
 }
 
-function checkU7RemainderQuiz(isMiaomiao) {
+function checkU7RemainderQuiz(isXiaoda) {
   const fb = document.getElementById('u7QuizFeedback');
-  if (isMiaomiao) {
+  if (isXiaoda) {
     addStar(1);
     fb.className = 'feedback-banner success';
-    fb.innerHTML = '✅ 答對了！妙妙說得對！因為奇奇剩下的 10 公分比 8 公分大，還可以再剪成 1 段！<strong>餘數一定要比除數小（2 ＜ 8）</strong>！';
+    fb.innerHTML = '✅ 答對了！小達說得對！因為小思剩下的 10 公分比 8 公分大，還可以再剪成 1 段！<strong>餘數一定要比除數小（2 ＜ 8）</strong>！';
   } else {
     playTone(261.63, 0.15, 'sawtooth');
     fb.className = 'feedback-banner warning';
-    fb.innerHTML = '🤔 想想看：奇奇剩下 10 公分，但每 8 公分就能再剪 1 段，10 公分還夠不夠再剪 1 段呢？餘數不能大於或等於除數喔！';
+    fb.innerHTML = '🤔 想想看：小思剩下 10 公分，但每 8 公分就能再剪 1 段，10 公分還夠不夠再剪 1 段呢？餘數不能大於或等於除數喔！';
   }
 }
 
 const u7WordProblems = [
   {
-    title: '🧁 1. 王媽媽裝點心（商數不用加 1）',
-    story: '王媽媽做了 32 個點心，每 6 個裝滿一盒，最多可以裝滿幾盒？',
+    title: '🧁 1. 林阿姨裝點心（商數不用加 1）',
+    story: '林阿姨做了 32 個小點心，每 6 個裝滿一盒，最多可以裝滿幾盒？',
     eq: '32 ÷ 6 ＝ 5（盒）… 2（個）',
     needPlusOne: false,
     ans: 5,
@@ -2080,7 +2286,7 @@ function renderU9Pie() {
         平分成 <strong>${d} 份（分母）</strong>，塗色其中的 <strong>${num} 份（分子）</strong>，也就是 <strong>${num} 個 1/${d}</strong> 合起來的！
       </div>
     </div>
-    <div class="readout-chinese">讀作：${numberToChinese(d)}分之${numberToChinese(num)}</div>
+    <div class="readout-chinese">讀作：${numberToChinese(d, true)}分之${numberToChinese(num, true)}</div>
   `;
 }
 
@@ -2089,19 +2295,19 @@ function checkU9EqualMyth(correct) {
   if (correct) {
     addStar(1);
     el.style.color = '#059669';
-    el.innerHTML = '✅ 答對了！分數一定要在「平分（每一份一樣大）」的前提下才成立！把檸檬派平分成一樣大後其實是 8 片，所以宇翔吃了 1/8 個檸檬派！';
+    el.innerHTML = '✅ 答對了！分數一定要在「平分（每一份一樣大）」的前提下才成立！把藍莓蛋糕平分成一樣大後其實是 8 片，所以小明吃了 1/8 個蛋糕！';
   } else {
     playTone(261.63, 0.15, 'sawtooth');
     el.style.color = '#DC2626';
-    el.innerHTML = '🤔 注意看喔！這 6 片檸檬派大小不一樣（沒有平分），不能直接說其中 1 片是 1/6 個喔！';
+    el.innerHTML = '🤔 注意看喔！這 6 片藍莓蛋糕大小不一樣（沒有平分），不能直接說其中 1 片是 1/6 個喔！';
   }
 }
 
 /* 9-B: 離散量一盒 10 個果凍 */
-let u9Jellies = ['dabao', 'dabao', 'dabao', 'xiaobao', 'xiaobao', 'xiaobao', 'xiaobao', 'none', 'none', 'none'];
+let u9Jellies = ['xiaosi', 'xiaosi', 'xiaosi', 'xiaoda', 'xiaoda', 'xiaoda', 'xiaoda', 'none', 'none', 'none'];
 
 function setU9JellyPreset() {
-  u9Jellies = ['dabao', 'dabao', 'dabao', 'xiaobao', 'xiaobao', 'xiaobao', 'xiaobao', 'none', 'none', 'none'];
+  u9Jellies = ['xiaosi', 'xiaosi', 'xiaosi', 'xiaoda', 'xiaoda', 'xiaoda', 'xiaoda', 'none', 'none', 'none'];
   playTone(523.25, 0.08);
   renderU9Jellies();
 }
@@ -2113,7 +2319,7 @@ function resetU9Jellies() {
 }
 
 function toggleU9Jelly(idx) {
-  const order = ['none', 'dabao', 'xiaobao'];
+  const order = ['none', 'xiaosi', 'xiaoda'];
   const next = order[(order.indexOf(u9Jellies[idx]) + 1) % 3];
   u9Jellies[idx] = next;
   playTone(587.33, 0.05);
@@ -2123,7 +2329,7 @@ function toggleU9Jelly(idx) {
 function renderU9Jellies() {
   const grid = document.getElementById('u9JellyGrid');
   grid.innerHTML = u9Jellies.map((owner, idx) => {
-    const label = owner === 'dabao' ? '👦大寶' : owner === 'xiaobao' ? '👧小寶' : '未吃';
+    const label = owner === 'xiaosi' ? '👦小思' : owner === 'xiaoda' ? '👧小達' : '未吃';
     return `
       <div class="jelly-cup ${owner}" onclick="toggleU9Jelly(${idx})">
         <div style="font-size:1.6rem;">🍮</div>
@@ -2133,14 +2339,14 @@ function renderU9Jellies() {
     `;
   }).join('');
 
-  const dabaoCnt = u9Jellies.filter(x => x === 'dabao').length;
-  const xiaobaoCnt = u9Jellies.filter(x => x === 'xiaobao').length;
-  const remCnt = 10 - dabaoCnt - xiaobaoCnt;
+  const xiaosiCnt = u9Jellies.filter(x => x === 'xiaosi').length;
+  const xiaodaCnt = u9Jellies.filter(x => x === 'xiaoda').length;
+  const remCnt = 10 - xiaosiCnt - xiaodaCnt;
 
   document.getElementById('u9JellySummary').innerHTML = `
     <div style="display:flex; gap:1.5rem; flex-wrap:wrap; font-weight:900; font-size:1.05rem;">
-      <span style="color:#1D4ED8;">👦 大寶吃了：${dabaoCnt} 個 ＝ <strong>${dabaoCnt}/10 盒</strong></span>
-      <span style="color:#B45309;">👧 小寶吃了：${xiaobaoCnt} 個 ＝ <strong>${xiaobaoCnt}/10 盒</strong></span>
+      <span style="color:#1D4ED8;">👦 小思吃了：${xiaosiCnt} 個 ＝ <strong>${xiaosiCnt}/10 盒</strong></span>
+      <span style="color:#B45309;">👧 小達吃了：${xiaodaCnt} 個 ＝ <strong>${xiaodaCnt}/10 盒</strong></span>
       <span style="color:#047857;">🍮 還剩下：${remCnt} 個 ＝ <strong>${remCnt}/10 盒</strong></span>
     </div>
   `;

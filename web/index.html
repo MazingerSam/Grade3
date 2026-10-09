@@ -78,9 +78,9 @@
     </button>
     <button class="unit-tab" onclick="switchUnit(9)" id="unitTab9">
       <span class="unit-num">第 9 單元</span>
-      <span class="unit-icon">🍕</span>
+      <span class="unit-icon">🍰</span>
       <span class="unit-name">分 數</span>
-      <span class="unit-desc">蔥油餅平分・果凍離散量・比大小</span>
+      <span class="unit-desc">蛋糕平分・果凍離散量・比大小</span>
     </button>
     <button class="unit-tab" onclick="switchUnit(10)" id="unitTab10" style="border-color:#F59E0B; background:#FFFBEB;">
       <span class="unit-num" style="background:#D97706; color:white;">自動批改評量</span>
@@ -343,7 +343,7 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🚂 第 2 單元：四位數的加減</h2>
-          <p>跟著豆豆全家去臺南旅遊！透過直式進退位逐步拆解與健康飲食熱量滑桿，掌握四位數加減與估算！</p>
+          <p>跟著小思全家去旅遊！透過直式進退位逐步拆解與健康飲食熱量滑桿，掌握四位數加減與估算！</p>
         </div>
         <div class="submode-switcher">
           <button class="submode-btn active" onclick="switchSubmode(2, 'A', this)">2-1 ~ 2-3 直式進位與連退位機</button>
@@ -356,13 +356,13 @@
         <div class="workspace-card">
           <div class="story-prompt">
             <div class="story-text">
-              <span class="story-badge">臺南旅遊直式解題</span>
-              <span id="u2StoryPrompt">點擊下方課本例題，再按「下一步驟拆解」觀察個位、十位、百位、千位如何<strong>滿十進位</strong>或<strong>向高位借位（連退位）</strong>！</span>
+              <span class="story-badge">直式解題步驟</span>
+              <span id="u2StoryPrompt">點擊下方例題，再按「下一步驟拆解」觀察個位、十位、百位、千位如何<strong>滿十進位</strong>或<strong>向高位借位（連退位）</strong>！</span>
             </div>
             <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
-              <button class="btn btn-Amber" onclick="loadU2Problem(891, '+', 446, '【火車票】全票 891 元 ＋ 孩童票 446 元，共要付多少元？')">🎫 891＋446 (進位)</button>
-              <button class="btn btn-Amber" onclick="loadU2Problem(1227, '+', 878, '【臺南孔廟】昨天 1227 人 ＋ 今天 878 人，兩天共幾人？')">🏯 1227＋878 (連續進位)</button>
-              <button class="btn btn-Amber" onclick="loadU2Problem(500, '-', 247, '【古蹟拼圖】思妤有 500 元，買了 247 元拼圖，還剩多少元？')">🧩 500－247 (跨0退位)</button>
+              <button class="btn btn-Amber" onclick="loadU2Problem(891, '+', 446, '【高鐵票】全票 891 元 ＋ 孩童票 446 元，共要付多少元？')">🎫 891＋446 (進位)</button>
+              <button class="btn btn-Amber" onclick="loadU2Problem(1227, '+', 878, '【文化園區】昨天 1227 人 ＋ 今天 878 人，兩天共幾人？')">🏯 1227＋878 (連續進位)</button>
+              <button class="btn btn-Amber" onclick="loadU2Problem(500, '-', 247, '【文創拼圖】思妤有 500 元，買了 247 元拼圖，還剩多少元？')">🧩 500－247 (跨0退位)</button>
               <button class="btn btn-Amber" onclick="loadU2Problem(6000, '-', 2685, '【健走步數】爺爺每天走 6000 步，已走 2685 步，還要走幾步？')">👟 6000－2685 (三個0退位)</button>
             </div>
           </div>
@@ -407,8 +407,8 @@
         <div class="workspace-card">
           <div class="story-prompt">
             <div class="story-text">
-              <span class="story-badge">課本 2-4 加減估算</span>
-              <span>拖拉下方數線滑桿，觀察數字<strong>比較接近哪一個整百或整千</strong>，並幫豆豆搭配晚餐（目標約 <strong>600 大卡</strong>）！</span>
+              <span class="story-badge">加減估算生活挑戰</span>
+              <span>拖拉下方數線滑桿，觀察數字<strong>比較接近哪一個整百或整千</strong>，並幫小思搭配晚餐（目標約 <strong>600 大卡</strong>）！</span>
             </div>
           </div>
 
@@ -416,10 +416,10 @@
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
               <strong>🎯 數線估算互動滑桿（拉動滑桿看看它最接近哪個整百 / 整千）：</strong>
               <div style="display:flex; gap:0.4rem;">
-                <button class="btn btn-outline" onclick="setEstSlider(108, 100)">🥛 牛奶 108大卡</button>
-                <button class="btn btn-outline" onclick="setEstSlider(193, 100)">🍞 花生吐司 193大卡</button>
-                <button class="btn btn-outline" onclick="setEstSlider(3852, 1000)">🚲 億載金城 3852公尺</button>
-                <button class="btn btn-outline" onclick="setEstSlider(2123, 1000)">🏰 安平古堡 2123公尺</button>
+                <button class="btn btn-outline" onclick="setEstSlider(108, 100)">🥛 燕麥奶 108大卡</button>
+                <button class="btn btn-outline" onclick="setEstSlider(193, 100)">🍞 堅果吐司 193大卡</button>
+                <button class="btn btn-outline" onclick="setEstSlider(3852, 1000)">🚲 景觀公園 3852公尺</button>
+                <button class="btn btn-outline" onclick="setEstSlider(2123, 1000)">🏰 歷史古蹟 2123公尺</button>
               </div>
             </div>
             <input type="range" id="estSlider" class="edu-slider" min="0" max="1000" value="193" oninput="updateEstVisualizer()" />
@@ -427,10 +427,10 @@
             <div id="estResultText" style="margin-top:0.65rem; font-weight:900; font-size:1.1rem; color:#1D4ED8; text-align:center;"></div>
           </div>
 
-          <!-- 豆豆晚餐搭配互動點選 -->
+          <!-- 小思晚餐搭配互動點選 -->
           <div style="background:#FFFBEB; border:2px solid #F59E0B; border-radius:16px; padding:1.25rem; margin-top:1.25rem;">
-            <h3 style="color:#92400E; font-size:1.15rem; margin-bottom:0.5rem;">🍽️ 課本挑戰：幫豆豆點晚餐（目標：大約 600 大卡）</h3>
-            <p style="font-size:0.95rem; color:#78350F; margin-bottom:1rem;">豆豆一天需要約 1600 大卡，早餐吃了約 400 大卡、午餐吃了 613 大卡（約 600 大卡），晚餐還需要約 <strong>1600 － 1000 ＝ 600 大卡</strong>！請點選 1 道前菜 ＋ 1 道主餐：</p>
+            <h3 style="color:#92400E; font-size:1.15rem; margin-bottom:0.5rem;">🍽️ 健康挑戰：幫小思點晚餐（目標：大約 600 大卡）</h3>
+            <p style="font-size:0.95rem; color:#78350F; margin-bottom:1rem;">小思一天需要約 1600 大卡，早餐吃了約 400 大卡、午餐吃了 613 大卡（約 600 大卡），晚餐還需要約 <strong>1600 － 1000 ＝ 600 大卡</strong>！請點選 1 道前菜 ＋ 1 道主餐：</p>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
               <div>
                 <div style="font-weight:900; margin-bottom:0.5rem; color:#B45309;">🥗 選擇一道前菜：</div>
@@ -487,7 +487,7 @@
               <span>用滑鼠或手指<strong>拖拉下方透明直尺</strong>，將刻度 0 對齊物品左端，讀出它的長度！還可以拉動繪圖滑桿畫出指定毫米數！</span>
             </div>
             <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-              <button class="btn btn-Amber" onclick="setU3Object(0)">✏️ 李健竹大師筆雕 (5毫米)</button>
+              <button class="btn btn-Amber" onclick="setU3Object(0)">✏️ 微雕工藝品 (5毫米)</button>
               <button class="btn btn-Amber" onclick="setU3Object(1)">🦎 迷你變色龍 (2公分9毫米)</button>
               <button class="btn btn-Amber" onclick="setU3Object(2)">🦗 蚱蜢跳遠 (46毫米)</button>
               <button class="btn btn-Amber" onclick="setU3Object(3)">🖍️ 藍色螢光筆線 (7公分2毫米)</button>
@@ -613,12 +613,12 @@
         <div class="workspace-card">
           <div class="story-prompt">
             <div class="story-text">
-              <span class="story-badge">課本 4-3 連乘問題</span>
-              <span>連乘兩步驟問題有<strong>兩種不同的思考順序</strong>，算出來的答案都一樣喔！切換下方按鈕比較奇奇與妙妙的想法！</span>
+              <span class="story-badge">4-3 連乘兩步驟問題</span>
+              <span>連乘兩步驟問題有<strong>兩種不同的思考順序</strong>，算出來的答案都一樣喔！切換下方按鈕比較小思與小達的想法！</span>
             </div>
             <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-              <button class="btn btn-Amber" onclick="setU4TwoStepCase(0)">🎈 課本氣球題 (20顆×4間×2層樓)</button>
-              <button class="btn btn-Amber" onclick="setU4TwoStepCase(1)">🧣 課本倍數線段圖 (髮夾35元×2倍×3倍)</button>
+              <button class="btn btn-Amber" onclick="setU4TwoStepCase(0)">🎈 學校佈置氣球題 (20顆×4間×2層樓)</button>
+              <button class="btn btn-Amber" onclick="setU4TwoStepCase(1)">🧣 倍數線段圖 (髮夾35元×2倍×3倍)</button>
             </div>
           </div>
 
@@ -740,7 +740,7 @@
           </div>
 
           <div class="feedback-banner" id="u5HouseFeedback">
-            📐 課本解答對照：∠2 是<strong>直角</strong>（做上 ∟ 記號）；∠3、∠4 比直角小是<strong>銳角</strong>；∠1、∠5、∠6 比直角大是<strong>鈍角</strong>！
+            📐 幾何角度比對：∠2 與屋頂頂端 ∠6 都是<strong>直角 ∟</strong>（90°，可與三角板直角完全疊合）；∠3、∠4 比直角小是<strong>銳角</strong>；∠1、∠5 比直角大是<strong>鈍角</strong>！
           </div>
         </div>
       </div>
@@ -829,17 +829,17 @@
         </div>
       </div>
 
-      <!-- 6-B: 估估看面積有多大（妙妙的雲朵與樹葉平方公分板夾擊法） -->
+      <!-- 6-B: 估估看面積有多大（雲朵與樹葉平方公分板夾擊法） -->
       <div id="u6-subB" class="submode-panel">
         <div class="workspace-card">
           <div class="story-prompt">
             <div class="story-text">
-              <span class="story-badge">課本 6-3 估估看面積</span>
-              <span>妙妙把透明平方公分板蓋在圖案上！切換下方按鈕觀察<strong>「內部完整方格」</strong>與<strong>「外部圍住方格」</strong>的面積範圍！</span>
+              <span class="story-badge">6-3 估估看面積</span>
+              <span>把透明平方公分板蓋在圖案上！切換下方按鈕觀察<strong>「內部完整方格」</strong>與<strong>「外部圍住方格」</strong>的面積範圍！</span>
             </div>
             <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-              <button class="btn btn-Amber" onclick="setU6EstCase(0)">☁️ 妙妙的圓弧圖案 (12 ~ 30 cm²)</button>
-              <button class="btn btn-Amber" onclick="setU6EstCase(1)">🍃 課本動動腦：樹葉面積估測</button>
+              <button class="btn btn-Amber" onclick="setU6EstCase(0)">☁️ 雲朵圓弧圖案 (12 ~ 30 cm²)</button>
+              <button class="btn btn-Amber" onclick="setU6EstCase(1)">🍃 樹葉面積估測 (6 ~ 20 cm²)</button>
               <button class="btn btn-primary" onclick="toggleU6BoundHighlight()">🔍 切換顯示：內部完整格 / 外圍總格數</button>
             </div>
           </div>
@@ -849,7 +849,7 @@
               <svg id="u6LeafSvg" viewBox="0 0 420 300" style="width:100%; max-width:420px; height:auto;"></svg>
             </div>
             <div style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:16px; padding:1.25rem;">
-              <h3 id="u6EstTitle" style="color:#1E3A8A; margin-bottom:0.65rem;">☁️ 妙妙的圖案面積範圍推理</h3>
+              <h3 id="u6EstTitle" style="color:#1E3A8A; margin-bottom:0.65rem;">☁️ 雲朵圖案面積範圍推理</h3>
               <div id="u6EstDesc" style="font-size:1rem; font-weight:700; color:#334155; line-height:1.7;"></div>
               <div style="margin-top:1rem; padding:1rem; background:#FFFBEB; border:2px solid #F59E0B; border-radius:12px;">
                 <div style="font-weight:900; color:#92400E; margin-bottom:0.5rem;">🤚 生活量感小挑戰：</div>
@@ -923,8 +923,8 @@
         <div class="workspace-card">
           <div class="story-prompt">
             <div class="story-text">
-              <span class="story-badge">課本 7-3 除法直式與餘數關係</span>
-              <span>重要觀念：<strong>餘數一定要比除數小！</strong>看看課本中奇奇和妙妙剪彩帶（每 8 公分剪一段），誰算得才對？</span>
+              <span class="story-badge">7-3 除法直式與餘數關係</span>
+              <span>重要觀念：<strong>餘數一定要比除數小！</strong>看看小思和小達剪彩帶（每 8 公分剪一段），誰算得才對？</span>
             </div>
           </div>
 
@@ -943,18 +943,18 @@
             </div>
 
             <div style="background:#FFFBEB; border:2px solid #F59E0B; border-radius:16px; padding:1.25rem;">
-              <h3 style="color:#92400E; margin-bottom:0.5rem;">🧐 課本診斷室：每 8 公分剪成一段，誰說得對？</h3>
+              <h3 style="color:#92400E; margin-bottom:0.5rem;">🧐 數學診斷室：每 8 公分剪成一段，誰說得對？</h3>
               <p style="font-size:0.95rem; color:#78350F; margin-bottom:0.85rem;">一條長 34 公分的彩帶，每 8 公分剪成一段：</p>
               <div style="display:flex; flex-direction:column; gap:0.65rem;">
                 <button class="btn btn-outline" onclick="checkU7RemainderQuiz(false)" style="text-align:left; justify-content:flex-start;">
-                  👦 奇奇說：「34 ÷ 8 ＝ 3 … 10，可以剪成 3 段，還剩下 10 公分！」
+                  👦 小思說：「34 ÷ 8 ＝ 3 … 10，可以剪成 3 段，還剩下 10 公分！」
                 </button>
                 <button class="btn btn-outline" onclick="checkU7RemainderQuiz(true)" style="text-align:left; justify-content:flex-start;">
-                  👧 妙妙說：「34 ÷ 8 ＝ 4 … 2，可以剪成 4 段，只剩下 2 公分！」
+                  👧 小達說：「34 ÷ 8 ＝ 4 … 2，可以剪成 4 段，只剩下 2 公分！」
                 </button>
               </div>
               <div class="feedback-banner" id="u7QuizFeedback" style="margin-top:0.85rem;">
-                👆 點選上方奇奇或妙妙的說法，檢查看看誰算得正確！
+                👆 點選上方小思或小達的說法，檢查看看誰算得正確！
               </div>
             </div>
           </div>
@@ -1016,7 +1016,7 @@
                 <button class="btn btn-outline" onclick="pourIntoBeaker(10)">🧪 含氟漱口水 (+10 mL)</button>
                 <button class="btn btn-outline" onclick="pourIntoBeaker(150)">🍼 爸爸泡牛奶 (+150 mL)</button>
                 <button class="btn btn-outline" onclick="pourIntoBeaker(250)">🥛 玻璃杯裝水 (+250 mL)</button>
-                <button class="btn btn-outline" onclick="pourIntoBeaker(375)">🧃 豆豆的鮮乳 (+375 mL)</button>
+                <button class="btn btn-outline" onclick="pourIntoBeaker(375)">🧃 小思的鮮乳 (+375 mL)</button>
                 <button class="btn btn-primary" onclick="pourIntoBeaker(1000)">🍾 1公升水瓶 (+1000 mL)</button>
                 <button class="btn btn-Amber" onclick="setBeakerVolume(1200)">🍵 課本例題：1200 mL 茶</button>
               </div>
@@ -1067,28 +1067,28 @@
     <section id="unit9" class="unit-section">
       <div class="unit-banner">
         <div class="unit-banner-info">
-          <h2>🍕 第 9 單元：分 數</h2>
-          <p>認識<strong>「平分」</strong>才有分數！透過蔥油餅與披薩點選塗色、果凍離散量互動，以及 1 公尺彩帶比較同分母分數大小！</p>
+          <h2>🍰 第 9 單元：分 數</h2>
+          <p>認識<strong>「平分」</strong>才有分數！透過蛋糕與披薩點選塗色、果凍離散量互動，以及 1 公尺彩帶比較同分母分數大小！</p>
         </div>
         <div class="submode-switcher">
-          <button class="submode-btn active" onclick="switchSubmode(9, 'A', this)">9-1 蔥油餅與披薩平分塗色</button>
-          <button class="submode-btn" onclick="switchSubmode(9, 'B', this)">9-2 一盒果凍與甜甜圈(離散量)</button>
+          <button class="submode-btn active" onclick="switchSubmode(9, 'A', this)">9-1 圓形蛋糕與披薩平分塗色</button>
+          <button class="submode-btn" onclick="switchSubmode(9, 'B', this)">9-2 一盒果凍與泡芙(離散量)</button>
           <button class="submode-btn" onclick="switchSubmode(9, 'C', this)">9-3 & 9-4 分數彩帶與比大小</button>
         </div>
       </div>
 
-      <!-- 9-A: 蔥油餅與披薩連續量平分 + 檸檬派等分迷思 -->
+      <!-- 9-A: 圓形蛋糕與披薩連續量平分 + 藍莓蛋糕等分迷思 -->
       <div id="u9-subA" class="submode-panel active">
         <div class="workspace-card">
           <div class="story-prompt">
             <div class="story-text">
-              <span class="story-badge">課本 9-1 幾分之幾(一)</span>
-              <span>拉動滑桿調整平分的份數（分母），再<strong>直接點選圓餅切片塗色</strong>（分子），觀察它是幾個單位分數合起來的！</span>
+              <span class="story-badge">9-1 幾分之幾(一)</span>
+              <span>拉動滑桿調整平分的份數（分母），再<strong>直接點選切片塗色</strong>（分子），觀察它是幾個單位分數合起來的！</span>
             </div>
             <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-              <button class="btn btn-Amber" onclick="setU9PiePreset(4, 2)">🫓 蔥油餅平分 4 片，吃 2 片 (2/4)</button>
-              <button class="btn btn-Amber" onclick="setU9PiePreset(8, 3)">🍕 披薩平分 8 片，品妍吃 3 片 (3/8)</button>
-              <button class="btn btn-green" onclick="setU9PiePreset(4, 4)">✨ 4/4 張蔥油餅 ＝ 1 張</button>
+              <button class="btn btn-Amber" onclick="setU9PiePreset(4, 2)">🍰 草莓蛋糕平分 4 片，吃 2 片 (2/4)</button>
+              <button class="btn btn-Amber" onclick="setU9PiePreset(8, 3)">🍕 披薩平分 8 片，小思吃 3 片 (3/8)</button>
+              <button class="btn btn-green" onclick="setU9PiePreset(4, 4)">✨ 4/4 個蛋糕 ＝ 1 個整塊蛋糕</button>
             </div>
           </div>
 
@@ -1099,17 +1099,17 @@
                 <input type="range" id="u9DenomSlider" class="edu-slider" min="2" max="12" value="8" oninput="changeU9Denom(this.value)" />
               </div>
               <svg id="u9PieSvg" viewBox="0 0 320 320" style="width:100%; max-width:300px; height:auto; cursor:pointer;"></svg>
-              <div style="font-size:0.85rem; color:#64748B; font-weight:700;">👆 直接點選上方圓餅的每一片來塗色或取消塗色！</div>
+              <div style="font-size:0.85rem; color:#64748B; font-weight:700;">👆 直接點選上方圓形食物的每一片來塗色或取消塗色！</div>
             </div>
 
             <div>
               <div class="readout-box" id="u9FractionReadout" style="margin-bottom:1rem;"></div>
 
-              <!-- 課本檸檬派與王爺爺菜園「有沒有平分」迷思辨析 -->
+              <!-- 藍莓蛋糕與開心農場「有沒有平分」迷思辨析 -->
               <div style="background:#FFFBEB; border:2px solid #F59E0B; border-radius:16px; padding:1.25rem;">
-                <h3 style="color:#92400E; font-size:1.1rem; margin-bottom:0.5rem;">🍋 課本迷思挑戰：切檸檬派與王爺爺的菜園</h3>
+                <h3 style="color:#92400E; font-size:1.1rem; margin-bottom:0.5rem;">🫐 迷思挑戰：切藍莓蛋糕與開心農場</h3>
                 <p style="font-size:0.95rem; color:#78350F; margin-bottom:0.75rem;">
-                  宇翔把檸檬派切成 <strong>6 片大小不一樣</strong>的切片（其中大片的占 1/4、小片的占 1/8），宇翔吃了 1 小片，可以說他吃了 1/6 個檸檬派嗎？
+                  小明把藍莓蛋糕切成 <strong>6 片大小不一樣</strong>的切片（其中大片的占 1/4、小片的占 1/8），小明吃了 1 小片，可以說他吃了 1/6 個蛋糕嗎？
                 </p>
                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                   <button class="btn btn-outline" onclick="checkU9EqualMyth(false)">⭕ 可以說是 1/6 個</button>
@@ -1122,16 +1122,16 @@
         </div>
       </div>
 
-      <!-- 9-B: 離散量分數（一盒 10 個果凍 & 甜甜圈整體 1 不變） -->
+      <!-- 9-B: 離散量分數（一盒 10 個果凍 & 泡芙整體 1 不變） -->
       <div id="u9-subB" class="submode-panel">
         <div class="workspace-card">
           <div class="story-prompt">
             <div class="story-text">
-              <span class="story-badge">課本 9-2 幾分之幾(二) 離散量</span>
-              <span>一盒果凍有 <strong>10 個</strong>！點選下方果凍分給<strong>大寶（藍色）</strong>或<strong>小寶（橘色）</strong>，看看各自占幾分之幾盒！</span>
+              <span class="story-badge">9-2 幾分之幾(二) 離散量</span>
+              <span>一盒果凍有 <strong>10 個</strong>！點選下方果凍分給<strong>小思（藍色）</strong>或<strong>小達（橘色）</strong>，看看各自占幾分之幾盒！</span>
             </div>
             <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-              <button class="btn btn-Amber" onclick="setU9JellyPreset()">🍮 課本例題：大寶吃3個(3/10盒)、小寶吃4個(4/10盒)</button>
+              <button class="btn btn-Amber" onclick="setU9JellyPreset()">🍮 範例：小思吃3個(3/10盒)、小達吃4個(4/10盒)</button>
               <button class="btn btn-outline" onclick="resetU9Jellies()">🔄 重置果凍盒</button>
             </div>
           </div>
@@ -1141,9 +1141,9 @@
           <div class="readout-box" id="u9JellySummary"></div>
 
           <div style="background:#EFF6FF; border:2px solid #60A5FA; border-radius:16px; padding:1.1rem; margin-top:1rem;">
-            <h3 style="color:#1E3A8A; font-size:1.05rem; margin-bottom:0.4rem;">🍩 課本動動腦：一盒甜甜圈有 6 個，哥哥先拿走 1 個（1/6 盒），妹妹再拿走 1 個，妹妹拿走的是 1/6 盒還是 1/5 盒？</h3>
+            <h3 style="color:#1E3A8A; font-size:1.05rem; margin-bottom:0.4rem;">🧁 動動腦：一盒小泡芙有 6 個，哥哥先拿走 1 個（1/6 盒），妹妹再拿走 1 個，妹妹拿走的是 1/6 盒還是 1/5 盒？</h3>
             <p style="font-size:0.95rem; color:#1E40AF; font-weight:700;">
-              💡 解答：是 <strong>1/6 盒</strong>！因為「整體 1 盒」原本就是裝 6 個甜甜圈，不會因為哥哥先拿走 1 個就變成 5 個一盒喔！
+              💡 解答：是 <strong>1/6 盒</strong>！因為「整體 1 盒」原本就是裝 6 個泡芙，不會因為哥哥先拿走 1 個就變成 5 個一盒喔！
             </p>
           </div>
         </div>

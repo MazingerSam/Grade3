@@ -1026,12 +1026,12 @@ input[type="range"].edu-slider::-webkit-slider-thumb {
   transform: translateY(-3px);
 }
 
-.jelly-cup.dabao {
+.jelly-cup.dabao, .jelly-cup.xiaosi {
   background: #DBEAFE;
   border-color: #2563EB;
 }
 
-.jelly-cup.xiaobao {
+.jelly-cup.xiaobao, .jelly-cup.xiaoda {
   background: #FEF3C7;
   border-color: #D97706;
 }
