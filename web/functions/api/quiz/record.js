@@ -1,17 +1,10 @@
 // Cloudflare Pages Functions - 測驗成績與錯題儲存 API
 // 路徑: /api/quiz/record
+import { queryD1 } from '../../_db.js';
 
 export async function onRequestPost(context) {
   try {
     const { request, env } = context;
-    const db = env.DB;
-    if (!db) {
-      return new Response(JSON.stringify({ error: '資料庫連線失敗' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-
     const body = await request.json();
     const {
       email,
@@ -38,13 +31,13 @@ export async function onRequestPost(context) {
 
     // 1. 寫入 quiz_attempts 主紀錄
     const wrongCount = wrongQuestions.length;
-    const insertAttempt = await db.prepare(`
+    const insertAttempt = await queryD1(env, `
       INSERT INTO quiz_attempts (
         email, student_name, student_class, seat_num, grade,
         unit, paper_idx, paper_name, score, correct_count,
         total_count, wrong_count, time_spent_sec
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).bind(
+    `, [
       email.toLowerCase(),
       studentName || '',
       studentClass || '',
@@ -58,21 +51,19 @@ export async function onRequestPost(context) {
       totalCount,
       wrongCount,
       timeSpentSec
-    ).run();
+    ]);
 
-    const attemptId = insertAttempt.meta.last_row_id;
+    const attemptId = (insertAttempt.meta && insertAttempt.meta.last_row_id) ? insertAttempt.meta.last_row_id : 1;
 
-    // 2. 批次寫入錯題詳細紀錄 (供日後補救與評估增加練習)
-    if (wrongQuestions.length > 0 && attemptId) {
-      const stmt = db.prepare(`
-        INSERT INTO wrong_questions (
-          attempt_id, email, grade, unit, paper_idx,
-          question_idx, question_text, user_answer, correct_answer, explanation
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `);
-
-      const batchQueries = wrongQuestions.map(wq => {
-        return stmt.bind(
+    // 2. 寫入錯題詳細紀錄 (供日後補救與評估增加練習)
+    if (wrongQuestions.length > 0) {
+      for (const wq of wrongQuestions) {
+        await queryD1(env, `
+          INSERT INTO wrong_questions (
+            attempt_id, email, grade, unit, paper_idx,
+            question_idx, question_text, user_answer, correct_answer, explanation
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `, [
           attemptId,
           email.toLowerCase(),
           grade,
@@ -83,17 +74,15 @@ export async function onRequestPost(context) {
           String(wq.userAnswer || ''),
           String(wq.correctAnswer || ''),
           wq.explanation || ''
-        );
-      });
-
-      await db.batch(batchQueries);
+        ]);
+      }
     }
 
     return new Response(JSON.stringify({
       success: true,
       attemptId,
       wrongCount,
-      message: '測驗成績與錯題紀錄已成功同步至 D1 資料庫！'
+      message: '測驗成績與錯題紀錄已成功同步！'
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
@@ -111,7 +100,6 @@ export async function onRequestPost(context) {
 export async function onRequestGet(context) {
   try {
     const { request, env } = context;
-    const db = env.DB;
     const url = new URL(request.url);
     const email = (url.searchParams.get('email') || '').toLowerCase().trim();
 
@@ -123,20 +111,20 @@ export async function onRequestGet(context) {
     }
 
     // 取得最近 30 次測驗紀錄
-    const attempts = await db.prepare(`
+    const attempts = await queryD1(env, `
       SELECT * FROM quiz_attempts 
       WHERE lower(email) = ? 
       ORDER BY created_at DESC 
       LIMIT 30
-    `).bind(email).all();
+    `, [email]);
 
     // 取得待複習的錯題 (以單元聚合)
-    const wrongList = await db.prepare(`
+    const wrongList = await queryD1(env, `
       SELECT * FROM wrong_questions 
       WHERE lower(email) = ? AND review_status = 'pending'
       ORDER BY created_at DESC 
       LIMIT 50
-    `).bind(email).all();
+    `, [email]);
 
     return new Response(JSON.stringify({
       success: true,

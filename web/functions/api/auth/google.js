@@ -1,7 +1,7 @@
 // Cloudflare Pages Functions - Google OAuth 登入驗證與年級權限檢查
 // 路徑: /api/auth/google
+import { queryD1 } from '../../_db.js';
 
-// 解析 Google ID Token (支援驗證 Google tokeninfo 端點)
 export async function onRequestPost(context) {
   try {
     const { request, env } = context;
@@ -38,17 +38,13 @@ export async function onRequestPost(context) {
     }
 
     // 2. 查詢 Cloudflare D1 資料庫：是否在授權白名單中
-    const db = env.DB;
-    if (!db) {
-      return new Response(JSON.stringify({ error: '系統資料庫連線尚未設定' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
+    const queryResult = await queryD1(
+      env,
+      'SELECT email, name, role, grade, status FROM allowed_users WHERE lower(email) = ?',
+      [userEmail]
+    );
 
-    const userRecord = await db.prepare(
-      'SELECT email, name, role, grade, status FROM allowed_users WHERE lower(email) = ?'
-    ).bind(userEmail).first();
+    const userRecord = (queryResult.results && queryResult.results.length > 0) ? queryResult.results[0] : null;
 
     // 3. 白名單檢查
     if (!userRecord) {
@@ -95,7 +91,7 @@ export async function onRequestPost(context) {
       });
     }
 
-    // 5. 授權通過，建立 Session Token (包含使用者資訊與簽章/時效)
+    // 5. 授權通過，建立使用者會話物件
     const sessionUser = {
       email: userEmail,
       name: userRecord.name || userName,

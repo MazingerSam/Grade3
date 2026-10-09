@@ -1,13 +1,9 @@
 // Cloudflare Pages Functions - 管理員專區：使用者白名單管理、成績與錯題總覽
 // 路徑: /api/admin/users
+import { queryD1 } from '../../_db.js';
 
 export async function onRequest(context) {
   const { request, env } = context;
-  const db = env.DB;
-  if (!db) {
-    return new Response(JSON.stringify({ error: '資料庫未連接' }), { status: 500 });
-  }
-
   const url = new URL(request.url);
   const adminEmail = (request.headers.get('x-admin-email') || url.searchParams.get('adminEmail') || '').toLowerCase().trim();
 
@@ -16,9 +12,13 @@ export async function onRequest(context) {
     return new Response(JSON.stringify({ error: '未授權訪問：缺少管理員憑證' }), { status: 401 });
   }
 
-  const adminCheck = await db.prepare(
-    "SELECT role FROM allowed_users WHERE lower(email) = ? AND role = 'admin' AND status = 'active'"
-  ).bind(adminEmail).first();
+  const check = await queryD1(
+    env,
+    "SELECT role FROM allowed_users WHERE lower(email) = ? AND role = 'admin' AND status = 'active'",
+    [adminEmail]
+  );
+
+  const adminCheck = (check.results && check.results.length > 0) ? check.results[0] : null;
 
   if (!adminCheck) {
     return new Response(JSON.stringify({ error: '權限不足：您不是系統管理員' }), { status: 403 });
@@ -26,14 +26,14 @@ export async function onRequest(context) {
 
   // GET: 查詢所有使用者、近期測驗紀錄、錯題統計
   if (request.method === 'GET') {
-    const users = await db.prepare("SELECT * FROM allowed_users ORDER BY role DESC, created_at DESC").all();
-    const attempts = await db.prepare("SELECT * FROM quiz_attempts ORDER BY created_at DESC LIMIT 50").all();
-    const wrongSummary = await db.prepare(`
+    const users = await queryD1(env, "SELECT * FROM allowed_users ORDER BY role DESC, created_at DESC");
+    const attempts = await queryD1(env, "SELECT * FROM quiz_attempts ORDER BY created_at DESC LIMIT 50");
+    const wrongSummary = await queryD1(env, `
       SELECT unit, COUNT(*) as count 
       FROM wrong_questions 
       GROUP BY unit 
       ORDER BY unit ASC
-    `).all();
+    `);
 
     return new Response(JSON.stringify({
       success: true,
@@ -55,7 +55,7 @@ export async function onRequest(context) {
       return new Response(JSON.stringify({ error: 'Email 為必填欄位' }), { status: 400 });
     }
 
-    await db.prepare(`
+    await queryD1(env, `
       INSERT INTO allowed_users (email, name, role, grade, status, updated_at)
       VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
       ON CONFLICT(email) DO UPDATE SET
@@ -64,7 +64,7 @@ export async function onRequest(context) {
         grade = excluded.grade,
         status = excluded.status,
         updated_at = CURRENT_TIMESTAMP
-    `).bind(email.toLowerCase().trim(), name || '', role, grade, status).run();
+    `, [email.toLowerCase().trim(), name || '', role, grade, status]);
 
     return new Response(JSON.stringify({ success: true, message: `已成功更新帳號 ${email}` }), {
       status: 200,
@@ -84,7 +84,7 @@ export async function onRequest(context) {
       return new Response(JSON.stringify({ error: '不可刪除當前登入之管理員帳號' }), { status: 400 });
     }
 
-    await db.prepare("DELETE FROM allowed_users WHERE lower(email) = ?").bind(targetEmail).run();
+    await queryD1(env, "DELETE FROM allowed_users WHERE lower(email) = ?", [targetEmail]);
     return new Response(JSON.stringify({ success: true, message: `已成功刪除帳號 ${targetEmail}` }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
