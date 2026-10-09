@@ -669,6 +669,7 @@ function gradeCurrentQuiz() {
 
   let score = 0;
   let correctCount = 0;
+  const wrongQuestions = [];
 
   questions.forEach((item, qIdx) => {
     let userAns = '';
@@ -684,6 +685,15 @@ function gradeCurrentQuiz() {
     if (isCorrect) {
       score += 20;
       correctCount++;
+    } else {
+      // 收集錯題，以供日後診斷與補救練習
+      wrongQuestions.push({
+        questionIdx: qIdx + 1,
+        questionText: item.q || '',
+        userAnswer: userAns || '(未作答)',
+        correctAnswer: String(item.ans),
+        explanation: item.explain || ''
+      });
     }
 
     const card = document.getElementById(`q_card_${qIdx}`);
@@ -700,7 +710,7 @@ function gradeCurrentQuiz() {
     }
   });
 
-  // 儲存成績紀錄
+  // 儲存本地成績紀錄
   const now = new Date();
   const timeStr = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
   const rec = {
@@ -713,10 +723,39 @@ function gradeCurrentQuiz() {
     paperIdx: pIdx,
     paperName: paperTypes[pIdx].name,
     score,
-    correctCount
+    correctCount,
+    wrongCount: wrongQuestions.length
   };
   quizState.records.unshift(rec);
   localStorage.setItem('kx_g3_quiz_records', JSON.stringify(quizState.records));
+
+  // 同步成績與錯題至 Cloudflare D1 資料庫
+  const currentUserEmail = (window.authState && window.authState.user) ? window.authState.user.email : localStorage.getItem('muxin_last_email') || 'guest@muxin.edu.tw';
+  fetch('/api/quiz/record', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: currentUserEmail,
+      studentName: quizState.studentName,
+      studentClass: quizState.studentClass,
+      seatNum: quizState.studentSeat,
+      grade: (window.authState && window.authState.user) ? window.authState.user.grade : '3上',
+      unit: u,
+      paperIdx: pIdx,
+      paperName: paperTypes[pIdx].name,
+      score,
+      correctCount,
+      totalCount: 5,
+      timeSpentSec: 0,
+      wrongQuestions
+    })
+  }).then(res => res.json()).then(data => {
+    if (data.success) {
+      console.log('✅ 成績與錯題已成功同步至 Cloudflare D1:', data);
+    }
+  }).catch(err => {
+    console.warn('D1 雲端同步提示 (離線或本地):', err);
+  });
 
   // 更新分數徽章與鼓勵語
   const badge = document.getElementById('quizLiveScoreBadge');
@@ -733,8 +772,9 @@ function gradeCurrentQuiz() {
       ? '🏆 太神啦！滿分 100 分！完全掌握這個單元的觀念！'
       : score >= 80
       ? '🎉 表現優異！只差一點點就滿分囉，看看上方紅色題目的訂正解析吧！'
-      : '💪 再接再厲！先閱讀每一題下方的訂正解析，或回到互動教具區操作看看，再挑戰一次！';
-    banner.innerHTML = `📝 批改完成！<strong>${quizState.studentClass} ${quizState.studentSeat}號 ${quizState.studentName}</strong> 在【${unitTitles[u]} - ${paperTypes[pIdx].name}】答對 <strong>${correctCount}/5 題</strong>，總分：<strong>${score} 分</strong>！${comment}`;
+      : '💪 再接再厲！先閱讀每一題下方的訂正解析，系統已記錄錯題供日後補救練習！';
+    const d1Note = `<span style="font-size:0.8rem; background:#EDE9FE; color:#6D28D9; padding:0.2rem 0.5rem; border-radius:999px; margin-left:0.5rem; font-weight:700;">☁️ D1資料庫已記錄 (${wrongQuestions.length} 題錯題)</span>`;
+    banner.innerHTML = `📝 批改完成！<strong>${quizState.studentClass} ${quizState.studentSeat}號 ${quizState.studentName}</strong> 在【${unitTitles[u]} - ${paperTypes[pIdx].name}】答對 <strong>${correctCount}/5 題</strong>，總分：<strong>${score} 分</strong>！${comment} ${d1Note}`;
   }
 
   const sbWrap = document.getElementById('quizScoreboardWrap');
