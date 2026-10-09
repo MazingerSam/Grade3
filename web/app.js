@@ -1,5 +1,5 @@
 /* =========================================================
-   康軒版國小三年級上學期 (3上) 數學互動學習樂園 - 主互動邏輯 app.js
+   木新思達 國小三年級上學期 (3上) 數學互動學習樂園 - 主互動邏輯 app.js
    ========================================================= */
 
 let starScore = 0;
@@ -1085,14 +1085,49 @@ function setU4TwoStepCase(idx) {
     box.innerHTML = `
       <div style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:16px; padding:1.25rem;">
         <h3 style="color:#1E3A8A; margin-bottom:0.75rem;">🎈 題目：一間教室外面布置 20 顆氣球，每層樓有 4 間教室，2 層樓總共布置幾顆氣球？</h3>
+        <!-- 增加奇奇與妙妙的圖示視覺化 -->
+        <div style="background:white; border:2px solid #CBD5E1; border-radius:14px; padding:0.75rem; margin-bottom:1rem; overflow-x:auto;">
+          <svg viewBox="0 0 760 160" style="width:100%; min-width:620px; height:auto;">
+            <!-- 2樓 -->
+            <rect x="20" y="20" width="720" height="52" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+            <text x="35" y="52" font-size="14" font-weight="900" fill="#1D4ED8">2 樓</text>
+            <rect x="85" y="27" width="145" height="38" rx="6" fill="#DBEAFE" stroke="#93C5FD"/>
+            <text x="157" y="51" font-size="13" font-weight="900" fill="#1E40AF" text-anchor="middle">教室一 🎈20顆</text>
+            <rect x="245" y="27" width="145" height="38" rx="6" fill="#DBEAFE" stroke="#93C5FD"/>
+            <text x="317" y="51" font-size="13" font-weight="900" fill="#1E40AF" text-anchor="middle">教室二 🎈20顆</text>
+            <rect x="405" y="27" width="145" height="38" rx="6" fill="#DBEAFE" stroke="#93C5FD"/>
+            <text x="477" y="51" font-size="13" font-weight="900" fill="#1E40AF" text-anchor="middle">教室三 🎈20顆</text>
+            <rect x="565" y="27" width="145" height="38" rx="6" fill="#DBEAFE" stroke="#93C5FD"/>
+            <text x="637" y="51" font-size="13" font-weight="900" fill="#1E40AF" text-anchor="middle">教室四 🎈20顆</text>
+
+            <!-- 1樓 -->
+            <rect x="20" y="88" width="720" height="52" rx="8" fill="#F0FDF4" stroke="#10B981" stroke-width="2"/>
+            <text x="35" y="120" font-size="14" font-weight="900" fill="#047857">1 樓</text>
+            <rect x="85" y="95" width="145" height="38" rx="6" fill="#DCFCE7" stroke="#86EFAC"/>
+            <text x="157" y="119" font-size="13" font-weight="900" fill="#065F46" text-anchor="middle">教室一 🎈20顆</text>
+            <rect x="245" y="95" width="145" height="38" rx="6" fill="#DCFCE7" stroke="#86EFAC"/>
+            <text x="317" y="119" font-size="13" font-weight="900" fill="#065F46" text-anchor="middle">教室二 🎈20顆</text>
+            <rect x="405" y="95" width="145" height="38" rx="6" fill="#DCFCE7" stroke="#86EFAC"/>
+            <text x="477" y="119" font-size="13" font-weight="900" fill="#065F46" text-anchor="middle">教室三 🎈20顆</text>
+            <rect x="565" y="95" width="145" height="38" rx="6" fill="#DCFCE7" stroke="#86EFAC"/>
+            <text x="637" y="119" font-size="13" font-weight="900" fill="#065F46" text-anchor="middle">教室四 🎈20顆</text>
+          </svg>
+        </div>
+
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
           <div style="background:white; border:3px solid #60A5FA; border-radius:14px; padding:1rem;">
             <div style="font-weight:900; color:#1D4ED8; font-size:1.1rem; margin-bottom:0.5rem;">👦 奇奇的做法（先算 1 層樓有幾顆）：</div>
+            <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:0.5rem; margin-bottom:0.5rem; font-size:0.9rem;">
+              🎨 <strong>圖示概念：</strong>把橫向 1 整排（1 層樓）框起來算！
+            </div>
             <p>① 先算 1 層樓（4 間教室）有幾顆氣球：<br/><strong>20 × 4 ＝ 80（顆）</strong></p>
             <p style="margin-top:0.4rem;">② 再算 2 層樓共有幾顆氣球：<br/><strong>80 × 2 ＝ 160（顆）</strong></p>
           </div>
           <div style="background:white; border:3px solid #34D399; border-radius:14px; padding:1rem;">
             <div style="font-weight:900; color:#047857; font-size:1.1rem; margin-bottom:0.5rem;">👧 妙妙的做法（先算共有幾間教室）：</div>
+            <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; padding:0.5rem; margin-bottom:0.5rem; font-size:0.9rem;">
+              🎨 <strong>圖示概念：</strong>先點算整棟大樓一共有 8 間教室！
+            </div>
             <p>① 先算 2 層樓共有幾間教室：<br/><strong>4 × 2 ＝ 8（間）</strong></p>
             <p style="margin-top:0.4rem;">② 再算 8 間教室共有幾顆氣球：<br/><strong>20 × 8 ＝ 160（顆）</strong></p>
           </div>

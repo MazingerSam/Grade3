@@ -1,6 +1,6 @@
 /* =========================================================
-   康軒版國小三年級上學期 (3上) 線上測驗中心與自動批改系統 (quiz.js)
-   依據 康軒版「04卷類」(學前檢測、基礎能力、隨堂練習、學後檢測、素養挑戰) 題庫與 RDQ 流程設計
+   木新思達國小三年級上學期 (3上) 線上測驗中心與自動批改系統 (quiz.js)
+   依據 木新思達「04卷類」(學前檢測、基礎能力、隨堂練習、學後檢測、素養挑戰) 題庫設計
    ========================================================= */
 
 let quizState = {
@@ -598,7 +598,7 @@ function renderQuizCenter() {
       </div>
 
       <div style="margin-bottom:1.25rem;">
-        <div style="font-weight:900; color:#1E3A8A; margin-bottom:0.45rem;">2️⃣ 選擇【${unitTitles[u]}】的測驗卷別（依 RDQ 診斷流程編排）：</div>
+        <div style="font-weight:900; color:#1E3A8A; margin-bottom:0.45rem;">2️⃣ 選擇【${unitTitles[u]}】的測驗卷別：</div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.65rem;">
           ${paperTabsHtml}
         </div>
@@ -633,30 +633,12 @@ function renderQuizCenter() {
       <div id="quizSummaryBanner" class="feedback-banner" style="display:none; margin-top:1.25rem;"></div>
     </div>
 
-    <!-- 歷史成績排行榜與 RDQ 設計規範面板 -->
-    <div class="vertical-math-stage">
-      <div class="workspace-card">
+    <!-- 歷史成績排行榜 -->
+    <div style="margin-top: 1.5rem;">
+      <div class="workspace-card" style="box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
         <h3 style="color:#1E3A8A; font-size:1.2rem; margin-bottom:0.75rem;">📊 學生測驗成績紀錄表（共 ${quizState.records.length} 筆紀錄）</h3>
         <div id="quizScoreboardWrap" style="max-height:360px; overflow-y:auto;">
           ${renderScoreboardTable()}
-        </div>
-      </div>
-
-      <div class="workspace-card" style="background:#FFFDF7; border-color:#FCD34D;">
-        <h3 style="color:#92400E; font-size:1.2rem; margin-bottom:0.75rem;">🧭 RDQ 線上測驗卷設計流程與注意事項</h3>
-        <div style="font-size:0.92rem; color:#334155; line-height:1.65; display:flex; flex-direction:column; gap:0.6rem;">
-          <div style="background:white; padding:0.7rem 0.9rem; border-radius:10px; border-left:4px solid #3B82F6;">
-            <strong>1. 需求與教學目標對齊 (Requirement & Objectives - R)：</strong><br/>
-            每份測驗必須緊扣 108 課綱學習重點（如：N-3-1 位值化聚、N-3-4 包含除與等分除）。本系統依康軒版卷類分為「學前檢測（起點行為）→ 基礎能力 → 隨堂練習 → 學後檢測 → 素養挑戰」5 階梯。
-          </div>
-          <div style="background:white; padding:0.7rem 0.9rem; border-radius:10px; border-left:4px solid #10B981;">
-            <strong>2. 誘答項與診斷性試題設計 (Diagnostic Design - D)：</strong><br/>
-            三年級線上測驗最忌「純猜測」。選項必須納入常見迷思（例如：邊越長角越大、檸檬派未平分誤認為 1/6、除法餘數大於除數、商數是否加 1），並在批改後立即顯示「診斷詳解」。
-          </div>
-          <div style="background:white; padding:0.7rem 0.9rem; border-radius:10px; border-left:4px solid #F59E0B;">
-            <strong>3. 題型多元與作答防呆品質 (Quality & UX - Q)：</strong><br/>
-            國小三年級學生打字較慢，應混合「點選單選、是非判斷、符號下拉選單（＞/＜/＝）與純數字填空」，自動過濾前後空白與全形數字，並搭配即時計分與錯題訂正回饋。
-          </div>
         </div>
       </div>
     </div>
@@ -811,7 +793,7 @@ function exportQuizCSV() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `康軒3上數學線上測驗成績單_${quizState.studentName || '全班'}.csv`;
+  a.download = `木新思達3上數學線上測驗成績單_${quizState.studentName || '全班'}.csv`;
   a.click();
   URL.revokeObjectURL(url);
 }

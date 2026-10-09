@@ -4,10 +4,15 @@
 
 ## [Unreleased]
 
+### Changed
+- 更名與品牌更新：將網頁介面、標題、成績匯出檔名及說明全面由「康軒 / 康軒版」更換為「木新思達」
+- 介面簡化：依需求移除網頁上的 RDQ 測驗卷設計流程說明卡片，使成績表與測驗主畫面更清爽聚焦
+- 視覺化增強：於第四單元（乘法）「連乘兩步驟」中的「教室氣球問題」新增奇奇與妙妙算則的雙層建築透視圖解（SVG 圖示呈現 2 樓與 1 樓每間教室 6 顆氣球的群組架構）
+
 ### Added
-- 新增 `web/quiz.js` 康軒版 3上 線上測驗中心（參考 `康軒版/02數學/04卷類` 與 RDQ 測驗設計流程，為全冊 9 單元各設計 5 份線上測驗卷，共 45 份測驗卷、225 道精選題），支援記錄學生班級/座號/姓名、自動批改給分、錯題詳解與 CSV 成績單匯出
-- 擴充 `web/` 康軒版國小三年級上學期（3上）後半學期第 6～9 單元互動教學模組（第6單元：面積、第7單元：除法、第8單元：公升和毫升、第9單元：分數），達成 3上 全冊 9 大單元完整涵蓋並重新部署至 Cloudflare Pages (`https://kangxuan-grade3-math.pages.dev/`)
-- 新增 `web/` 康軒版國小三年級上學期（3上）前 5 單元數學互動教學網頁（[index.html](file:///c:/Users/sam09/OneDrive/文件/AiAgent/Grade3/web/index.html), [styles.css](file:///c:/Users/sam09/OneDrive/文件/AiAgent/Grade3/web/styles.css), [app.js](file:///c:/Users/sam09/OneDrive/文件/AiAgent/Grade3/web/app.js)），支援拖拉、點選、切換、滑桿與 SVG 幾何視覺化
+- 新增 `web/quiz.js` 木新思達 3上 線上測驗中心（為全冊 9 單元各設計 5 份線上測驗卷，共 45 份測驗卷、225 道精選題），支援記錄學生班級/座號/姓名、自動批改給分、錯題詳解與 CSV 成績單匯出
+- 擴充 `web/` 木新思達國小三年級上學期（3上）後半學期第 6～9 單元互動教學模組（第6單元：面積、第7單元：除法、第8單元：公升和毫升、第9單元：分數），達成 3上 全冊 9 大單元完整涵蓋並重新部署至 Cloudflare Pages (`https://kangxuan-grade3-math.pages.dev/`)
+- 新增 `web/` 木新思達國小三年級上學期（3上）前 5 單元數學互動教學網頁（[index.html](file:///c:/Users/sam09/OneDrive/文件/AiAgent/Grade3/web/index.html), [styles.css](file:///c:/Users/sam09/OneDrive/文件/AiAgent/Grade3/web/styles.css), [app.js](file:///c:/Users/sam09/OneDrive/文件/AiAgent/Grade3/web/app.js)），支援拖拉、點選、切換、滑桿與 SVG 幾何視覺化
 - 新增 `AGENTS.md` 與 `wrangler.jsonc` 部署設定
 - 新增 `康軒版/README.md`：官方課程計畫/數位高手入口、3上9單元+3下8單元、彰化/集美公開課程計畫範例、均一/教育大市集配套
 - 新增 `南一版/README.md`：Nani Box/電子書/題庫/研習入口、3上9單元+3下9單元、古依涵113上U1-U4研習、均一類南一版/LearnMode三上
