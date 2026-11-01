@@ -3931,11 +3931,40 @@ function initG4App() {
   initG4Unit(1);
 }
 
-// 監聽載入事件
+// 監聽載入事件（支援 URL 查詢參數 ?grade=1 / ?grade=1上 / ?grade=2 等直達與 LocalStorage 記憶）
 window.addEventListener('DOMContentLoaded', () => {
-  const savedGrade = localStorage.getItem('kx_active_grade') || '3上';
-  if (savedGrade === '1上' || savedGrade === '2上' || savedGrade === '4上' || savedGrade === '5上' || savedGrade === '6上') {
-    switchGrade(savedGrade);
+  const urlParams = new URLSearchParams(window.location.search);
+  let gradeParam = urlParams.get('grade') || urlParams.get('g');
+  let targetGrade = null;
+
+  if (gradeParam) {
+    gradeParam = gradeParam.trim().toLowerCase();
+    if (gradeParam === '1' || gradeParam === '1上' || gradeParam === 'g1') targetGrade = '1上';
+    else if (gradeParam === '2' || gradeParam === '2上' || gradeParam === 'g2') targetGrade = '2上';
+    else if (gradeParam === '3' || gradeParam === '3上' || gradeParam === 'g3') targetGrade = '3上';
+    else if (gradeParam === '4' || gradeParam === '4上' || gradeParam === 'g4') targetGrade = '4上';
+    else if (gradeParam === '5' || gradeParam === '5上' || gradeParam === 'g5') targetGrade = '5上';
+    else if (gradeParam === '6' || gradeParam === '6上' || gradeParam === 'g6') targetGrade = '6上';
+  }
+
+  if (!targetGrade) {
+    targetGrade = localStorage.getItem('kx_active_grade') || '1上';
+  }
+
+  switchGrade(targetGrade);
+
+  // 支援單元直達參數 ?unit=... / ?u=...
+  const unitParam = urlParams.get('unit') || urlParams.get('u');
+  if (unitParam) {
+    const uNum = parseInt(unitParam, 10);
+    if (!isNaN(uNum) && uNum >= 1 && uNum <= 10) {
+      if (targetGrade === '1上' && typeof switchG1Unit === 'function') switchG1Unit(uNum);
+      else if (targetGrade === '2上' && typeof switchG2Unit === 'function') switchG2Unit(uNum);
+      else if (targetGrade === '3上' && typeof switchUnit === 'function') switchUnit(uNum);
+      else if (targetGrade === '4上' && typeof switchG4Unit === 'function') switchG4Unit(uNum);
+      else if (targetGrade === '5上' && typeof switchG5Unit === 'function') switchG5Unit(uNum);
+      else if (targetGrade === '6上' && typeof switchG6Unit === 'function') switchG6Unit(uNum);
+    }
   }
 });
 
