@@ -56,7 +56,10 @@ function switchG2Unit(unitNum) {
     const tab = document.getElementById(`g2UnitTab${i}`);
     const sec = document.getElementById(`g2_unit${i}`);
     if (tab) tab.classList.toggle('active', i === unitNum);
-    if (sec) sec.classList.toggle('active', i === unitNum);
+    if (sec) {
+      sec.classList.toggle('active', i === unitNum);
+      sec.style.display = (i === unitNum ? 'block' : 'none');
+    }
   }
   const tab11 = document.getElementById('g2UnitTab11');
   if (tab11) tab11.classList.remove('active');

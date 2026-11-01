@@ -55,7 +55,10 @@ function switchUnit(unitNum) {
     const tab = document.getElementById(`unitTab${i}`);
     const sec = document.getElementById(`unit${i}`);
     if (tab) tab.classList.toggle('active', i === unitNum);
-    if (sec) sec.classList.toggle('active', i === unitNum);
+    if (sec) {
+      sec.classList.toggle('active', i === unitNum);
+      sec.style.display = (i === unitNum ? 'block' : 'none');
+    }
   }
   if (typeof window.MathMLRenderer !== 'undefined' && typeof window.MathMLRenderer.renderElement === 'function') {
     const activeSec = document.getElementById(`unit${unitNum}`);
@@ -2470,27 +2473,27 @@ let currentGrade = localStorage.getItem('kx_active_grade') || '3上';
 function hideAllGradeSections() {
   for (let i = 1; i <= 9; i++) {
     const sec = document.getElementById(`g1_unit${i}`);
-    if (sec) sec.classList.remove('active');
+    if (sec) { sec.classList.remove('active'); sec.style.display = 'none'; }
   }
   for (let i = 1; i <= 10; i++) {
     const sec = document.getElementById(`g2_unit${i}`);
-    if (sec) sec.classList.remove('active');
+    if (sec) { sec.classList.remove('active'); sec.style.display = 'none'; }
   }
   for (let i = 1; i <= 10; i++) {
     const sec = document.getElementById(`unit${i}`);
-    if (sec) sec.classList.remove('active');
+    if (sec) { sec.classList.remove('active'); sec.style.display = 'none'; }
   }
   for (let i = 1; i <= 10; i++) {
     const sec = document.getElementById(`g4_unit${i}`);
-    if (sec) sec.classList.remove('active');
+    if (sec) { sec.classList.remove('active'); sec.style.display = 'none'; }
   }
   for (let i = 1; i <= 10; i++) {
     const sec = document.getElementById(`g5_unit${i}`);
-    if (sec) sec.classList.remove('active');
+    if (sec) { sec.classList.remove('active'); sec.style.display = 'none'; }
   }
   for (let i = 1; i <= 9; i++) {
     const sec = document.getElementById(`g6_unit${i}`);
-    if (sec) sec.classList.remove('active');
+    if (sec) { sec.classList.remove('active'); sec.style.display = 'none'; }
   }
 }
 
@@ -2601,7 +2604,10 @@ function switchG4Unit(unitNum) {
     const tab = document.getElementById(`g4UnitTab${i}`);
     const sec = document.getElementById(`g4_unit${i}`);
     if (tab) tab.classList.toggle('active', i === unitNum);
-    if (sec) sec.classList.toggle('active', i === unitNum);
+    if (sec) {
+      sec.classList.toggle('active', i === unitNum);
+      sec.style.display = (i === unitNum ? 'block' : 'none');
+    }
   }
   const tab11 = document.getElementById('g4UnitTab11');
   initG4Unit(unitNum);
