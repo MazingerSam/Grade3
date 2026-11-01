@@ -456,6 +456,7 @@
   <main class="main-container">
 
 
+
     <!-- ==========================================
          1上 第 1 單元：10以內的數
          ========================================== -->
@@ -463,16 +464,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🍎 1上 第 1 單元：10以內的數</h2>
-          <p>積木點子卡、五五數法排列，直觀理解 1~10 具體量與數字符號。</p>
+          <p>結合康軒版課本「動物園野餐、點子卡排排看、五五數法」，直觀認識 1~10 具體量與數字符號！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG1UnitQuiz(1)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g1U1Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g1U1TaskText">【動物園野餐】小動物們在草地上野餐，盤子裡擺了 <strong>6</strong> 顆紅蘋果，請在點子卡排排看，並數一數是多少！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U1Preset(6, '【動物園野餐】小動物帶來了 <strong>6</strong> 顆紅蘋果，排成五五數法（上面 5 顆、下面 1 顆）！')">🍎 蘋果 6顆</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U1Preset(8, '【動物園野餐】猴子拿了 <strong>8</strong> 根香蕉，看一眼就知道是 5 根加 3 根！')">🍌 香蕉 8根</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U1Preset(10, '【動物園野餐】松鼠買了 <strong>10</strong> 塊小蛋糕，剛好排滿兩排 5！')">🧁 蛋糕 10塊</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG1U1Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 10以內數的核心觀念：五五數法與一一對應
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>一一對應原則</strong>：數數時手指指著一個物品、嘴巴數一個數字，不多數也不漏數。</li>
+            <li><strong>五五數法排列</strong>：5 顆排成一橫列，第 6 顆換到下一列，孩子能立即辨識「5 和 1 是 6」、「5 和 3 是 8」，免除逐一點數的負擔。</li>
+            <li><strong>滿十的概念</strong>：兩列各 5 顆剛好滿 10，為後續二位數十進位打下直觀基礎。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g1U1Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：把 7 個點子排在點子卡上，上面一排有幾個？下面一排有幾個？一眼看過去是不是「5 和 2 就是 7」？
+        </div>
       </div>
     </section>
   
@@ -484,16 +518,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>📏 1上 第 2 單元：比長短</h2>
-          <p>起點對齊基準線，藉由長條比較與方格測量，建立長度直觀感。</p>
+          <p>結合康軒版「色鉛筆大比拼、剪刀彩帶量一量」，掌握長度基準線對齊與直接比較！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG1UnitQuiz(2)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g1U2Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g1U2TaskText">【文具店大比拼】桌上放著不同長度的藍色筆與紅色筆，請量量看誰比較長！注意：起點必須對齊基準線！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U2Preset(7, 5, true, '【文具店比長短】藍筆 7 格，紅筆 5 格，起點已對齊基準線，藍筆比紅筆長！')">✏️ 藍筆7格 vs 紅筆5格</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U2Preset(5, 7, false, '【小心陷阱】紅色筆末端雖然比較突出去，但因為起點沒對齊，其實藍筆才沒有比較短！請點按對齊！')">⚠️ 起點沒對齊陷阱題</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U2Preset(9, 4, true, '【長度測量】直尺長 9 格，剪刀長 4 格，直尺比剪刀多出 5 格！')">📏 尺與剪刀比比看</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG1U2Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 比長短核心觀念：對齊基準線才能比長短
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>起點必須對齊</strong>：比較兩樣物品長短時，必須將一端貼齊同一條「基準線」，只看另一端誰伸得長。</li>
+            <li><strong>直接比較與個別單位</strong>：除了把兩件物品靠在一起比，也可以用相同的「小方格」來數格子數量。</li>
+            <li><strong>視覺陷阱破除</strong>：起點不同時，不能只看末端誰在前面，必須先平移對齊再比！</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g1U2Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：如果把蠟筆往右推，讓它的右端超過鉛筆，這時候蠟筆真的比鉛筆長嗎？為什麼要先把左端對齊？
+        </div>
       </div>
     </section>
   
@@ -505,16 +572,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🧍 1上 第 3 單元：排順序、比多少</h2>
-          <p>排隊前後順序（第幾個 vs 幾個）與一一對應連線比多少。</p>
+          <p>結合康軒版「森林動物排隊買冰淇淋、一一對應連連看」，徹底分清「第幾個 (序數)」與「幾個 (基數)」！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG1UnitQuiz(3)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g1U3Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g1U3TaskText">【動物排隊買冰淇淋】小動物們依序排隊，點選小動物觀察他是「排在第幾隻」，並數數看全部有「幾隻」！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U3Preset(0, 5, 4, '【排順序】獅子排在最前面，是「第 1 隻」！')">🦁 獅子排在第 1 隻</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U3Preset(2, 6, 4, '【排順序】從左往右數：第 1、第 2、第 3，兔子排在「第 3 隻」！')">🐰 兔子排在第 3 隻</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U3Preset(1, 6, 4, '【比多少】盤子裡有 6 顆蘋果和 4 顆橘子，一一對應連線後，蘋果多 2 顆！')">⚖️ 水果比多少 (6比4)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG1U3Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 排順序與比多少核心觀念：序數 vs 基數 & 一對一配對
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>「幾個」代表全部數量（基數）</strong>：例如隊伍裡一共有 5 隻動物，代表總數是 5。</li>
+            <li><strong>「第幾個」代表特定位置（序數）</strong>：例如「第 3 隻小兔子」只代表特定那一隻，不是指 3 隻。</li>
+            <li><strong>一對一配對連線</strong>：一個對一個，全部連完後，還有剩下沒連到的就是「比較多」，多出來的個數就是相差量。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g1U3Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：排隊時，排在「第 4 個」的小朋友前面有幾個人？如果隊伍總共有 4 個人，他和隊伍總人數有什麼不同？
+        </div>
       </div>
     </section>
   
@@ -526,16 +626,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🌳 1上 第 4 單元：分與合</h2>
-          <p>蘋果樹分合模型與十雙色點子卡，奠定十進位與加減法基礎。</p>
+          <p>結合康軒版「蘋果樹分與合、十雙色點子卡」，熟練 10 的組成與分解，為進位加減打下堅實基礎！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG1UnitQuiz(4)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g1U4Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g1U4TaskText">【採蘋果分籃子】樹上有 <strong>10</strong> 顆紅蘋果，請分配掉進左邊和右邊籃子裡，看看 10 可以分成幾和幾！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U4Preset(10, 6, '【合十好朋友】10 顆蘋果，左邊放 6 顆，右邊放 4 顆，6 和 4 合起來是 10！')">🧺 10 分成 6 和 4</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U4Preset(10, 7, '【合十好朋友】10 顆蘋果，左邊放 7 顆，右邊放 3 顆，7 和 3 合起來是 10！')">🧺 10 分成 7 和 3</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U4Preset(8, 5, '【數的分解】8 顆蘋果，左邊放 5 顆，右邊放 3 顆，5 和 3 合起來是 8！')">🧺 8 分成 5 和 3</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG1U4Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 分與合核心觀念：整體與部分、合十好朋友
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>整體可以分成兩個部分</strong>：一個數可以拆分成兩堆，兩堆合起來還是原來的數（數的守恆）。</li>
+            <li><strong>合十好朋友（必背互補數）</strong>：1配9、2配8、3配7、4配6、5配5，熟練合十是未來二位數進位加法的關鍵秘密武器！</li>
+            <li><strong>雙色點子卡</strong>：透過翻轉顏色，一眼看出「看見 8 個紅點，就知道還有 2 個白點湊成 10」。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g1U4Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：樹上有 10 顆蘋果，如果左邊籃子裝了 8 顆，右邊籃子一定裝幾顆？如果左邊增加 1 顆，右邊會變多還是變少？
+        </div>
       </div>
     </section>
   
@@ -547,16 +680,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>📦 1上 第 5 單元：方盒、圓罐、球</h2>
-          <p>立體形體辨識實驗室，探索平平的面、滾動、滑動與堆疊。</p>
+          <p>結合康軒版「玩具箱大整理、滾動堆疊實驗室」，親身體驗立體形體平平的面與彎曲面的特性！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG1UnitQuiz(5)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g1U5Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g1U5TaskText">【積木城堡大挑戰】小朋友在地上堆積木，哪些形體可以疊高高？哪些形體滾得動？點選進行滾動與堆疊實驗！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U5Preset('box', '【方盒特性】六個面都是平平的，擺在桌上很穩，可以往上堆疊，但不能滾動！')">📦 方盒 (面平平/可疊高)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U5Preset('can', '【圓罐特性】上下兩個面是平平的圓形（可以堆疊），側邊是彎曲的面（側躺可以滾動）！')">🥫 圓罐 (有平面有曲面)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U5Preset('ball', '【球形特性】表面全部都是彎曲的曲面，放在桌上容易到處滾動，不能堆疊！')">⚽ 球 (全部彎彎面/到處滾)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="selectG1U5Shape('box')">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 方盒、圓罐、球核心觀念：平平的面 vs 彎彎的曲面
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>方盒（長方體/正方體）</strong>：每個面都是平平的。平平的面貼在一起可以穩固堆高，推它時只會滑動，不會滾動。</li>
+            <li><strong>圓罐（圓柱體）</strong>：直立時上面和下面是平平的圓形，可以向上堆疊；推倒側躺時是彎曲的面，可以向前滾動。</li>
+            <li><strong>球（球體）</strong>：沒有任何平平的面，全部是彎曲的曲面。往任何方向推都會順暢滾動，但不能在它上面堆疊其他積木。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g1U5Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：如果想蓋一座不會倒的高塔，最底層應該放方盒還是球？為什麼滾動輪子都是圓罐或球形而不是方盒？
+        </div>
       </div>
     </section>
   
@@ -568,16 +734,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🪙 1上 第 6 單元：30以內的數</h2>
-          <p>十個一捆位值板、10元與1元錢幣組合，培養二位數結構。</p>
+          <p>結合康軒版「文具雜貨鋪買彩色筆、十個一捆鉛筆」，從個位跨入二位數，理解十位與個位的位值意義！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG1UnitQuiz(6)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g1U6Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g1U6TaskText">【文具雜貨鋪】小華買了一盒 <strong>24</strong> 元的彩色筆，請看看定位板，數一數需要幾捆 10 枝鉛筆和幾枝散裝鉛筆！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U6Preset(24, '【購物付錢】彩色筆 24 元，需要 2 張十元（或 2 捆鉛筆）和 4 個一元！')">🪙 24元 (2個十與4個一)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U6Preset(18, '【購物付錢】買剪刀 18 元，由 1 個十和 8 個一組成！')">🪙 18元 (1個十與8個一)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U6Preset(30, '【整十數】買水彩 30 元，滿 3 個十，個位是 0！')">🪙 30元 (3個十剛好滿三十)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG1U6Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 30以內數核心觀念：十進位位值與數線順數
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>十個一捆</strong>：滿 10 根散裝吸管就綁成 1 捆。1 捆代表「1 個十」，散裝代表「幾個一」。</li>
+            <li><strong>位值表左右位置</strong>：左邊是「十位」，右邊是「個位」。「24」表示十位有 2 個十（是 20），個位有 4 個一（是 4）。</li>
+            <li><strong>錢幣換算連結</strong>：1 個 10 元硬幣可以換成 10 個 1 元硬幣，加深二位數合成與分解概念。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g1U6Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：數字「20」裡的「0」可以不寫嗎？如果不寫變成「2」，它的大小會差多少？十位的「2」代表多少個一？
+        </div>
       </div>
     </section>
   
@@ -589,16 +788,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>➕ 1上 第 7 單元：10以內的加法</h2>
-          <p>合併與添加情境，小鳥停樹枝互動動畫，理解加號與算式。</p>
+          <p>結合康軒版「公園樹枝停小鳥、花園採花瓣」，體會合併與添加生活情境，熟練加法算式！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG1UnitQuiz(7)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g1U7Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g1U7TaskText">【公園小鳥聚會】樹枝上原本停了 <strong>4</strong> 隻小鳥，又飛來了 <strong>3</strong> 隻小鳥，現在樹上一共有幾隻小鳥？</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U7Preset(4, 3, '【添加情境】樹上原本有 4 隻小鳥，又飛來 3 隻，4 + 3 = 7 隻！')">🐦 4隻又飛來3隻 (4+3=7)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U7Preset(5, 2, '【合併情境】花瓶裡有 5 朵紅花和 2 朵黃花，合起來 5 + 2 = 7 朵！')">🌸 5朵紅花加2朵黃花 (5+2=7)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U7Preset(6, 4, '【合十加法】原有 6 顆糖果，媽媽又給 4 顆，6 + 4 = 10 顆！')">🍬 6顆糖加4顆糖 (6+4=10)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG1U7Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 10以內加法核心觀念：合併情境 vs 添加情境
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>合併情境（合起來）</strong>：桌上有 4 顆紅蘋果和 3 顆青蘋果，問「合起來一共有幾顆？」（算式：4 + 3 = 7）。</li>
+            <li><strong>添加情境（又來了）</strong>：原本有 4 隻鳥，後來「又飛來 3 隻」，問「現在一共有幾隻？」（算式：4 + 3 = 7）。</li>
+            <li><strong>加號與等號的意義</strong>：「＋」是加號表示合在一起，「＝」是等號表示兩邊的數量一樣多。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g1U7Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：算式 4 ＋ 3 ＝ 7，如果把順序倒過來寫成 3 ＋ 4，答案會改變嗎？這代表什麼數學特性？
+        </div>
       </div>
     </section>
   
@@ -610,16 +842,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>➖ 1上 第 8 單元：10以內的減法</h2>
-          <p>拿走與比較情境，動態戳破氣球，理解減號與差的意義。</p>
+          <p>結合康軒版「園遊會氣球攤、吃餅乾盤子空了」，理解拿走、飛走、吃掉求剩下的減法概念！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG1UnitQuiz(8)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g1U8Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g1U8TaskText">【園遊會氣球攤】手上有 <strong>8</strong> 顆氣球，不小心飛走了 <strong>3</strong> 顆，手裡還剩下幾顆氣球？點選戳破動態演示！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U8Preset(8, 3, '【拿走減法】手上原有 8 顆氣球，飛走 3 顆，剩下 8 - 3 = 5 顆！')">🎈 8顆飛走3顆 (8-3=5)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U8Preset(9, 4, '【吃掉求剩】盤子裡原本有 9 塊餅乾，吃掉 4 塊，剩下 9 - 4 = 5 塊！')">🍪 9塊餅乾吃掉4塊 (9-4=5)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U8Preset(7, 4, '【比較減法】7 隻兔子和 4 根蘿蔔一對一配對，兔子比蘿蔔多 7 - 4 = 3 隻！')">🥕 7隻兔與4蘿蔔 (7-4=3)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG1U8Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 10以內減法核心觀念：拿走求剩 vs 比較求差
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>拿走情境（吃掉、飛走、壞掉）</strong>：從全部的數量中扣掉一部分，問「還剩下多少？」（算式：8 － 3 ＝ 5）。</li>
+            <li><strong>比較情境（誰比誰多/少）</strong>：兩堆不同數量的東西比大小，問「多幾個」或「少幾個」，同樣用大數減小數（算式：7 － 4 ＝ 3）。</li>
+            <li><strong>被減數、減數與差</strong>：8 是被減數（原有的總數），3 是減數（拿走或比較的數），5 是差（算出的結果）。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g1U8Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：如果手上有 6 顆氣球，全部 6 顆都飛走了，手裡剩下幾顆？算式怎麼寫？（6 － 6 ＝ 0）
+        </div>
       </div>
     </section>
   
@@ -631,16 +896,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>⏰ 1上 第 9 單元：幾點鐘</h2>
-          <p>鐘面時針短針與分針長針認識，整點與半點精準轉動判定。</p>
+          <p>結合康軒版「小熊的一天生活作息、鐘面大轉盤」，清楚辨認長針與短針，精準讀出整點與半點！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG1UnitQuiz(9)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g1U9Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g1U9TaskText">【小熊的一天作息】觀察時鐘，看看小熊在每天的不同時刻做些什麼！撥動指針確認長針與短針位置！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U9Preset(8, false, '【整點鐘】長針指著 12，短針指著 8，是「8 點鐘」，小熊背書包去上學！')">🎒 早上 8 點鐘 (上學)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U9Preset(12, true, '【半點鐘】長針指著 6，短針指在 12 和 1 正中間，是「12 點半」，小熊吃午餐！')">🍜 中午 12 點半 (午餐)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG1U9Preset(9, false, '【整點鐘】長針指著 12，短針指著 9，是「9 點鐘」，小熊準時上床睡覺！')">🛌 晚上 9 點鐘 (睡覺)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG1U9Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 認識時鐘核心觀念：長針、短針、整點與半點
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>短針是時針，長針是分針</strong>：短針走得慢看「幾點」，長針走得快看「幾分」。</li>
+            <li><strong>整點看 12</strong>：只要長針筆直指著「12」，短針指著幾就是「幾點鐘」（例如短針指著 3，就是 3 點鐘）。</li>
+            <li><strong>半點看 6（短針走一半）</strong>：長針筆直指著「6」時是「半」（30分），此時短針會走到兩個數字的「正中間」，讀作「幾點半」。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g1U9Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：長針指在 6，短針剛好在 4 和 5 的正中間，這時候是「4 點半」還是「5 點半」？為什麼還不能讀作 5 點半？
+        </div>
       </div>
     </section>
   
@@ -652,16 +950,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>💵 2上 第 1 單元：200以內的數</h2>
-          <p>百位、十位、個位位值表，鈔票硬幣換算與大小比較。</p>
+          <p>結合康軒版「文具批發倉庫盤點、新臺幣鈔票硬幣換算」，建立百位、十位、個位位值表與大數比大小！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG2UnitQuiz(1)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g2U1Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g2U1TaskText">【文具批發倉庫】店長在清點庫存，倉庫裡有 <strong>146</strong> 本筆記本，請在位值表上檢視百位、十位與個位的鈔幣組成！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U1Preset(146, '【百位數認識】146 是由 1 個百、4 個十和 6 個一組成的！')">💵 146元 (1百4十6一)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U1Preset(180, '【末位是零】180 是由 1 個百、8 個十和 0 個一組成，個位要寫 0 佔位！')">💵 180元 (個位是0)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U1Preset(152, '【比大小法則】152 本筆記本和 139 本比大小：百位都是 1，比十位 5 > 3，所以 152 > 139！')">⚖️ 比大小 (152 vs 139)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG2U1Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 200以內的數核心觀念：三位數位值表與位值比大小
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>滿十進一化聚</strong>：10 個一元可以換 1 個十元；10 個十元可以換 1 張一百元！</li>
+            <li><strong>百位、十位與個位</strong>：由左至右分別是百位（100）、十位（10）、個位（1）。</li>
+            <li><strong>比大小標準流程</strong>：先從最高位（百位）比起；如果百位一樣大，再比十位；十位也一樣大，才比個位。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g2U1Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：如果百位是 1、十位是 0、個位是 5，這個數讀作什麼？中間的十位為 0 需要讀出來嗎？（讀作一百零五）
+        </div>
       </div>
     </section>
   
@@ -673,16 +1004,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🧮 2上 第 2 單元：二位數直式加減</h2>
-          <p>直式進退位演算機，視覺化滿十進一、借十退位計算步驟。</p>
+          <p>結合康軒版「超市收銀台買零食、退位找零錢」，視覺化滿十進位與不夠減借位的計算原理！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG2UnitQuiz(2)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g2U2Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g2U2TaskText">【超市收銀台】買了一盒餅乾 <strong>38</strong> 元和一瓶果汁 <strong>27</strong> 元，需要付多少元？點選啟動直式進退位演算機！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U2Preset(38, 27, true, '【進位加法】個位 8 + 7 = 15，個位寫 5，滿十向十位進 1！十位 1 + 3 + 2 = 6，答案是 65！')">➕ 38 + 27 (進位加法)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U2Preset(50, 24, false, '【退位減法】個位 0 不夠減 4，向十位借 1 當 10！10 - 4 = 6，十位 4 - 2 = 2，答案是 26！')">➖ 50 - 24 (整十退位減)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U2Preset(63, 28, false, '【退位減法】個位 3 不夠減 8，借十退位：13 - 8 = 5，十位 5 - 2 = 3，答案是 35！')">➖ 63 - 28 (一般退位減)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG2U2Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 直式加減核心觀念：位值對齊、滿十進一與借十退位
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>直式對齊原則</strong>：個位一定要和個位上下對齊，十位和十位上下對齊，橫線下方從個位開始算。</li>
+            <li><strong>加法滿十進一</strong>：個位相加達到 10 或以上時，在十位上方寫上小小的「1」，十位相加時絕不能漏加進位。</li>
+            <li><strong>減法不夠減借一當十</strong>：個位不夠減時，將十位劃斜線減 1，借 1 個十到個位變成 10 個一再減。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g2U2Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：做直式減法 52 － 27 時，為什麼不能用下面的 7 減上面的 2？減法是由被減數減去減數，順序絕對不能顛倒！
+        </div>
       </div>
     </section>
   
@@ -694,16 +1058,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>📐 2上 第 3 單元：量長度</h2>
-          <p>公分 (cm) 刻度尺測量，對齊 0 刻度與斷尺兩端相減原理。</p>
+          <p>結合康軒版「美勞課手作文具量測、斷尺測量大解密」，熟練公分 (cm) 刻度尺與兩端刻度相減！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG2UnitQuiz(3)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g2U3Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g2U3TaskText">【美勞手作課】測量彩色鉛筆與緞帶的長度！觀察尺上的公分刻度，掌握從 0 開始量與斷尺量法！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U3Preset(8, 0, '【標準測量】鉛筆左端對齊刻度 0，右端對齊刻度 8，長度就是 8 公分 (cm)！')">📏 完整量測 (從0量到8)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U3Preset(6, 3, '【斷尺挑戰】橡皮擦左端放在刻度 3，右端在刻度 9，長度是 9 - 3 = 6 公分 (cm)！')">✂️ 斷尺測量 (從3量到9)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U3Preset(8, 2, '【斷尺挑戰】緞帶左端在刻度 2，右端在刻度 10，長度是 10 - 2 = 8 公分 (cm)！')">📐 緞帶長度 (從2量到10)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG2U3Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 量長度核心觀念：認識公分刻度與斷尺兩端相減
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>長度公制單位：公分 (cm)</strong>：尺上相鄰兩個大數字之間的距離就是 1 公分。</li>
+            <li><strong>起點對齊 0 刻度</strong>：一般量測時，物體左端要對齊刻度「0」，右端指在幾就是幾公分。</li>
+            <li><strong>斷尺測量原理</strong>：若起點不是 0（例如尺壞了），物品長度 ＝「右端終點刻度 － 左端起點刻度」。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g2U3Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：如果一把尺前面的 0~2 公分斷掉了，我們把竹籤放在刻度 3 到刻度 8，這根竹籤是 8 公分還是 5 公分？為什麼？
+        </div>
       </div>
     </section>
   
@@ -715,16 +1112,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🔄 2上 第 4 單元：加減關係與應用</h2>
-          <p>部分-整體線段圖模型，加減互逆與求未知數框框。</p>
+          <p>結合康軒版「麵包店烤箱出爐、部分整體線段圖」，透徹理解加減互逆運算與未知數求法！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG2UnitQuiz(4)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g2U4Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g2U4TaskText">【烘焙坊出爐】烤盤上有紅豆麵包 <strong>14</strong> 個與奶油麵包 <strong>11</strong> 個，一共有 <strong>25</strong> 個麵包。觀察加減互逆線段圖！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U4Preset(14, 11, '【求未知部分】已知全體 25 個，紅豆 14 個，奶油有 25 - 14 = 11 個！')">🥖 求其中一部分 (25 - 14 = 11)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U4Preset(14, 11, '【求整體總量】紅豆 14 個與奶油 11 個合起來，14 + 11 = 25 個！')">🥐 求全體總和 (14 + 11 = 25)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U4Preset(20, 15, '【加減互逆驗算】20 + 15 = 35，用 35 - 15 = 20 或 35 - 20 = 15 來驗算！')">🥨 驗算練習 (20 + 15 = 35)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG2U4Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 加減關係核心觀念：部分-整體線段圖與互逆運算
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>部分 ＋ 部分 ＝ 整體</strong>：兩個部分合起來等於全部總量。</li>
+            <li><strong>整體 － 部分 ＝ 另一部分</strong>：想求其中一個未知部分時，用全部減去已知的部分。</li>
+            <li><strong>加法與減法互為逆運算</strong>：加法算式可以用減法來驗算；減法算式可以用加法來驗算。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g2U4Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：算式 □ ＋ 12 ＝ 30，想求框框裡的數字，要用加法還是減法算？為什麼？（30 － 12 ＝ 18）
+        </div>
       </div>
     </section>
   
@@ -736,16 +1166,50 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🟩 2上 第 5 單元：面積的大小比較</h2>
-          <p>方格紙覆蓋計數、透明重疊透視比較，建立面積直觀。</p>
+          <p>結合康軒版「客廳鋪地磚遊戲、方格紙覆蓋點數」，建立平面圖形大小的直觀與個別單位計數！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG2UnitQuiz(5)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g2U5Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g2U5TaskText">【鋪彩色地磚】給房間地面鋪上彩色方塊地磚，圖形甲鋪了 <strong>12</strong> 格，圖形乙鋪了 <strong>9</strong> 格，哪一塊面積比較大？</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U5Preset(12, 9, '【方格點數比大小】圖形甲有 12 個方格，圖形乙有 9 個方格，12 > 9，甲的面積比乙大！')">🟩 甲12格 vs 乙9格</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U5Preset(10, 10, '【面積守恆】甲是長條形(10格)，乙是階梯形(10格)，雖然形狀不同但格子數一樣多，面積一樣大！')">🟧 形狀不同但面積相同(10格)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U5Preset(8, 15, '【方格點數】圖形乙有 15 個方格，明顯比圖形甲(8格)大很多！')">🟪 甲8格 vs 乙15格</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG2U5Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 面積大小比較核心觀念：什麼是面積？個別單位覆蓋點數
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>面與面積的意義</strong>：平面圖形所佔平面的大小，叫做面積。</li>
+            <li><strong>直接疊合比較</strong>：如果圖形大小差異明顯，可以直接把兩個圖形疊在一起，看哪一個多出來。</li>
+            <li><strong>間接比較（個別單位）</strong>：用大小完全相同的「正方形小白方格」鋪滿整個圖形，數出格子個數來比大小。</li>
+            <li><strong>形狀改變面積不變</strong>：把一個圖形剪開拼成另一種形狀，只要沒有重疊或縫隙，面積保持不變。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g2U5Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：一條長長的長方形拼了 8 個方格，另一個胖胖的正方形也拼了 8 個方格，哪一個面積比較大？（一樣大，因為都是 8 格！）
+        </div>
       </div>
     </section>
   
@@ -757,16 +1221,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🚌 2上 第 6 單元：兩步驟的加減</h2>
-          <p>公車乘客上下車生活情境，掌握先算什麼、再算什麼。</p>
+          <p>結合康軒版「市區公車乘客上下車、零用錢買文具」，掌握第一步先算什麼、第二步再算什麼！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG2UnitQuiz(6)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g2U6Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g2U6TaskText">【市區公車出發】公車上原本有 <strong>18</strong> 人，靠站後下車 <strong>5</strong> 人、又上車 <strong>8</strong> 人，現在車上一共有幾人？</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U6Preset(18, 5, 8, '【兩步驟問題】第一步先算下車後：18 - 5 = 13 人；第二步再算上車後：13 + 8 = 21 人！')">🚌 先下5人後上8人 (18-5+8)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U6Preset(30, 12, 20, '【生活應用】原有 30 元，買糖果花 12 元剩下 18 元；媽媽又給 20 元，最後有 18 + 20 = 38 元！')">🍬 買糖果又給零錢 (30-12+20)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U6Preset(24, 4, 6, '【連減情境】一盒 24 枝彩色筆，送同學 4 枝剩下 20 枝，又送妹妹 6 枝，最後剩 20 - 6 = 14 枝！')">✏️ 彩色筆連送兩次 (24-4-6)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG2U6Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 兩步驟加減核心觀念：分步列式與併式思考
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>步驟拆解清晰</strong>：先問自己「題目的第一步要先算出什麼隱藏數字？」，算完後再拿這個答案去做第二步。</li>
+            <li><strong>生活情境對照</strong>：公車先有人下車（減法），接著有人上車（加法），按事情發生的先後順序逐步計算。</li>
+            <li><strong>列式規範</strong>：分步列出兩個算式，每個算式都要標註正確的答案與單位。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g2U6Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：如果題目是「小明有 20 元，買鉛筆花 5 元，買橡皮擦花 3 元」，可以先把買文具花了多少錢加起來嗎？（5 ＋ 3 ＝ 8，20 － 8 ＝ 12 元）
+        </div>
       </div>
     </section>
   
@@ -778,16 +1275,50 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🐸 2上 第 7 單元：2、5、4、8的乘法</h2>
-          <p>連加的簡記，青蛙跳跳數線與點子矩陣倍數模型。</p>
+          <p>結合康軒版「青蛙連跳數線、水果盤裝點子陣列」，理解乘法是相同數連加的簡記！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG2UnitQuiz(7)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g2U7Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g2U7TaskText">【水果包裝廠】每盤裝相同數量的水果，算算看一共有幾個！青蛙在數線上連跳，發現乘法的倍數規律！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U7Preset(2, 4, '【2的乘法】每盤 2 顆蘋果，4 盤是 4 個 2 連加：2 + 2 + 2 + 2 = 8 顆，記作 2 × 4 = 8！')">🍎 2的乘法 (每盤2顆裝4盤)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U7Preset(5, 6, '【5的乘法】每串 5 根香蕉，6 串是 6 個 5，記作 5 × 6 = 30！個位數字不是 0 就是 5！')">🍌 5的乘法 (每串5根裝6串)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U7Preset(4, 5, '【4的乘法】青蛙每次跳 4 格，跳了 5 次，落在 4 × 5 = 20！')">🐸 4的跳跳機 (4×5=20)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U7Preset(8, 3, '【8的乘法】1 盒有 8 顆巧克力，3 盒共有 8 × 3 = 24 顆！')">📦 8的倍數 (8×3=24)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG2U7Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 乘法核心觀念：相同數連加的簡記、被乘數 vs 乘數
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>乘法的本質</strong>：乘法就是「幾個相同數連加」的快速簡寫（例如 5 ＋ 5 ＋ 5 ＝ 5 × 3 ＝ 15）。</li>
+            <li><strong>被乘數與乘數</strong>：「被乘數」表示每一份有多少個（單位量）；「乘數」表示有幾份（倍數）。</li>
+            <li><strong>2、5、4、8的規律</strong>：2的倍數個位都是雙數；5的倍數個位一定是 0 或 5；8的倍數剛好是4的倍數的兩倍！</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g2U7Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：「一輛三輪車有 3 個輪子，4 輛三輪車有幾個輪子？」算式要寫成 3 × 4 還是 4 × 3？哪一個是被乘數？（每輛車 3 個輪子，所以 3 是被乘數！）
+        </div>
       </div>
     </section>
   
@@ -799,16 +1330,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>🕰️ 2上 第 8 單元：幾時幾分</h2>
-          <p>鐘面大格5分小格1分，分針時針連動精確報時。</p>
+          <p>結合康軒版「一日遊火車時刻表、鐘面五分一數小冒險」，精準讀出大格與小格，分針指針完美連動！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG2UnitQuiz(8)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g2U8Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g2U8TaskText">【車站時刻大冒險】火車即將進站！觀察車站大鐘，學會鐘面上大格 5 分鐘、小格 1 分鐘的精確讀時！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U8Preset(8, 15, '【精準報時】時針走過 8，分針指在大格 3（5 × 3 = 15 分），是 8 點 15 分！')">🚉 8 點 15 分 (長針指在3)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U8Preset(10, 45, '【接近整點】時針靠近 11 但還沒到 11，分針指在 9（45分），是 10 點 45 分！')">🍵 10 點 45 分 (長針指在9)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U8Preset(3, 50, '【讀時陷阱】時針看起來很像在 4，但因為還沒到 12，所以還是 3 點 50 分！')">🏃 3 點 50 分 (差10分4點)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG2U8Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 幾時幾分核心觀念：時針與分針的走動規律、5分一數
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>鐘面刻度結構</strong>：鐘面分成 12 個大格，每個大格分成 5 個小格，全鐘面共有 60 個小格。</li>
+            <li><strong>分針走動規律</strong>：分針走 1 小格是 1 分鐘，走 1 大格是 5 分鐘；分針走一圈（60分），時針剛好走 1 大格（1小時）。</li>
+            <li><strong>讀時口訣</strong>：先看短針走過哪一個數字（代表幾點）；再從 12 開始順時針以「5分一數」看長針指到哪裡（代表幾分）。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g2U8Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：當時間是 1 點 55 分時，時針會指在 1 還是快指到 2？這時候可以讀作 2 點 55 分嗎？為什麼？
+        </div>
       </div>
     </section>
   
@@ -820,16 +1384,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>✖️ 2上 第 9 單元：3、6、9、7的乘法</h2>
-          <p>九九乘法表矩陣探索，長方形陣列旋轉發現交換律。</p>
+          <p>結合康軒版「九九乘法大冒險、矩形陣列旋轉探索」，熟練九九乘法表並發現乘法交換律！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG2UnitQuiz(9)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g2U9Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g2U9TaskText">【九九乘法冒險島】點選九九乘法矩陣算式，旋轉點子陣列，看看 3×7 與 7×3 的神奇交換律！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U9Preset(3, 7, '【3的乘法】3 顆一包，7 包是 3 × 7 = 21 顆！')">✖️ 3 的乘法 (3 × 7 = 21)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U9Preset(7, 3, '【乘法交換律】把 3 橫排 7 直列的點子旋轉 90 度，變成 7 橫排 3 直列，總數都是 21！')">🔄 旋轉交換律 (3×7 vs 7×3)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U9Preset(9, 6, '【9的乘法】9 × 6 = 54，十位是 5，個位是 4，十位加個位 5 + 4 = 9！')">✖️ 9 的手指魔術 (9 × 6 = 54)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG2U9Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 3、6、9、7乘法核心觀念：九九乘法表與乘法交換律
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>九九乘法背誦口訣</strong>：熟記三三得九、六七四十二、九九八十一，是小學計算不可或缺的基本功。</li>
+            <li><strong>乘法交換律</strong>：被乘數與乘數對調，算出來的「積」完全一樣（$a \times b = b \times a$）。在生活情境中，代表橫看與直看的視角互換。</li>
+            <li><strong>倍數加倍規律</strong>：6 的乘法結果是 3 的乘法的 2 倍；8 的乘法結果是 4 的乘法的 2 倍。</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g2U9Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：如果忘記了 7 × 8 是多少，能不能先算 7 × 7 ＝ 49，再加上一個 7 呢？（49 ＋ 7 ＝ 56！）
+        </div>
       </div>
     </section>
   
@@ -841,16 +1438,49 @@
       <div class="unit-banner">
         <div class="unit-banner-info">
           <h2>⚖️ 2上 第 10 單元：容量與重量</h2>
-          <p>量杯倒水水位高度比較，天平平衡直接與代換比輕重。</p>
+          <p>結合康軒版「果汁量杯倒水實驗、天平平衡代換法」，建立容量與重量的直接比較與間接比較！</p>
         </div>
         <div class="submode-switcher">
           <button class="btn btn-Amber" onclick="openG2UnitQuiz(10)">📝 參加本單元測驗 (5份卷)</button>
         </div>
       </div>
 
-      <!-- 互動教具容器 -->
-      <div class="workspace-card" style="margin-top:1rem;">
-        <div id="g2U10Display"></div>
+      <!-- 課本案例任務卡 (仿三年級情境引導架構) -->
+      <div class="workspace-card" style="margin-top:1rem; border-left:5px solid #F59E0B;">
+        <div class="story-prompt" style="margin-bottom:0.75rem;">
+          <div class="story-text">
+            <span class="story-badge">課本案例任務</span>
+            <span id="g2U10TaskText">【實驗室動手做】把水倒入杯子觀察水位高低，並在天平放上砝碼與水果比比看誰比較重！</span>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U10Preset('capacity', 1, '【容量比較】杯子大小相同時，水裝得越高，代表容量越大！')">🥛 容器容量比較 (相同杯子看水位)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U10Preset('weight', -1, '【重量比較】天平沉下去的一端比較重，翹起來的一端比較輕，平平的代表一樣重！')">⚖️ 天平秤重量 (沉下去的比較重)</button>
+            <button class="btn btn-Amber" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="setG2U10Preset('weight', 0, '【代換平衡】1 顆蘋果和 2 顆奇異果剛好平衡，那 2 顆蘋果需要幾顆奇異果才能平衡？（4顆！）')">🍎 代換法比輕重 (1顆蘋果=2顆奇異果)</button>
+            <button class="btn btn-primary" style="font-size:0.85rem; padding:0.35rem 0.75rem;" onclick="randomG2U10Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <!-- 核心觀念深度解析卡片 -->
+        <div class="g6-concept-card" style="margin: 0.85rem 0; border-left-color: #3B82F6;">
+          <div class="g6-concept-title">
+            💡 容量與重量核心觀念：直接比較、間接比較與天平代換
+          </div>
+          <ul style="padding-left:1.25rem; line-height:1.75; font-size:0.95rem; color:#334155; margin:0.35rem 0 0 0;">
+            <li><strong>容量的意義</strong>：容器內部能容納液體的多寡。比較時若杯子形狀不同，必須倒進「相同的透明量杯」中看水位高低。</li>
+            <li><strong>重量的意義</strong>：物體受地心引力吸引的輕重程度。兩手掂掂看是直接感覺；用天平秤是科學的精確比較。</li>
+            <li><strong>天平代換法則</strong>：若 A ＝ 2個B，則 2個A ＝ 4個B，這是未來代數思考（等量公理）的重要啟蒙！</li>
+          </ul>
+        </div>
+
+        <!-- 具體教具互動操作區 -->
+        <div style="margin-top:1rem;">
+          <div id="g2U10Display"></div>
+        </div>
+
+        <!-- 啟發思考反饋提示橫幅 -->
+        <div class="feedback-banner" style="margin-top:1rem;">
+          💡 思考提問：胖胖矮矮的杯子和瘦瘦高高的杯子，水的高度看起來一樣高，哪一個裝的水比較多？為什麼不能只看高度？
+        </div>
       </div>
     </section>
   

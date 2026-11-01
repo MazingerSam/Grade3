@@ -814,6 +814,123 @@ function initG1App() {
   renderG1U1();
 }
 
+
+/* ================= 1上 課本案例任務與隨機出題控制器 ================= */
+function setG1U1Preset(count, story) {
+  g1State.u1.count = count;
+  const el = document.getElementById('g1U1TaskText');
+  if (el) el.innerHTML = story;
+  renderG1U1();
+}
+function randomG1U1Task() {
+  const c = Math.floor(Math.random() * 10) + 1;
+  const items = ['🍎 紅蘋果', '🍓 草莓', '🍌 香蕉', '🧁 杯子蛋糕', '🎈 彩色氣球', '🦆 玩具小鴨'];
+  const item = items[Math.floor(Math.random() * items.length)];
+  setG1U1Preset(c, `【隨機出題】野餐墊上有 <strong>${c}</strong> 個${item}，請在點子卡排排看，並數一數是多少！`);
+}
+
+function setG1U2Preset(lenA, lenB, aligned, story) {
+  g1State.u2.lenA = lenA;
+  g1State.u2.lenB = lenB;
+  g1State.u2.aligned = aligned;
+  const el = document.getElementById('g1U2TaskText');
+  if (el) el.innerHTML = story;
+  renderG1U2();
+}
+function randomG1U2Task() {
+  const a = Math.floor(Math.random() * 7) + 3;
+  let b = Math.floor(Math.random() * 7) + 3;
+  if (b === a) b = (a % 9) + 2;
+  const al = Math.random() > 0.3;
+  setG1U2Preset(a, b, al, `【隨機挑戰】量量看！藍色彩帶長 <strong>${a}</strong> 格，紅色彩帶長 <strong>${b}</strong> 格，${al ? '起點已對齊基準線' : '⚠️ 注意：起點沒有對齊！'}，誰比較長？`);
+}
+
+function setG1U3Preset(idx, numA, numB, story) {
+  g1State.u3.selectedIdx = idx;
+  g1State.u3.numA = numA;
+  g1State.u3.numB = numB;
+  const el = document.getElementById('g1U3TaskText');
+  if (el) el.innerHTML = story;
+  renderG1U3();
+}
+function randomG1U3Task() {
+  const idx = Math.floor(Math.random() * 5);
+  const a = Math.floor(Math.random() * 6) + 3;
+  const b = Math.floor(Math.random() * 6) + 3;
+  const names = ['獅子', '大象', '小兔子', '長頸鹿', '小猴子'];
+  setG1U3Preset(idx, a, b, `【隨機出題】排隊買票中！請找出第 <strong>${idx + 1}</strong> 個小動物（${names[idx]}），並用連線比比看下方水果誰比較多！`);
+}
+
+function setG1U4Preset(total, left, story) {
+  g1State.u4.total = total;
+  g1State.u4.left = left;
+  const el = document.getElementById('g1U4TaskText');
+  if (el) el.innerHTML = story;
+  renderG1U4();
+}
+function randomG1U4Task() {
+  const tot = Math.floor(Math.random() * 6) + 5; // 5~10
+  const l = Math.floor(Math.random() * (tot - 1)) + 1;
+  setG1U4Preset(tot, l, `【隨機出題】蘋果樹上有 <strong>${tot}</strong> 顆蘋果，掉到左邊籃子 <strong>${l}</strong> 顆，請問右邊籃子有幾顆？`);
+}
+
+function setG1U5Preset(shape, story) {
+  g1State.u5.selectedShape = shape;
+  const el = document.getElementById('g1U5TaskText');
+  if (el) el.innerHTML = story;
+  renderG1U5();
+}
+
+function setG1U6Preset(num, story) {
+  g1State.u6.num = num;
+  const el = document.getElementById('g1U6TaskText');
+  if (el) el.innerHTML = story;
+  renderG1U6();
+}
+function randomG1U6Task() {
+  const n = Math.floor(Math.random() * 20) + 11; // 11~30
+  setG1U6Preset(n, `【隨機出題】買一本筆記本要 <strong>${n}</strong> 元，請在位值板上看看需要幾個 10 元和幾個 1 元！`);
+}
+
+function setG1U7Preset(a, b, story) {
+  g1State.u7.a = a;
+  g1State.u7.b = b;
+  const el = document.getElementById('g1U7TaskText');
+  if (el) el.innerHTML = story;
+  renderG1U7();
+}
+function randomG1U7Task() {
+  const a = Math.floor(Math.random() * 5) + 1;
+  const b = Math.floor(Math.random() * (10 - a)) + 1;
+  setG1U7Preset(a, b, `【隨機出題】樹上原本停了 <strong>${a}</strong> 隻小鳥，又飛來 <strong>${b}</strong> 隻，現在樹上一共有幾隻小鳥？`);
+}
+
+function setG1U8Preset(a, b, story) {
+  g1State.u8.a = a;
+  g1State.u8.b = b;
+  const el = document.getElementById('g1U8TaskText');
+  if (el) el.innerHTML = story;
+  renderG1U8();
+}
+function randomG1U8Task() {
+  const a = Math.floor(Math.random() * 6) + 4; // 4~9
+  const b = Math.floor(Math.random() * (a - 1)) + 1;
+  setG1U8Preset(a, b, `【隨機出題】小華拿了 <strong>${a}</strong> 顆氣球，不小心飛走 <strong>${b}</strong> 顆，手裡還剩幾顆氣球？`);
+}
+
+function setG1U9Preset(hour, isHalf, story) {
+  g1State.u9.hour = hour;
+  g1State.u9.isHalf = isHalf;
+  const el = document.getElementById('g1U9TaskText');
+  if (el) el.innerHTML = story;
+  renderG1U9();
+}
+function randomG1U9Task() {
+  const h = Math.floor(Math.random() * 12) + 1;
+  const isH = Math.random() > 0.5;
+  setG1U9Preset(h, isH, `【隨機出題】看時鐘！現在是 <strong>${h} 點${isH ? '半' : '鐘'}</strong>，請撥動指針觀察長針與短針的正確位置！`);
+}
+
 if (typeof window !== 'undefined') {
   window.switchG1Unit = switchG1Unit;
   window.openG1UnitQuiz = openG1UnitQuiz;
@@ -830,6 +947,23 @@ if (typeof window !== 'undefined') {
   window.setG1U7 = setG1U7;
   window.setG1U8 = setG1U8;
   window.setG1U9 = setG1U9;
+  window.setG1U1Preset = setG1U1Preset;
+  window.randomG1U1Task = randomG1U1Task;
+  window.setG1U2Preset = setG1U2Preset;
+  window.randomG1U2Task = randomG1U2Task;
+  window.setG1U3Preset = setG1U3Preset;
+  window.randomG1U3Task = randomG1U3Task;
+  window.setG1U4Preset = setG1U4Preset;
+  window.randomG1U4Task = randomG1U4Task;
+  window.setG1U5Preset = setG1U5Preset;
+  window.setG1U6Preset = setG1U6Preset;
+  window.randomG1U6Task = randomG1U6Task;
+  window.setG1U7Preset = setG1U7Preset;
+  window.randomG1U7Task = randomG1U7Task;
+  window.setG1U8Preset = setG1U8Preset;
+  window.randomG1U8Task = randomG1U8Task;
+  window.setG1U9Preset = setG1U9Preset;
+  window.randomG1U9Task = randomG1U9Task;
   window.renderG1U1 = renderG1U1;
   window.renderG1U2 = renderG1U2;
   window.renderG1U3 = renderG1U3;

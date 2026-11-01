@@ -740,6 +740,149 @@ function initG2App() {
   renderG2U1();
 }
 
+
+/* ================= 2上 課本案例任務與隨機出題控制器 ================= */
+function setG2U1Preset(num, story) {
+  g2State.u1.num = num;
+  const el = document.getElementById('g2U1TaskText');
+  if (el) el.innerHTML = story;
+  renderG2U1();
+}
+function randomG2U1Task() {
+  const n = Math.floor(Math.random() * 150) + 50; // 50~199
+  setG2U1Preset(n, `【隨機出題】文具倉庫盤點，筆記本共有 <strong>${n}</strong> 本，請在百十個位值表上檢視鈔票與錢幣換算！`);
+}
+
+function setG2U2Preset(a, b, isAdd, story) {
+  g2State.u2.a = a;
+  g2State.u2.b = b;
+  g2State.u2.isAdd = isAdd;
+  const el = document.getElementById('g2U2TaskText');
+  if (el) el.innerHTML = story;
+  renderG2U2();
+}
+function randomG2U2Task() {
+  const isA = Math.random() > 0.5;
+  if (isA) {
+    const a = Math.floor(Math.random() * 45) + 25;
+    const b = Math.floor(Math.random() * 35) + 15;
+    setG2U2Preset(a, b, true, `【隨機出題】超市購物：買了一盒餅乾 <strong>${a}</strong> 元和一瓶果汁 <strong>${b}</strong> 元，一共要付多少元？（直式進位加法）`);
+  } else {
+    const a = Math.floor(Math.random() * 45) + 50; // 50~94
+    const b = Math.floor(Math.random() * 35) + 15; // 15~49
+    setG2U2Preset(a, b, false, `【隨機出題】帶了 <strong>${a}</strong> 元出門，買文具花掉 <strong>${b}</strong> 元，還剩下多少元？（直式退位減法）`);
+  }
+}
+
+function setG2U3Preset(len, start, story) {
+  g2State.u3.len = len;
+  g2State.u3.start = start;
+  const el = document.getElementById('g2U3TaskText');
+  if (el) el.innerHTML = story;
+  renderG2U3();
+}
+function randomG2U3Task() {
+  const l = Math.floor(Math.random() * 8) + 3; // 3~10
+  const s = Math.floor(Math.random() * (12 - l)); // 0 ~ (12-l)
+  setG2U3Preset(l, s, `【隨機出題】美勞課量長度：文具從刻度 <strong>${s}</strong> cm 放起，末端指在 <strong>${s + l}</strong> cm，長度是多少公分？`);
+}
+
+function setG2U4Preset(partA, partB, story) {
+  g2State.u4.partA = partA;
+  g2State.u4.partB = partB;
+  const el = document.getElementById('g2U4TaskText');
+  if (el) el.innerHTML = story;
+  renderG2U4();
+}
+function randomG2U4Task() {
+  const a = Math.floor(Math.random() * 15) + 8;
+  const b = Math.floor(Math.random() * 15) + 8;
+  setG2U4Preset(a, b, `【隨機出題】烤盤上有紅豆麵包 <strong>${a}</strong> 個與奶油麵包 <strong>${b}</strong> 個，一共有 ${a + b} 個。觀察加減互逆線段圖！`);
+}
+
+function setG2U5Preset(gridA, gridB, story) {
+  g2State.u5.gridA = gridA;
+  g2State.u5.gridB = gridB;
+  const el = document.getElementById('g2U5TaskText');
+  if (el) el.innerHTML = story;
+  renderG2U5();
+}
+function randomG2U5Task() {
+  const a = Math.floor(Math.random() * 10) + 6;
+  let b = Math.floor(Math.random() * 10) + 6;
+  if (b === a) b = (a % 15) + 4;
+  setG2U5Preset(a, b, `【隨機出題】鋪彩色方塊地磚：圖形甲鋪了 <strong>${a}</strong> 格，圖形乙鋪了 <strong>${b}</strong> 格，誰的面積比較大？`);
+}
+
+function setG2U6Preset(orig, off, on, story) {
+  g2State.u6.orig = orig;
+  g2State.u6.off = off;
+  g2State.u6.on = on;
+  const el = document.getElementById('g2U6TaskText');
+  if (el) el.innerHTML = story;
+  renderG2U6();
+}
+function randomG2U6Task() {
+  const orig = Math.floor(Math.random() * 15) + 12;
+  const off = Math.floor(Math.random() * (orig - 4)) + 2;
+  const on = Math.floor(Math.random() * 10) + 3;
+  setG2U6Preset(orig, off, on, `【隨機出題】公車上有 <strong>${orig}</strong> 人，到站後下車 <strong>${off}</strong> 人，又上車 <strong>${on}</strong> 人，現在車上一共有幾人？`);
+}
+
+function setG2U7Preset(base, times, story) {
+  g2State.u7.base = base;
+  g2State.u7.times = times;
+  const el = document.getElementById('g2U7TaskText');
+  if (el) el.innerHTML = story;
+  renderG2U7();
+}
+function randomG2U7Task() {
+  const bases = [2, 5, 4, 8];
+  const b = bases[Math.floor(Math.random() * bases.length)];
+  const t = Math.floor(Math.random() * 8) + 2;
+  setG2U7Preset(b, t, `【隨機出題】水果包裝盒：每盒裝 <strong>${b}</strong> 顆，裝了 <strong>${t}</strong> 盒，算算看一共有幾顆？（${b} × ${t} = ${b * t}）`);
+}
+
+function setG2U8Preset(hour, min, story) {
+  g2State.u8.hour = hour;
+  g2State.u8.min = min;
+  const el = document.getElementById('g2U8TaskText');
+  if (el) el.innerHTML = story;
+  renderG2U8();
+}
+function randomG2U8Task() {
+  const h = Math.floor(Math.random() * 12) + 1;
+  const m = Math.floor(Math.random() * 12) * 5; // 0, 5, 10, ... 55
+  setG2U8Preset(h, m, `【隨機出題】火車即將進站！鐘面顯示 <strong>${h} 點 ${m < 10 ? '0' + m : m} 分</strong>，觀察時針與分針的走動規律！`);
+}
+
+function setG2U9Preset(a, b, story) {
+  g2State.u9.a = a;
+  g2State.u9.b = b;
+  const el = document.getElementById('g2U9TaskText');
+  if (el) el.innerHTML = story;
+  renderG2U9();
+}
+function randomG2U9Task() {
+  const bases = [3, 6, 9, 7];
+  const a = bases[Math.floor(Math.random() * bases.length)];
+  const b = Math.floor(Math.random() * 9) + 1;
+  setG2U9Preset(a, b, `【隨機出題】九九乘法大冒險：算算看 <strong>${a} × ${b} = ${a * b}</strong>，並旋轉矩陣觀察交換律 ${b} × ${a}！`);
+}
+
+function setG2U10Preset(mode, diff, story) {
+  g2State.u10.mode = mode;
+  g2State.u10.diff = diff;
+  const el = document.getElementById('g2U10TaskText');
+  if (el) el.innerHTML = story;
+  renderG2U10();
+}
+function randomG2U10Task() {
+  const isC = Math.random() > 0.5;
+  const d = Math.floor(Math.random() * 3) - 1; // -1, 0, 1
+  setG2U10Preset(isC ? 'capacity' : 'weight', d, `【隨機出題】實驗室觀察：比較兩個容器的${isC ? '水位高度 (容量)' : '天平傾斜角度 (重量)'}！`);
+}
+
 if (typeof window !== 'undefined') {
   window.switchG2Unit = switchG2Unit;
   window.openG2UnitQuiz = openG2UnitQuiz;
@@ -754,6 +897,26 @@ if (typeof window !== 'undefined') {
   window.setG2U8 = setG2U8;
   window.setG2U9 = setG2U9;
   window.setG2U10 = setG2U10;
+  window.setG2U1Preset = setG2U1Preset;
+  window.randomG2U1Task = randomG2U1Task;
+  window.setG2U2Preset = setG2U2Preset;
+  window.randomG2U2Task = randomG2U2Task;
+  window.setG2U3Preset = setG2U3Preset;
+  window.randomG2U3Task = randomG2U3Task;
+  window.setG2U4Preset = setG2U4Preset;
+  window.randomG2U4Task = randomG2U4Task;
+  window.setG2U5Preset = setG2U5Preset;
+  window.randomG2U5Task = randomG2U5Task;
+  window.setG2U6Preset = setG2U6Preset;
+  window.randomG2U6Task = randomG2U6Task;
+  window.setG2U7Preset = setG2U7Preset;
+  window.randomG2U7Task = randomG2U7Task;
+  window.setG2U8Preset = setG2U8Preset;
+  window.randomG2U8Task = randomG2U8Task;
+  window.setG2U9Preset = setG2U9Preset;
+  window.randomG2U9Task = randomG2U9Task;
+  window.setG2U10Preset = setG2U10Preset;
+  window.randomG2U10Task = randomG2U10Task;
   window.renderG2U1 = renderG2U1;
   window.renderG2U2 = renderG2U2;
   window.renderG2U3 = renderG2U3;
