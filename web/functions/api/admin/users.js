@@ -24,10 +24,11 @@ export async function onRequest(context) {
     return new Response(JSON.stringify({ error: '權限不足：您不是系統管理員' }), { status: 403 });
   }
 
-  // GET: 查詢所有使用者、近期測驗紀錄、錯題統計
+  // GET: 查詢所有使用者、近期測驗紀錄、錯題統計與作答明細
   if (request.method === 'GET') {
     const users = await queryD1(env, "SELECT * FROM allowed_users ORDER BY role DESC, created_at DESC");
-    const attempts = await queryD1(env, "SELECT * FROM quiz_attempts ORDER BY created_at DESC LIMIT 50");
+    const attempts = await queryD1(env, "SELECT * FROM quiz_attempts ORDER BY created_at DESC LIMIT 60");
+    const wrongQuestions = await queryD1(env, "SELECT * FROM wrong_questions ORDER BY id DESC LIMIT 600");
     const wrongSummary = await queryD1(env, `
       SELECT unit, COUNT(*) as count 
       FROM wrong_questions 
@@ -39,6 +40,7 @@ export async function onRequest(context) {
       success: true,
       users: users.results || [],
       recentAttempts: attempts.results || [],
+      wrongQuestions: wrongQuestions.results || [],
       wrongSummary: wrongSummary.results || []
     }), {
       status: 200,

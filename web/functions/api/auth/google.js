@@ -72,11 +72,11 @@ export async function onRequestPost(context) {
       });
     }
 
-    // 4. 年級權限檢查：本網站為「3上」（國小三年級上學期）
-    // 規定：每組學生帳號只能使用在一個年級，管理員(admin)除外可存取所有年級('all')
-    const currentSiteGrade = '3上';
+    // 4. 年級權限檢查：本網站支援「3上」與「4上」
+    // 規定：學生帳號必須指定為開放年級（3上、4上），管理員(admin)除外可存取所有年級('all')
     const isAdmin = userRecord.role === 'admin';
-    const isGradeMatch = isAdmin || userRecord.grade === currentSiteGrade || userRecord.grade === '3' || userRecord.grade === 'all';
+    const allowedGrades = ['3上', '4上', '3', '4', 'all'];
+    const isGradeMatch = isAdmin || allowedGrades.includes(userRecord.grade);
 
     if (!isGradeMatch) {
       return new Response(JSON.stringify({
@@ -84,7 +84,7 @@ export async function onRequestPost(context) {
         email: userEmail,
         role: userRecord.role,
         assignedGrade: userRecord.grade,
-        message: `權限限制：您的帳號指定年級為【${userRecord.grade}】，無法登入本【${currentSiteGrade}】教材系統（每組學生帳號限定一個年級）！`
+        message: `權限限制：您的帳號指定年級為【${userRecord.grade}】，目前系統僅開放 3上 與 4上 年級學生應試！`
       }), {
         status: 403,
         headers: { 'Content-Type': 'application/json' }

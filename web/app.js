@@ -57,9 +57,16 @@ function switchUnit(unitNum) {
     if (tab) tab.classList.toggle('active', i === unitNum);
     if (sec) sec.classList.toggle('active', i === unitNum);
   }
+  if (typeof window.MathMLRenderer !== 'undefined' && typeof window.MathMLRenderer.renderElement === 'function') {
+    const activeSec = document.getElementById(`unit${unitNum}`);
+    if (activeSec) window.MathMLRenderer.renderElement(activeSec);
+  }
 }
 
 function openUnitQuiz(unitNum) {
+  if (typeof setQuizGrade === 'function') {
+    setQuizGrade('3上', true);
+  }
   switchUnit(10);
   if (typeof selectQuizUnit === 'function') {
     selectQuizUnit(unitNum);
@@ -759,7 +766,7 @@ function selectDinner(type, idx) {
    ========================================================= */
 const u3Objects = [
   { name: '微雕藝術家鉛筆芯工藝品', mm: 5, color: '#F59E0B', desc: '尺上 1 小格是 1 毫米 (mm)，5 小格就是 5 毫米！' },
-  { name: '馬達加斯加迷你變色龍', mm: 29, color: '#10B981', desc: '2 公分又 9 毫米 ＝ 20 毫米 ＋ 9 毫米 ＝ 29 毫米！' },
+  { name: '馬達加斯加迷你變色龍', mm: 29, color: '#10B981', desc: '2 公分 9 毫米 ＝ 20 毫米 ＋ 9 毫米 ＝ 29 毫米！' },
   { name: '蚱蜢跳遠紀錄', mm: 46, color: '#8B5CF6', desc: '46 毫米 ＝ 4 公分 6 毫米！' },
   { name: '藍色螢光筆畫出的直線', mm: 72, color: '#3B82F6', desc: '7 公分 2 毫米 ＝ 72 毫米！' }
 ];
@@ -2394,8 +2401,14 @@ function updateU9Compare() {
   `;
 
   const sign = a > b ? '＞' : a < b ? '＜' : '＝';
-  document.getElementById('u9CompareFeedback').innerHTML =
-    `🎀 同分母分數比大小：<strong>${a}/${den}</strong> 是 ${a} 個 1/${den}，<strong>${b}/${den}</strong> 是 ${b} 個 1/${den}，所以 <strong>${a}/${den} ${sign} ${b}/${den}</strong>！`;
+  const fb = document.getElementById('u9CompareFeedback');
+  if (fb) {
+    const rawMsg = `🎀 同分母分數比大小：<strong>${a}/${den}</strong> 是 ${a} 個 1/${den}，<strong>${b}/${den}</strong> 是 ${b} 個 1/${den}，所以 <strong>${a}/${den} ${sign} ${b}/${den}</strong>！`;
+    fb.innerHTML = (typeof formatMath === 'function') ? formatMath(rawMsg) : rawMsg;
+    if (typeof window.MathMLRenderer !== 'undefined' && typeof window.MathMLRenderer.renderElement === 'function') {
+      window.MathMLRenderer.renderElement(fb);
+    }
+  }
 }
 
 /* 初始化所有單元互動元件 */
@@ -2447,3 +2460,1490 @@ window.addEventListener('DOMContentLoaded', () => {
   updateU9Compare();
 });
 
+
+/* =========================================================
+   木新思達 國小四年級上學期 (4上) 主互動邏輯與教具模組
+   ========================================================= */
+
+let currentGrade = localStorage.getItem('kx_active_grade') || '3上';
+
+function hideAllGradeSections() {
+  for (let i = 1; i <= 9; i++) {
+    const sec = document.getElementById(`g1_unit${i}`);
+    if (sec) sec.classList.remove('active');
+  }
+  for (let i = 1; i <= 10; i++) {
+    const sec = document.getElementById(`g2_unit${i}`);
+    if (sec) sec.classList.remove('active');
+  }
+  for (let i = 1; i <= 10; i++) {
+    const sec = document.getElementById(`unit${i}`);
+    if (sec) sec.classList.remove('active');
+  }
+  for (let i = 1; i <= 10; i++) {
+    const sec = document.getElementById(`g4_unit${i}`);
+    if (sec) sec.classList.remove('active');
+  }
+  for (let i = 1; i <= 10; i++) {
+    const sec = document.getElementById(`g5_unit${i}`);
+    if (sec) sec.classList.remove('active');
+  }
+  for (let i = 1; i <= 9; i++) {
+    const sec = document.getElementById(`g6_unit${i}`);
+    if (sec) sec.classList.remove('active');
+  }
+}
+
+function switchGrade(grade) {
+  // 檢查當前登入者是否具備切換至該年級之權限
+  if (typeof canUserAccessGrade === 'function' && !canUserAccessGrade(grade)) {
+    const curUser = (typeof getActiveAuthUser === 'function') ? getActiveAuthUser() : null;
+    const userGrades = curUser ? (curUser.grade ? curUser.grade.split(',').join('、') : '未開通') : '';
+    alert('⚠️ 年級權限提醒：\n您的帳號目前設定授權年級為【' + userGrades + '】，尚未開通【' + grade + '】年級！\n如需學習或應試該年級內容，請聯繫老師或管理員為您新增年級授權。');
+    return;
+  }
+
+  currentGrade = grade;
+  localStorage.setItem('kx_active_grade', grade);
+
+  const btn1 = document.getElementById('gradeBtn1');
+  const btn2 = document.getElementById('gradeBtn2');
+  const btn3 = document.getElementById('gradeBtn3');
+  const btn4 = document.getElementById('gradeBtn4');
+  const btn5 = document.getElementById('gradeBtn5');
+  const btn6 = document.getElementById('gradeBtn6');
+  if (btn1) btn1.classList.toggle('active', grade === '1上');
+  if (btn2) btn2.classList.toggle('active', grade === '2上');
+  if (btn3) btn3.classList.toggle('active', grade === '3上');
+  if (btn4) btn4.classList.toggle('active', grade === '4上');
+  if (btn5) btn5.classList.toggle('active', grade === '5上');
+  if (btn6) btn6.classList.toggle('active', grade === '6上');
+
+  const brandBadge = document.getElementById('brandBadge');
+  const brandTitle = document.getElementById('brandTitle');
+  if (brandBadge) brandBadge.textContent = `木新思達 ${grade}`;
+  if (brandTitle) {
+    if (grade === '6上') brandTitle.textContent = '🎯 國小六年級數學互動學習樂園';
+    else if (grade === '5上') brandTitle.textContent = '🎯 國小五年級數學互動學習樂園';
+    else if (grade === '4上') brandTitle.textContent = '🎯 國小四年級數學互動學習樂園';
+    else if (grade === '3上') brandTitle.textContent = '🎯 國小三年級數學互動學習樂園';
+    else if (grade === '2上') brandTitle.textContent = '🎯 國小二年級數學互動學習樂園';
+    else if (grade === '1上') brandTitle.textContent = '🎯 國小一年級數學互動學習樂園';
+  }
+
+  const navG1 = document.getElementById('unitNavG1');
+  const navG2 = document.getElementById('unitNavG2');
+  const navG3 = document.getElementById('unitNavG3');
+  const navG4 = document.getElementById('unitNavG4');
+  const navG5 = document.getElementById('unitNavG5');
+  const navG6 = document.getElementById('unitNavG6');
+  if (navG1) navG1.style.display = (grade === '1上') ? 'grid' : 'none';
+  if (navG2) navG2.style.display = (grade === '2上') ? 'grid' : 'none';
+  if (navG3) navG3.style.display = (grade === '3上') ? 'grid' : 'none';
+  if (navG4) navG4.style.display = (grade === '4上') ? 'grid' : 'none';
+  if (navG5) navG5.style.display = (grade === '5上') ? 'grid' : 'none';
+  if (navG6) navG6.style.display = (grade === '6上') ? 'grid' : 'none';
+
+  if (typeof setQuizGrade === 'function') {
+    setQuizGrade(grade, true);
+  }
+
+  hideAllGradeSections();
+
+  if (grade === '6上') {
+    if (typeof switchG6Unit === 'function') switchG6Unit(1);
+    if (typeof initG6App === 'function') initG6App();
+  } else if (grade === '5上') {
+    if (typeof switchG5Unit === 'function') switchG5Unit(1);
+    if (typeof initG5App === 'function') initG5App();
+  } else if (grade === '4上') {
+    switchG4Unit(1);
+    initG4App();
+  } else if (grade === '2上') {
+    if (typeof switchG2Unit === 'function') switchG2Unit(1);
+    if (typeof initG2App === 'function') initG2App();
+  } else if (grade === '1上') {
+    if (typeof switchG1Unit === 'function') switchG1Unit(1);
+    if (typeof initG1App === 'function') initG1App();
+  } else {
+    switchUnit(1);
+  }
+}
+
+function switchG4Unit(unitNum) {
+  playTone(440, 0.08);
+
+  // 若切換至線上測驗中心 (第 11 個標籤)
+  if (unitNum === 11) {
+    for (let i = 1; i <= 10; i++) {
+      const tab = document.getElementById(`g4UnitTab${i}`);
+      const sec = document.getElementById(`g4_unit${i}`);
+      if (tab) tab.classList.remove('active');
+      if (sec) sec.classList.remove('active');
+    }
+    const tab11 = document.getElementById('g4UnitTab11');
+    if (tab11) tab11.classList.add('active');
+    const u10Sec = document.getElementById('unit10');
+    if (u10Sec) u10Sec.classList.add('active');
+    if (typeof setQuizGrade === 'function') setQuizGrade('4上');
+    if (typeof renderQuizCenter === 'function') renderQuizCenter();
+    return;
+  }
+
+  // 關閉 3上 單元與測驗中心
+  for (let i = 1; i <= 10; i++) {
+    const sec = document.getElementById(`unit${i}`);
+    if (sec) sec.classList.remove('active');
+  }
+
+  // 切換 4上 該單元
+  for (let i = 1; i <= 10; i++) {
+    const tab = document.getElementById(`g4UnitTab${i}`);
+    const sec = document.getElementById(`g4_unit${i}`);
+    if (tab) tab.classList.toggle('active', i === unitNum);
+    if (sec) sec.classList.toggle('active', i === unitNum);
+  }
+  const tab11 = document.getElementById('g4UnitTab11');
+  initG4Unit(unitNum);
+  if (typeof window.MathMLRenderer !== 'undefined' && typeof window.MathMLRenderer.renderElement === 'function') {
+    const sec = document.getElementById(`g4_unit${unitNum}`);
+    if (sec) window.MathMLRenderer.renderElement(sec);
+  }
+}
+
+function openG4UnitQuiz(unitNum) {
+  if (typeof setQuizGrade === 'function') {
+    setQuizGrade('4上', true);
+  }
+  switchG4Unit(11);
+  if (typeof selectQuizUnit === 'function') {
+    selectQuizUnit(unitNum);
+  }
+}
+
+function switchG4Submode(unitNum, subKey, btnEl) {
+  playTone(493.88, 0.08);
+  const section = document.getElementById(`g4_unit${unitNum}`);
+  if (!section) return;
+  section.querySelectorAll('.submode-btn').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+  section.querySelectorAll('.submode-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(`g4_u${unitNum}-sub${subKey}`);
+  if (panel) panel.classList.add('active');
+}
+
+/* =========================================================
+   4上 第 1 單元：一億以內的數
+   ========================================================= */
+let g4U1Digits = [0, 2, 3, 4, 0, 0, 0, 0, 0]; // 9位: 億, 千萬, 百萬, 十萬, 萬, 千, 百, 十, 個
+
+const placeNamesG4 = ['一億', '千萬', '百萬', '十萬', '一萬', '一千', '一百', '一十', '一個'];
+
+function numberToChineseG4(num) {
+  if (num === 0) return '零';
+  const digits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+  const yi = Math.floor(num / 100000000);
+  const wan = Math.floor((num % 100000000) / 10000);
+  const ge = num % 10000;
+
+  function sectionToChinese(sec, isWan) {
+    let str = '';
+    const q = Math.floor(sec / 1000);
+    const b = Math.floor((sec % 1000) / 100);
+    const s = Math.floor((sec % 100) / 10);
+    const g = sec % 10;
+
+    if (q > 0) str += digits[q] + '千';
+    else if (sec > 0 && isWan) str += '零';
+
+    if (b > 0) str += digits[b] + '百';
+    else if (q > 0 && (s > 0 || g > 0)) str += '零';
+
+    if (s > 0) str += (s === 1 && str === '' ? '一' : digits[s]) + '十';
+    else if (b > 0 && g > 0) str += '零';
+
+    if (g > 0) str += digits[g];
+    return str.replace(/零+/g, '零').replace(/零$/, '');
+  }
+
+  let res = '';
+  if (yi > 0) res += digits[yi] + '億';
+  if (wan > 0) {
+    const wanStr = sectionToChinese(wan, yi > 0);
+    res += (yi > 0 && wan < 1000 ? '零' : '') + wanStr + '萬';
+  } else if (yi > 0 && ge > 0) {
+    res += '零';
+  }
+
+  if (ge > 0) {
+    const geStr = sectionToChinese(ge, wan > 0 || yi > 0);
+    res += (wan > 0 && ge < 1000 ? '零' : '') + geStr;
+  }
+  return res.replace(/零+/g, '零').replace(/零$/, '');
+}
+
+function getG4U1Total() {
+  let sum = 0;
+  const multipliers = [100000000, 10000000, 1000000, 100000, 10000, 1000, 100, 10, 1];
+  for (let i = 0; i < 9; i++) {
+    sum += g4U1Digits[i] * multipliers[i];
+  }
+  return sum;
+}
+
+function renderG4U1() {
+  const tbody = document.getElementById('g4U1TableBody');
+  if (!tbody) return;
+
+  let rowHtml = '<tr>';
+  for (let i = 0; i < 9; i++) {
+    const val = g4U1Digits[i];
+    const bg = i === 0 ? '#FAF5FF' : (i <= 4 ? '#EFF6FF' : '#F0FDF4');
+    rowHtml += `
+      <td style="background:${bg};">
+        <div class="g4-digit-val">${val}</div>
+        <div class="g4-digit-ctrl">
+          <button class="g4-digit-btn" onclick="stepG4U1Digit(${i}, 1)">▲</button>
+          <button class="g4-digit-btn" onclick="stepG4U1Digit(${i}, -1)">▼</button>
+        </div>
+      </td>
+    `;
+  }
+  rowHtml += '</tr>';
+  tbody.innerHTML = rowHtml;
+
+  const total = getG4U1Total();
+  const readout = document.getElementById('g4U1Readout');
+  if (readout) {
+    const formattedNum = total.toLocaleString();
+    const chn = numberToChineseG4(total);
+    readout.innerHTML = `
+      <div style="font-size:1.1rem; color:#1E3A8A; margin-bottom:0.4rem;">
+        🔢 阿拉伯數字記作：<strong style="font-size:1.45rem; color:#1D4ED8;">${formattedNum}</strong>
+      </div>
+      <div style="font-size:1.15rem; color:#065F46; font-weight:900;">
+        🗣️ 國字讀作：<span style="color:#059669; font-size:1.4rem;">「${chn}」</span>
+      </div>
+    `;
+  }
+}
+
+function stepG4U1Digit(idx, delta) {
+  playTone(520, 0.08);
+  g4U1Digits[idx] = (g4U1Digits[idx] + delta + 10) % 10;
+  renderG4U1();
+}
+
+function addG4U1Place(fromRightIdx, count) {
+  playTone(600, 0.1);
+  const arrIdx = 8 - fromRightIdx;
+  if (arrIdx >= 0 && arrIdx < 9) {
+    g4U1Digits[arrIdx] = (g4U1Digits[arrIdx] + count) % 10;
+    renderG4U1();
+  }
+}
+
+function setG4U1Preset(num) {
+  playTone(659.25, 0.12);
+  const str = String(num).padStart(9, '0');
+  for (let i = 0; i < 9; i++) {
+    g4U1Digits[i] = parseInt(str[i], 10) || 0;
+  }
+  renderG4U1();
+}
+
+function resetG4U1() {
+  playTone(400, 0.08);
+  g4U1Digits = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  renderG4U1();
+}
+
+const g4Cities = [
+  { name: '新北市', pop: 4042000, desc: '全台人口最多大都會' },
+  { name: '台中市', pop: 2853000, desc: '中部最大繁榮城市' },
+  { name: '高雄市', pop: 2735000, desc: '南部海洋重鎮' },
+  { name: '台北市', pop: 2510000, desc: '台灣政治經濟首都' }
+];
+
+let g4SelectedCities = [0, 1];
+
+function renderG4U1Cities() {
+  const container = document.getElementById('g4U1CityCards');
+  if (!container) return;
+
+  container.innerHTML = g4Cities.map((c, idx) => {
+    const isSelected = g4SelectedCities.includes(idx);
+    return `
+      <div onclick="selectG4City(${idx})" style="
+        cursor:pointer;
+        background:${isSelected ? '#EFF6FF' : 'white'};
+        border:3px solid ${isSelected ? '#3B82F6' : '#CBD5E1'};
+        border-radius:16px;
+        padding:1rem;
+        transition:all 0.15s;
+        box-shadow:${isSelected ? '0 4px 12px rgba(59,130,246,0.2)' : 'none'};
+      ">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
+          <h4 style="font-size:1.2rem; font-weight:900; color:#1E293B;">${c.name}</h4>
+          ${isSelected ? '<span style="background:#3B82F6; color:white; font-size:0.75rem; font-weight:900; padding:2px 8px; border-radius:99px;">已選取</span>' : ''}
+        </div>
+        <div style="font-size:1.35rem; font-weight:900; color:#1D4ED8; font-family:'Fredoka', sans-serif;">
+          ${c.pop.toLocaleString()} 人
+        </div>
+        <div style="font-size:0.82rem; color:#64748B; margin-top:0.3rem;">${c.desc}</div>
+      </div>
+    `;
+  }).join('');
+
+  const cA = g4Cities[g4SelectedCities[0]];
+  const cB = g4Cities[g4SelectedCities[1]];
+  const resEl = document.getElementById('g4U1CityCompareResult');
+  if (resEl && cA && cB) {
+    const diff = Math.abs(cA.pop - cB.pop);
+    const sign = cA.pop > cB.pop ? '＞' : (cA.pop < cB.pop ? '＜' : '＝');
+    resEl.innerHTML = `
+      ⚖️ 比大小結果：<strong>${cA.name} (${cA.pop.toLocaleString()}人)</strong> 
+      <span style="font-size:1.4rem; color:#DC2626; margin:0 0.4rem;">${sign}</span> 
+      <strong>${cB.name} (${cB.pop.toLocaleString()}人)</strong>！
+      兩市相差 <strong>${diff.toLocaleString()} 人</strong>（百萬位 ${Math.floor(cA.pop/1000000)} vs ${Math.floor(cB.pop/1000000)}）。
+    `;
+  }
+}
+
+function selectG4City(idx) {
+  playTone(550, 0.08);
+  if (g4SelectedCities.includes(idx)) return;
+  g4SelectedCities.shift();
+  g4SelectedCities.push(idx);
+  renderG4U1Cities();
+}
+
+/* =========================================================
+   4上 第 2 單元：整數的乘法
+   ========================================================= */
+let g4U2State = {
+  a: 324,
+  b: 46,
+  step: 0,
+  format: 'expanded' // 'expanded' | 'standard'
+};
+
+function renderG4U2() {
+  const board = document.getElementById('g4U2VerticalBoard');
+  const expBox = document.getElementById('g4U2StepExplanation');
+  if (!board) return;
+
+  const a = g4U2State.a;
+  const b = g4U2State.b;
+  const onesB = b % 10;
+  const tensB = Math.floor(b / 10);
+  const p1 = a * onesB;
+  const p2 = a * tensB * 10;
+  const total = a * b;
+
+  let html = `
+    <div style="text-align:right; width:220px; margin:0 auto; letter-spacing:2px;">
+      <div>&nbsp;&nbsp;${a}</div>
+      <div style="border-bottom:2px solid #1E293B;">×&nbsp;&nbsp;${b}</div>
+  `;
+
+  if (g4U2State.step >= 1) {
+    html += `<div style="color:#2563EB; ${g4U2State.step === 1 ? 'background:#DBEAFE; border-radius:4px;' : ''}">&nbsp;${p1} <span style="font-size:0.75rem; color:#64748B;">(${a}×${onesB})</span></div>`;
+  }
+  if (g4U2State.step >= 2) {
+    const p2Str = (g4U2State.format === 'expanded') ? `&nbsp;${p2}` : `${a * tensB}&nbsp;`;
+    html += `<div style="color:#059669; border-bottom:2px solid #1E293B; ${g4U2State.step === 2 ? 'background:#DCFCE7; border-radius:4px;' : ''}">${p2Str} <span style="font-size:0.75rem; color:#64748B;">(${a}×${tensB}0)</span></div>`;
+  }
+  if (g4U2State.step >= 3) {
+    html += `<div style="color:#7C3AED; font-size:1.6rem; font-weight:900;">${total}</div>`;
+  }
+  html += `</div>`;
+  board.innerHTML = html;
+
+  if (expBox) {
+    if (g4U2State.step === 0) {
+      expBox.innerHTML = `👉 準備計算 <strong>${a} × ${b}</strong>，點選「下一步」開始分步拆解！`;
+    } else if (g4U2State.step === 1) {
+      expBox.innerHTML = `🔹 <strong>步驟 1（個位相乘）</strong>：<br/>用乘數個位的 <strong>${onesB}</strong> 乘被乘數：<br/>${a} × ${onesB} ＝ <strong style="color:#2563EB;">${p1}</strong>。`;
+    } else if (g4U2State.step === 2) {
+      expBox.innerHTML = `🔹 <strong>步驟 2（十位相乘）</strong>：<br/>用乘數十位的 <strong>${tensB}</strong>（代表 ${tensB * 10}）乘被乘數：<br/>${a} × ${tensB * 10} ＝ <strong style="color:#059669;">${p2}</strong>。<br/>⚠️ 注意：個位必須對齊補 0！`;
+    } else {
+      expBox.innerHTML = `🎉 <strong>步驟 3（相加求總和）</strong>：<br/>將兩部分相加：${p1} ＋ ${p2} ＝ <strong style="color:#7C3AED; font-size:1.3rem;">${total}</strong>！`;
+    }
+  }
+}
+
+function nextG4U2Step() {
+  playTone(550, 0.08);
+  if (g4U2State.step < 3) {
+    g4U2State.step++;
+    if (g4U2State.step === 3) playSuccessChord();
+    renderG4U2();
+  }
+}
+
+function resetG4U2Step() {
+  playTone(400, 0.08);
+  g4U2State.step = 0;
+  renderG4U2();
+}
+
+function setG4U2Problem(a, b) {
+  g4U2State.a = a;
+  g4U2State.b = b;
+  g4U2State.step = 0;
+  renderG4U2();
+}
+
+function toggleG4U2Format() {
+  g4U2State.format = (g4U2State.format === 'expanded' ? 'standard' : 'expanded');
+  const btn = document.getElementById('g4U2ModeToggleBtn');
+  if (btn) btn.textContent = (g4U2State.format === 'expanded' ? '切換為簡便式' : '切換為展開式');
+  renderG4U2();
+}
+
+// 2-B 末尾0磁鐵
+let g4U2ZeroProblem = { a: 4500, b: 30, step: 0 };
+
+function setG4U2ZeroProblem(a, b) {
+  g4U2ZeroProblem = { a, b, step: 0 };
+  renderG4U2Magnet();
+}
+
+function renderG4U2Magnet() {
+  const stage = document.getElementById('g4U2MagnetStage');
+  const btn = document.getElementById('g4U2MagnetBtn');
+  if (!stage) return;
+
+  const a = g4U2ZeroProblem.a;
+  const b = g4U2ZeroProblem.b;
+  const strA = String(a);
+  const strB = String(b);
+  const zA = strA.length - strA.replace(/0+$/, '').length;
+  const zB = strB.length - strB.replace(/0+$/, '').length;
+  const totalZeros = zA + zB;
+  const baseA = parseInt(strA.slice(0, strA.length - zA), 10);
+  const baseB = parseInt(strB.slice(0, strB.length - zB), 10);
+  const baseProduct = baseA * baseB;
+  const finalProduct = a * b;
+
+  if (g4U2ZeroProblem.step === 0) {
+    stage.innerHTML = `
+      <div style="font-size:2rem; font-weight:900; color:#1E293B;">
+        <span>${strA.slice(0, strA.length - zA)}<span style="color:#EF4444; text-decoration:underline;">${'0'.repeat(zA)}</span></span> 
+        × 
+        <span>${strB.slice(0, strB.length - zB)}<span style="color:#EF4444; text-decoration:underline;">${'0'.repeat(zB)}</span></span>
+      </div>
+      <p style="color:#92400E; font-weight:800; margin-top:0.5rem;">共有 ${totalZeros} 個末尾的 0！點擊磁鐵吸走它們！</p>
+    `;
+    if (btn) btn.textContent = '🧲 步驟 1：吸走末尾的 0';
+  } else if (g4U2ZeroProblem.step === 1) {
+    stage.innerHTML = `
+      <div style="font-size:1.8rem; font-weight:900; color:#2563EB;">
+        🧲 磁鐵暫時吸附：<span style="background:#EF4444; color:white; padding:3px 12px; border-radius:99px;">${'0'.repeat(totalZeros)} (${totalZeros}個0)</span>
+      </div>
+      <div style="font-size:2rem; font-weight:900; color:#15803D; margin-top:0.75rem;">
+        先算非零部分：${baseA} × ${baseB} ＝ <strong>${baseProduct}</strong>
+      </div>
+    `;
+    if (btn) btn.textContent = '🌟 步驟 2：將 0 補回乘積末尾';
+  } else {
+    stage.innerHTML = `
+      <div style="font-size:2.2rem; font-weight:900; color:#7C3AED;">
+        ${baseProduct}<span style="color:#EF4444;">${'0'.repeat(totalZeros)}</span> ＝ <strong>${finalProduct.toLocaleString()}</strong>
+      </div>
+      <p style="color:#059669; font-weight:800; margin-top:0.5rem;">🎉 答對了！直接在 ${baseProduct} 後面補上 ${totalZeros} 個 0，不用列複雜直式！</p>
+    `;
+    if (btn) btn.textContent = '🔄 重新開始';
+  }
+}
+
+function runG4U2MagnetStep() {
+  playTone(580, 0.1);
+  g4U2ZeroProblem.step = (g4U2ZeroProblem.step + 1) % 3;
+  if (g4U2ZeroProblem.step === 2) playSuccessChord();
+  renderG4U2Magnet();
+}
+
+/* =========================================================
+   4上 第 3 單元：角度
+   ========================================================= */
+let g4U3Angle = 60;
+let g4U3ScaleMode = 'outer'; // 'outer' (CCW) | 'inner' (CW)
+
+function renderG4U3Protractor() {
+  const svg = document.getElementById('g4U3ProtractorSvg');
+  if (!svg) return;
+
+  const cx = 190, cy = 210, r = 160;
+  let ticksHtml = '';
+
+  // 繪製半圓量角器本體
+  for (let deg = 0; deg <= 180; deg += 10) {
+    const rad = (180 - deg) * (Math.PI / 180);
+    const x1 = cx + r * Math.cos(rad);
+    const y1 = cy - r * Math.sin(rad);
+    const tickLen = (deg % 30 === 0) ? 14 : ((deg % 10 === 0) ? 9 : 5);
+    const x2 = cx + (r - tickLen) * Math.cos(rad);
+    const y2 = cy - (r - tickLen) * Math.sin(rad);
+    ticksHtml += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#64748B" stroke-width="${deg % 30 === 0 ? 2 : 1}"/>`;
+
+    if (deg % 30 === 0) {
+      const txOuter = cx + (r - 24) * Math.cos(rad);
+      const tyOuter = cy - (r - 24) * Math.sin(rad) + 4;
+      const txInner = cx + (r - 42) * Math.cos(rad);
+      const tyInner = cy - (r - 42) * Math.sin(rad) + 4;
+      ticksHtml += `<text x="${txOuter}" y="${tyOuter}" font-size="9" font-weight="900" fill="${g4U3ScaleMode === 'outer' ? '#1D4ED8' : '#94A3B8'}" text-anchor="middle">${deg}</text>`;
+      ticksHtml += `<text x="${txInner}" y="${tyInner}" font-size="8" font-weight="800" fill="${g4U3ScaleMode === 'inner' ? '#D97706' : '#94A3B8'}" text-anchor="middle">${180 - deg}</text>`;
+    }
+  }
+
+  // 旋轉角射線
+  const radAngle = (g4U3Angle <= 180) ? (180 - g4U3Angle) * (Math.PI / 180) : (180 - g4U3Angle) * (Math.PI / 180);
+  const armX = cx + (r + 15) * Math.cos(radAngle);
+  const armY = cy - (r + 15) * Math.sin(radAngle);
+
+  // 扇形陰影
+  const arcRad = (180 - Math.min(180, g4U3Angle)) * (Math.PI / 180);
+  const arcX = cx + 55 * Math.cos(arcRad);
+  const arcY = cy - 55 * Math.sin(arcRad);
+
+  svg.innerHTML = `
+    <!-- 量角器透明本體 -->
+    <path d="M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy} Z" fill="rgba(239, 246, 255, 0.75)" stroke="#3B82F6" stroke-width="2.5"/>
+    <line x1="${cx - r}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="#1E40AF" stroke-width="2.5"/>
+    <circle cx="${cx}" cy="${cy}" r="4" fill="#DC2626"/>
+    ${ticksHtml}
+    <!-- 始邊 (向右0度) -->
+    <line x1="${cx}" y1="${cy}" x2="${cx + r + 20}" y2="${cy}" stroke="#2563EB" stroke-width="4"/>
+    <!-- 旋轉邊 -->
+    <line x1="${cx}" y1="${cy}" x2="${armX}" y2="${armY}" stroke="#DC2626" stroke-width="4"/>
+    <circle cx="${armX}" cy="${armY}" r="6" fill="#DC2626"/>
+  `;
+
+  // 更新徽章與說明
+  const badge = document.getElementById('g4U3AngleBadge');
+  const disp = document.getElementById('g4U3AngleDisplay');
+  if (disp) disp.textContent = `${g4U3Angle}°`;
+
+  if (badge) {
+    let typeStr = '';
+    let color = '';
+    if (g4U3Angle === 0) { typeStr = '零角 (0°)'; color = '#64748B'; }
+    else if (g4U3Angle < 90) { typeStr = '🔹 銳角 (大於0°且小於90°)'; color = '#0284C7'; }
+    else if (g4U3Angle === 90) { typeStr = '📐 直角 (剛好 90°)'; color = '#16A34A'; }
+    else if (g4U3Angle < 180) { typeStr = '🔸 鈍角 (大於90°且小於180°)'; color = '#D97706'; }
+    else if (g4U3Angle === 180) { typeStr = '📏 平角 (剛好 180°，兩直角合起來)'; color = '#4F46E5'; }
+    else if (g4U3Angle < 360) { typeStr = '🌀 優角 (大於180°且小於360°)'; color = '#9333EA'; }
+    else { typeStr = '🌟 周角 (剛好 360°，旋轉一整圈)'; color = '#E11D48'; }
+
+    badge.innerHTML = `
+      <div style="font-size:1.15rem; font-weight:900; color:${color};">
+        ${typeStr}
+      </div>
+    `;
+  }
+}
+
+function changeG4U3Angle(val) {
+  g4U3Angle = parseInt(val, 10);
+  renderG4U3Protractor();
+}
+
+function setG4U3Angle(deg) {
+  playTone(600, 0.08);
+  g4U3Angle = deg;
+  const slider = document.getElementById('g4U3AngleSlider');
+  if (slider) slider.value = deg;
+  renderG4U3Protractor();
+}
+
+function toggleG4U3Scale() {
+  playTone(500, 0.08);
+  g4U3ScaleMode = (g4U3ScaleMode === 'outer' ? 'inner' : 'outer');
+  const btn = document.getElementById('g4U3ScaleBtn');
+  if (btn) btn.textContent = (g4U3ScaleMode === 'outer' ? '目前刻度：外圈 (逆時針)' : '目前刻度：內圈 (順時針)');
+  renderG4U3Protractor();
+}
+
+// 3-B 時鐘夾角
+let g4U3ClockHour = 3;
+
+function renderG4U3Clock() {
+  const svg = document.getElementById('g4U3ClockSvg');
+  const readout = document.getElementById('g4U3ClockReadout');
+  const label = document.getElementById('g4U3ClockHourLabel');
+  if (!svg) return;
+
+  if (label) label.textContent = `${g4U3ClockHour}:00`;
+
+  const cx = 150, cy = 150, r = 120;
+  let clockTicks = '';
+
+  for (let h = 1; h <= 12; h++) {
+    const rad = (h * 30 - 90) * (Math.PI / 180);
+    const tx = cx + (r - 20) * Math.cos(rad);
+    const ty = cy + (r - 20) * Math.sin(rad) + 5;
+    clockTicks += `<text x="${tx}" y="${ty}" font-size="14" font-weight="900" fill="#1E293B" text-anchor="middle">${h}</text>`;
+  }
+
+  // 分針固定指在 12 (0度)
+  const minAngle = 0;
+  // 時針依小時指向 (每小時30度)
+  const hourAngle = g4U3ClockHour * 30;
+  const hourRad = (hourAngle - 90) * (Math.PI / 180);
+  const hx = cx + 70 * Math.cos(hourRad);
+  const hy = cy + 70 * Math.sin(hourRad);
+
+  svg.innerHTML = `
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="#FFFBEB" stroke="#F59E0B" stroke-width="4"/>
+    <circle cx="${cx}" cy="${cy}" r="5" fill="#1E293B"/>
+    ${clockTicks}
+    <!-- 分針 (指在12) -->
+    <line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy - 95}" stroke="#2563EB" stroke-width="4" stroke-linecap="round"/>
+    <!-- 時針 -->
+    <line x1="${cx}" y1="${cy}" x2="${hx}" y2="${hy}" stroke="#DC2626" stroke-width="6" stroke-linecap="round"/>
+  `;
+
+  if (readout) {
+    const angle = Math.min(hourAngle, 360 - hourAngle);
+    readout.innerHTML = `
+      🕒 <strong>${g4U3ClockHour} 點整</strong> 時：<br/>
+      分針指向 12，時針指向 ${g4U3ClockHour}。<br/>
+      相差 <strong>${g4U3ClockHour} 個大格</strong>，夾角是：<br/>
+      30° × ${g4U3ClockHour} ＝ <strong style="font-size:1.35rem; color:#DC2626;">${angle}°</strong>！
+    `;
+  }
+}
+
+function changeG4U3Clock(val) {
+  g4U3ClockHour = parseInt(val, 10);
+  renderG4U3Clock();
+}
+
+/* =========================================================
+   4上 第 4 單元：整數的除法
+   ========================================================= */
+let g4U4State = {
+  dividend: 385,
+  divisor: 42
+};
+
+function renderG4U4() {
+  const board = document.getElementById('g4U4VerticalBoard');
+  const estCard = document.getElementById('g4U4EstimateCard');
+  const verCard = document.getElementById('g4U4VerifyCard');
+  if (!board) return;
+
+  const d1 = g4U4State.dividend;
+  const d2 = g4U4State.divisor;
+  const q = Math.floor(d1 / d2);
+  const rem = d1 % d2;
+  const approxD2 = Math.round(d2 / 10) * 10;
+
+  board.innerHTML = `
+    <div style="width:200px; margin:0 auto; text-align:right;">
+      <div style="color:#2563EB; font-size:1.7rem;">&nbsp;&nbsp;&nbsp;${q}</div>
+      <div style="border-bottom:2px solid #1E293B; border-left:2px solid #1E293B; padding-left:4px;">
+        <span style="float:left; margin-left:-36px;">${d2} )</span> ${d1}
+      </div>
+      <div style="border-bottom:2px solid #1E293B; color:#059669;">&nbsp;&nbsp;${d2 * q}</div>
+      <div style="color:#DC2626; font-size:1.5rem;">&nbsp;&nbsp;&nbsp;${rem}</div>
+    </div>
+  `;
+
+  if (estCard) {
+    estCard.innerHTML = `
+      <h4 style="color:#92400E; font-size:1.05rem; margin-bottom:0.4rem;">💡 估商試商引導</h4>
+      <p style="font-size:0.95rem; color:#78350F; line-height:1.5;">
+        1. 將除數 <strong>${d2}</strong> 看成接近的整十數 <strong>${approxD2}</strong>。<br/>
+        2. 看被除數前三位 ${d1}，${approxD2} × <strong>${q}</strong> ＝ ${approxD2 * q} 最接近且小於 ${d1}。<br/>
+        3. 試乘：${d2} × ${q} ＝ <strong>${d2 * q}</strong>（合格！）。<br/>
+        4. 餘數檢驗：餘數 <strong>${rem}</strong> ＜ 除數 <strong>${d2}</strong>（綠燈合格！）。
+      </p>
+    `;
+  }
+
+  if (verCard) {
+    verCard.innerHTML = `
+      <div style="font-size:1.1rem; color:#1E3A8A; font-weight:800;">
+        ✅ 驗算公式：被除數 ＝ 除數 × 商 ＋ 餘數
+      </div>
+      <div style="font-size:1.25rem; font-weight:900; color:#059669; margin-top:0.3rem;">
+        ${d2} × ${q} ＋ ${rem} ＝ <strong>${d2 * q + rem}</strong>（完全正確！）
+      </div>
+    `;
+  }
+}
+
+function setG4U4Problem(d1, d2) {
+  playTone(540, 0.08);
+  g4U4State.dividend = d1;
+  g4U4State.divisor = d2;
+  renderG4U4();
+}
+
+function renderG4U4Stories() {
+  const container = document.getElementById('g4U4StoryCards');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div style="background:#EFF6FF; border:2px solid #93C5FD; border-radius:16px; padding:1.25rem;">
+      <span style="background:#2563EB; color:white; font-size:0.75rem; font-weight:900; padding:2px 8px; border-radius:99px;">情境一：校外教學搭遊覽車</span>
+      <h4 style="font-size:1.15rem; color:#1E3A8A; margin:0.4rem 0;">480 位師生，每車限坐 42 人</h4>
+      <p style="font-size:0.92rem; color:#334155; margin-bottom:0.6rem;">
+        算式：480 ÷ 42 ＝ <strong>11 輛 … 剩下 18 人</strong>
+      </p>
+      <div style="background:white; border-left:4px solid #10B981; padding:0.6rem 0.8rem; border-radius:6px; font-weight:800; color:#065F46;">
+        🚌 結論：剩下的 18 人也必須有車搭，所以 11 ＋ 1 ＝ <strong>12 輛</strong>！（商數要 ＋1）
+      </div>
+    </div>
+
+    <div style="background:#FFFBEB; border:2px solid #FCD34D; border-radius:16px; padding:1.25rem;">
+      <span style="background:#D97706; color:white; font-size:0.75rem; font-weight:900; padding:2px 8px; border-radius:99px;">情境二：零用錢買筆</span>
+      <h4 style="font-size:1.15rem; color:#92400E; margin:0.4rem 0;">有 500 元，每盒色筆 32 元</h4>
+      <p style="font-size:0.92rem; color:#334155; margin-bottom:0.6rem;">
+        算式：500 ÷ 32 ＝ <strong>15 盒 … 剩下 20 元</strong>
+      </p>
+      <div style="background:white; border-left:4px solid #F59E0B; padding:0.6rem 0.8rem; border-radius:6px; font-weight:800; color:#92400E;">
+        ✏️ 結論：剩下的 20 元不夠再買一整盒，所以最多只能買 <strong>15 盒</strong>！（商數不加 1）
+      </div>
+    </div>
+  `;
+}
+
+/* =========================================================
+   4上 第 5 單元：公里 (km)
+   ========================================================= */
+let g4U5Laps = 5;
+
+function renderG4U5Track() {
+  const svg = document.getElementById('g4U5TrackSvg');
+  const readout = document.getElementById('g4U5TrackReadout');
+  const label = document.getElementById('g4U5LapLabel');
+  if (!svg) return;
+
+  if (label) label.textContent = `${g4U5Laps} 圈`;
+
+  svg.innerHTML = `
+    <!-- 操場跑道 -->
+    <rect x="30" y="30" width="260" height="140" rx="70" fill="#EF4444" stroke="#B91C1C" stroke-width="4"/>
+    <rect x="75" y="65" width="170" height="70" rx="35" fill="#10B981" stroke="#047857" stroke-width="3"/>
+    <text x="160" y="105" font-size="14" font-weight="900" fill="white" text-anchor="middle">操場一圈 200m</text>
+    <circle cx="290" cy="100" r="8" fill="#FBBF24" stroke="#B45309" stroke-width="2"/>
+    <text x="290" y="85" font-size="11" font-weight="900" fill="#78350F" text-anchor="middle">跑者</text>
+  `;
+
+  if (readout) {
+    const totalM = g4U5Laps * 200;
+    const km = Math.floor(totalM / 1000);
+    const m = totalM % 1000;
+    readout.innerHTML = `
+      🏃 跑操場 <strong>${g4U5Laps} 圈</strong>：<br/>
+      總公尺數：200m × ${g4U5Laps} ＝ <strong style="color:#2563EB; font-size:1.3rem;">${totalM} 公尺</strong><br/>
+      化聚為公里：<strong style="color:#059669; font-size:1.4rem;">${km > 0 ? `${km} 公里 ` : ''}${m > 0 ? `${m} 公尺` : (km > 0 ? '整' : '0 公尺')}</strong>
+    `;
+  }
+}
+
+function changeG4U5Laps(val) {
+  g4U5Laps = parseInt(val, 10);
+  renderG4U5Track();
+}
+
+function setG4U5Problem(type, km1, m1, km2, m2) {
+  const board = document.getElementById('g4U5VerticalBoard');
+  if (!board) return;
+
+  let totalM = (type === 'add') ? (m1 + m2) : (m1 - m2);
+  let carryKm = 0;
+  if (type === 'add' && totalM >= 1000) {
+    carryKm = 1;
+    totalM -= 1000;
+  } else if (type === 'sub' && totalM < 0) {
+    carryKm = -1;
+    totalM += 1000;
+  }
+  const totalKm = (type === 'add') ? (km1 + km2 + carryKm) : (km1 - km2 + carryKm);
+
+  board.innerHTML = `
+    <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; border-bottom:2px solid #CBD5E1; padding-bottom:0.3rem;">
+      <span>公里 (km)</span>
+      <span>公尺 (m)</span>
+    </div>
+    <div style="display:flex; justify-content:space-between;">
+      <span>&nbsp;&nbsp;${km1}</span>
+      <span>${m1}</span>
+    </div>
+    <div style="display:flex; justify-content:space-between; border-bottom:2px solid #1E293B;">
+      <span>${type === 'add' ? '＋' : '－'}&nbsp;${km2}</span>
+      <span>${m2}</span>
+    </div>
+    <div style="display:flex; justify-content:space-between; color:#1E40AF; font-size:1.4rem; font-weight:900; margin-top:0.25rem;">
+      <span>&nbsp;&nbsp;${totalKm}</span>
+      <span>${totalM}</span>
+    </div>
+    <div style="font-size:0.85rem; color:#64748B; margin-top:0.5rem;">
+      💡 算式結果：<strong>${totalKm} 公里 ${totalM} 公尺</strong>
+      ${carryKm > 0 ? '（公尺滿 1000m 進位 1km）' : (carryKm < 0 ? '（公尺不夠向公里借 1 換 1000m）' : '')}
+    </div>
+  `;
+}
+
+/* =========================================================
+   4上 第 6 單元：三角形
+   ========================================================= */
+let g4U6Points = {
+  A: { x: 80, y: 210 },
+  B: { x: 260, y: 210 },
+  C: { x: 170, y: 70 }
+};
+
+let g4U6Dragging = null;
+
+function dist(p1, p2) {
+  return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+}
+
+function getAngleDeg(a, b, c) {
+  // cos A = (b^2 + c^2 - a^2) / (2bc)
+  const cos = (b * b + c * c - a * a) / (2 * b * c);
+  const clamped = Math.max(-1, Math.min(1, cos));
+  return Math.round(Math.acos(clamped) * (180 / Math.PI));
+}
+
+function renderG4U6Canvas() {
+  const canvas = document.getElementById('g4U6Canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const { A, B, C } = g4U6Points;
+
+  // 繪製三角形
+  ctx.beginPath();
+  ctx.moveTo(A.x, A.y);
+  ctx.lineTo(B.x, B.y);
+  ctx.lineTo(C.x, C.y);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(59, 130, 246, 0.15)';
+  ctx.fill();
+  ctx.strokeStyle = '#2563EB';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  // 頂點圓圈
+  const pts = [{ p: A, name: 'A' }, { p: B, name: 'B' }, { p: C, name: 'C' }];
+  pts.forEach(pt => {
+    ctx.beginPath();
+    ctx.arc(pt.p.x, pt.p.y, 8, 0, Math.PI * 2);
+    ctx.fillStyle = '#EF4444';
+    ctx.fill();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.font = 'bold 14px sans-serif';
+    ctx.fillStyle = '#1E293B';
+    ctx.fillText(pt.name, pt.p.x - 5, pt.p.y - 12);
+  });
+
+  // 邊長換算 (pixel / 20 = cm)
+  const a = Math.round((dist(B, C) / 20) * 10) / 10;
+  const b = Math.round((dist(A, C) / 20) * 10) / 10;
+  const c = Math.round((dist(A, B) / 20) * 10) / 10;
+
+  // 角度
+  const rawDistBC = dist(B, C);
+  const rawDistAC = dist(A, C);
+  const rawDistAB = dist(A, B);
+  const angA = getAngleDeg(rawDistBC, rawDistAC, rawDistAB);
+  const angB = getAngleDeg(rawDistAC, rawDistBC, rawDistAB);
+  const angC = 180 - angA - angB;
+
+  const readout = document.getElementById('g4U6Readout');
+  if (readout) {
+    const isEqui = (angA === 60 && angB === 60 && angC === 60);
+    const isIso = isEqui || (Math.abs(a - b) < 0.3 || Math.abs(b - c) < 0.3 || Math.abs(a - c) < 0.3);
+    const isRight = (angA === 90 || angB === 90 || angC === 90);
+    const isObtuse = (angA > 90 || angB > 90 || angC > 90);
+
+    readout.innerHTML = `
+      <div style="margin-bottom:0.5rem;">
+        <strong>三邊長：</strong> a ＝ ${a}cm，b ＝ ${b}cm，c ＝ ${c}cm<br/>
+        <strong>三內角：</strong> ∠A ＝ ${angA}°，∠B ＝ ${angB}°，∠C ＝ ${angC}°
+      </div>
+      <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+        <span style="background:${isEqui ? '#FEF08A' : (isIso ? '#DBEAFE' : '#F1F5F9')}; color:#1E293B; padding:3px 10px; border-radius:99px; font-weight:900;">
+          ${isEqui ? '🌟 正三角形' : (isIso ? '✨ 等腰三角形' : '不等邊三角形')}
+        </span>
+        <span style="background:${isRight ? '#DCFCE7' : (isObtuse ? '#FEE2E2' : '#EFF6FF')}; color:#1E293B; padding:3px 10px; border-radius:99px; font-weight:900;">
+          ${isRight ? '📐 直角三角形' : (isObtuse ? '🪓 鈍角三角形' : '銳角三角形')}
+        </span>
+      </div>
+    `;
+  }
+}
+
+function initG4U6Events() {
+  const canvas = document.getElementById('g4U6Canvas');
+  if (!canvas) return;
+
+  canvas.onpointerdown = e => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const thresh = 25;
+    if (dist({ x, y }, g4U6Points.A) < thresh) g4U6Dragging = 'A';
+    else if (dist({ x, y }, g4U6Points.B) < thresh) g4U6Dragging = 'B';
+    else if (dist({ x, y }, g4U6Points.C) < thresh) g4U6Dragging = 'C';
+  };
+
+  canvas.onpointermove = e => {
+    if (!g4U6Dragging) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.max(20, Math.min(canvas.width - 20, e.clientX - rect.left));
+    const y = Math.max(20, Math.min(canvas.height - 20, e.clientY - rect.top));
+    g4U6Points[g4U6Dragging] = { x, y };
+    renderG4U6Canvas();
+  };
+
+  canvas.onpointerup = () => { g4U6Dragging = null; };
+}
+
+function setG4U6Preset(type) {
+  playTone(550, 0.08);
+  if (type === 'equi') {
+    g4U6Points = { A: { x: 70, y: 220 }, B: { x: 270, y: 220 }, C: { x: 170, y: 46 } };
+  } else if (type === 'iso') {
+    g4U6Points = { A: { x: 80, y: 220 }, B: { x: 260, y: 220 }, C: { x: 170, y: 80 } };
+  } else if (type === 'right') {
+    g4U6Points = { A: { x: 80, y: 220 }, B: { x: 260, y: 220 }, C: { x: 80, y: 70 } };
+  } else if (type === 'obtuse') {
+    g4U6Points = { A: { x: 60, y: 210 }, B: { x: 240, y: 210 }, C: { x: 130, y: 150 } };
+  }
+  renderG4U6Canvas();
+}
+
+function animateG4U6Tear() {
+  playSuccessChord();
+  const svg = document.getElementById('g4U6TearSvg');
+  if (!svg) return;
+  svg.innerHTML = `
+    <!-- 水平基準線 -->
+    <line x1="20" y1="180" x2="400" y2="180" stroke="#1E40AF" stroke-width="3"/>
+    <text x="210" y="210" font-size="14" font-weight="900" fill="#1E40AF" text-anchor="middle">平角 180° 直線基準</text>
+    <!-- 三個拼合的扇形角 -->
+    <path d="M 210 180 L 150 180 A 60 60 0 0 1 180 128 Z" fill="#FCA5A5" stroke="#B91C1C"/>
+    <text x="175" y="165" font-size="11" font-weight="900" fill="#7F1D1D">∠A</text>
+    <path d="M 210 180 L 180 128 A 60 60 0 0 1 240 128 Z" fill="#86EFAC" stroke="#15803D"/>
+    <text x="210" y="150" font-size="11" font-weight="900" fill="#14532D">∠B</text>
+    <path d="M 210 180 L 240 128 A 60 60 0 0 1 270 180 Z" fill="#93C5FD" stroke="#1D4ED8"/>
+    <text x="245" y="165" font-size="11" font-weight="900" fill="#1E3A8A">∠C</text>
+    <circle cx="210" cy="180" r="4" fill="#1E293B"/>
+  `;
+}
+
+function resetG4U6Tear() {
+  const svg = document.getElementById('g4U6TearSvg');
+  if (!svg) return;
+  svg.innerHTML = `
+    <polygon points="60,180 340,180 180,40" fill="rgba(59,130,246,0.15)" stroke="#2563EB" stroke-width="3"/>
+    <circle cx="60" cy="180" r="5" fill="#DC2626"/>
+    <circle cx="340" cy="180" r="5" fill="#DC2626"/>
+    <circle cx="180" cy="40" r="5" fill="#DC2626"/>
+    <text x="50" y="195" font-size="12" font-weight="900">A</text>
+    <text x="345" y="195" font-size="12" font-weight="900">B</text>
+    <text x="180" y="30" font-size="12" font-weight="900">C</text>
+  `;
+}
+
+/* =========================================================
+   4上 第 7 單元：小數
+   ========================================================= */
+let g4U7Count = 45;
+
+function renderG4U7Grid() {
+  const wrap = document.getElementById('g4U7GridWrap');
+  const readout = document.getElementById('g4U7Readout');
+  if (!wrap) return;
+
+  let cellsHtml = '';
+  for (let i = 1; i <= 100; i++) {
+    const isColored = i <= g4U7Count;
+    cellsHtml += `<div class="g4-grid-cell ${isColored ? 'colored' : ''}" onclick="toggleG4U7Cell(${i})"></div>`;
+  }
+  wrap.innerHTML = cellsHtml;
+
+  if (readout) {
+    const dec = (g4U7Count / 100).toFixed(2);
+    readout.innerHTML = `
+      <div style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.4rem;">
+        🟦 塗色方格數：<strong>${g4U7Count} 格</strong>（共 100 格）
+      </div>
+      <div style="font-size:1.25rem; font-weight:900; color:#059669; margin-bottom:0.3rem;">
+        🍰 分數表示：<strong>${g4U7Count} / 100</strong>
+      </div>
+      <div style="font-size:1.6rem; font-weight:900; color:#2563EB;">
+        🔢 二位小數：<strong>${dec}</strong>
+      </div>
+    `;
+  }
+}
+
+function toggleG4U7Cell(num) {
+  playTone(550, 0.06);
+  g4U7Count = (num === g4U7Count ? num - 1 : num);
+  renderG4U7Grid();
+}
+
+function addG4U7Grid(delta) {
+  playTone(520, 0.08);
+  g4U7Count = Math.max(0, Math.min(100, g4U7Count + delta));
+  renderG4U7Grid();
+}
+
+function setG4U7Grid(val) {
+  playTone(580, 0.08);
+  g4U7Count = val;
+  renderG4U7Grid();
+}
+
+function setG4U7Problem(a, b, op) {
+  const board = document.getElementById('g4U7VerticalBoard');
+  if (!board) return;
+
+  const res = (op === '+') ? (a + b) : (a - b);
+  const strA = a.toFixed(2);
+  const strB = b.toFixed(2);
+  const strRes = res.toFixed(2);
+
+  board.innerHTML = `
+    <div style="text-align:right; width:180px; margin:0 auto; position:relative;">
+      <div>&nbsp;&nbsp;${strA}</div>
+      <div style="border-bottom:2px solid #1E293B;">${op}&nbsp;${strB}</div>
+      <div style="color:#2563EB; font-size:1.5rem; font-weight:900;">&nbsp;&nbsp;${strRes}</div>
+      <div style="position:absolute; top:0; left:108px; width:2px; height:100%; border-left:2px dashed #EF4444;" title="小數點對齊線"></div>
+    </div>
+    <div style="font-size:0.85rem; color:#64748B; margin-top:0.6rem; text-align:center;">
+      🔴 紅色虛線為<strong>小數點垂直對齊線</strong>，直式計算絕不可錯位！
+    </div>
+  `;
+}
+
+/* =========================================================
+   4上 第 8 單元：整數四則計算
+   ========================================================= */
+function setG4U8Expression(expr) {
+  const ladder = document.getElementById('g4U8StepLadder');
+  if (!ladder) return;
+
+  if (expr === '50 + 25 * 4') {
+    ladder.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:0.75rem; max-width:450px; margin:0 auto;">
+        <div style="background:white; border:2px solid #CBD5E1; padding:0.8rem; border-radius:12px; font-weight:900; font-size:1.2rem;">
+          原式：50 ＋ <span style="background:#FEF08A; padding:2px 6px; border-radius:6px; color:#B45309;">25 × 4</span>
+          <span style="font-size:0.8rem; color:#B45309; float:right;">(先乘除！)</span>
+        </div>
+        <div style="text-align:center; color:#3B82F6; font-size:1.4rem;">⬇️ 25 × 4 ＝ 100</div>
+        <div style="background:#EFF6FF; border:2px solid #93C5FD; padding:0.8rem; border-radius:12px; font-weight:900; font-size:1.2rem;">
+          步驟：50 ＋ 100
+        </div>
+        <div style="text-align:center; color:#3B82F6; font-size:1.4rem;">⬇️ 50 ＋ 100</div>
+        <div style="background:#DCFCE7; border:2px solid #86EFAC; padding:0.8rem; border-radius:12px; font-weight:900; font-size:1.35rem; color:#15803D;">
+          答案：<strong>150</strong>
+        </div>
+      </div>
+    `;
+  } else if (expr === '(120 - 40) / 8') {
+    ladder.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:0.75rem; max-width:450px; margin:0 auto;">
+        <div style="background:white; border:2px solid #CBD5E1; padding:0.8rem; border-radius:12px; font-weight:900; font-size:1.2rem;">
+          原式：<span style="background:#FEF08A; padding:2px 6px; border-radius:6px; color:#B45309;">(120 － 40)</span> ÷ 8
+          <span style="font-size:0.8rem; color:#B45309; float:right;">(括號先算！)</span>
+        </div>
+        <div style="text-align:center; color:#3B82F6; font-size:1.4rem;">⬇️ 120 － 40 ＝ 80</div>
+        <div style="background:#EFF6FF; border:2px solid #93C5FD; padding:0.8rem; border-radius:12px; font-weight:900; font-size:1.2rem;">
+          步驟：80 ÷ 8
+        </div>
+        <div style="text-align:center; color:#3B82F6; font-size:1.4rem;">⬇️ 80 ÷ 8</div>
+        <div style="background:#DCFCE7; border:2px solid #86EFAC; padding:0.8rem; border-radius:12px; font-weight:900; font-size:1.35rem; color:#15803D;">
+          答案：<strong>10</strong>
+        </div>
+      </div>
+    `;
+  } else {
+    ladder.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:0.75rem; max-width:450px; margin:0 auto;">
+        <div style="background:white; border:2px solid #CBD5E1; padding:0.8rem; border-radius:12px; font-weight:900; font-size:1.2rem;">
+          原式：100 － <span style="background:#FEF08A; padding:2px 6px; border-radius:6px; color:#B45309;">20 ÷ 4</span> × 3
+          <span style="font-size:0.8rem; color:#B45309; float:right;">(同級先除！)</span>
+        </div>
+        <div style="text-align:center; color:#3B82F6; font-size:1.4rem;">⬇️ 20 ÷ 4 ＝ 5</div>
+        <div style="background:#EFF6FF; border:2px solid #93C5FD; padding:0.8rem; border-radius:12px; font-weight:900; font-size:1.2rem;">
+          步驟：100 － <span style="background:#FEF08A; padding:2px 6px; border-radius:6px; color:#B45309;">5 × 3</span>
+        </div>
+        <div style="text-align:center; color:#3B82F6; font-size:1.4rem;">⬇️ 5 × 3 ＝ 15</div>
+        <div style="background:#EFF6FF; border:2px solid #93C5FD; padding:0.8rem; border-radius:12px; font-weight:900; font-size:1.2rem;">
+          步驟：100 － 15
+        </div>
+        <div style="text-align:center; color:#3B82F6; font-size:1.4rem;">⬇️ 100 － 15</div>
+        <div style="background:#DCFCE7; border:2px solid #86EFAC; padding:0.8rem; border-radius:12px; font-weight:900; font-size:1.35rem; color:#15803D;">
+          答案：<strong>85</strong>
+        </div>
+      </div>
+    `;
+  }
+}
+
+/* =========================================================
+   4上 第 9 單元：分數 (假分數與帶分數)
+   ========================================================= */
+let g4U9Denom = 3;
+let g4U9Slices = 7; // 7/3 = 2 1/3
+
+function renderG4U9Pizza() {
+  const container = document.getElementById('g4U9PizzasWrap');
+  const readout = document.getElementById('g4U9Readout');
+  if (!container) return;
+
+  const whole = Math.floor(g4U9Slices / g4U9Denom);
+  const rem = g4U9Slices % g4U9Denom;
+  const numPizzas = whole + (rem > 0 ? 1 : 0);
+
+  let html = '';
+  for (let p = 0; p < Math.max(1, numPizzas); p++) {
+    const isFull = p < whole;
+    const slicesInThis = isFull ? g4U9Denom : (p === whole ? rem : 0);
+
+    let slicesSvg = '';
+    const cx = 60, cy = 60, r = 50;
+    for (let s = 0; s < g4U9Denom; s++) {
+      const a1 = (s * (360 / g4U9Denom) - 90) * (Math.PI / 180);
+      const a2 = ((s + 1) * (360 / g4U9Denom) - 90) * (Math.PI / 180);
+      const x1 = cx + r * Math.cos(a1);
+      const y1 = cy + r * Math.sin(a1);
+      const x2 = cx + r * Math.cos(a2);
+      const y2 = cy + r * Math.sin(a2);
+      const hasSlice = s < slicesInThis;
+
+      slicesSvg += `
+        <path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2} Z" 
+          fill="${hasSlice ? '#F59E0B' : '#F1F5F9'}" 
+          stroke="#D97706" stroke-width="1.5"/>
+      `;
+    }
+
+    html += `
+      <div style="background:#FFFBEB; border:2px solid #FCD34D; border-radius:14px; padding:0.5rem; text-align:center;">
+        <svg viewBox="0 0 120 120" style="width:110px; height:110px;">
+          ${slicesSvg}
+        </svg>
+        <div style="font-size:0.82rem; font-weight:800; color:#92400E; margin-top:0.2rem;">
+          ${isFull ? '✨ 整塊披薩 (1)' : (slicesInThis > 0 ? `${slicesInThis}/${g4U9Denom} 個` : '空盤')}
+        </div>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+
+  if (readout) {
+    readout.innerHTML = `
+      <div style="font-size:1.2rem; color:#1E3A8A; margin-bottom:0.4rem;">
+        🍕 假分數表示：<strong style="font-size:1.5rem; color:#2563EB;">${g4U9Slices}/${g4U9Denom}</strong> 個披薩
+      </div>
+      <div style="font-size:1.35rem; font-weight:900; color:#D97706;">
+        🍰 帶分數表示：<strong>${whole > 0 ? `${whole} ` : ''}${rem > 0 ? `${rem}/${g4U9Denom}` : ''}${whole === 0 && rem === 0 ? '0' : ''}</strong> 個披薩
+      </div>
+    `;
+    if (typeof window.MathMLRenderer !== 'undefined' && typeof window.MathMLRenderer.renderElement === 'function') {
+      window.MathMLRenderer.renderElement(readout);
+    }
+  }
+}
+
+function changeG4U9Denom(d) {
+  playTone(520, 0.08);
+  g4U9Denom = d;
+  renderG4U9Pizza();
+}
+
+function addG4U9Slice(delta) {
+  playTone(600, 0.08);
+  g4U9Slices = Math.max(0, g4U9Slices + delta);
+  renderG4U9Pizza();
+}
+
+function resetG4U9Slices() {
+  playTone(400, 0.08);
+  g4U9Slices = g4U9Denom;
+  renderG4U9Pizza();
+}
+
+function setG4U9Problem(op, w1, f1, w2, f2, d) {
+  const board = document.getElementById('g4U9VerticalBoard');
+  if (!board) return;
+
+  if (op === 'sub') {
+    // 借位減法：4 1/5 - 1 3/5 = 3 6/5 - 1 3/5 = 2 3/5
+    const borrowedW1 = w1 - 1;
+    const borrowedF1 = f1 + d;
+    const resW = borrowedW1 - w2;
+    const resF = borrowedF1 - f2;
+    board.innerHTML = `
+      <div style="margin-bottom:0.6rem;">
+        原式：<strong>${w1} ${f1}/${d} － ${w2} ${f2}/${d}</strong>
+      </div>
+      <div style="background:#FFFBEB; border-left:4px solid #F59E0B; padding:0.6rem; margin-bottom:0.6rem; font-size:1.05rem;">
+        ⚠️ 分數部分 ${f1}/${d} 不夠減 ${f2}/${d}！<br/>
+        向整數 ${w1} 借 1 化為 ${d}/${d}：<br/>
+        ${w1} ${f1}/${d} 變形為 <strong>${borrowedW1} ${borrowedF1}/${d}</strong>！
+      </div>
+      <div style="color:#059669; font-size:1.35rem;">
+        ＝ (${borrowedW1} － ${w2}) ＋ (${borrowedF1} － ${f2})/${d}<br/>
+        ＝ <strong>${resW} ${resF}/${d}</strong>
+      </div>
+    `;
+  } else {
+    // 進位加法
+    const sumW = w1 + w2;
+    const sumF = f1 + f2;
+    const carry = Math.floor(sumF / d);
+    const remF = sumF % d;
+    board.innerHTML = `
+      <div style="margin-bottom:0.6rem;">
+        原式：<strong>${w1} ${f1}/${d} ＋ ${w2} ${f2}/${d}</strong>
+      </div>
+      <div style="color:#059669; font-size:1.35rem;">
+        ＝ (${w1} ＋ ${w2}) ＋ (${f1} ＋ ${f2})/${d}<br/>
+        ＝ ${sumW} ${sumF}/${d}<br/>
+        ＝ <strong>${sumW + carry}${remF > 0 ? ` ${remF}/${d}` : ''}</strong>
+      </div>
+    `;
+  }
+
+  if (typeof window.MathMLRenderer !== 'undefined' && typeof window.MathMLRenderer.renderElement === 'function') {
+    window.MathMLRenderer.renderElement(board);
+  }
+}
+
+/* =========================================================
+   4上 第 10 單元：統計圖
+   ========================================================= */
+let g4U10Bars = [
+  { name: '籃球', count: 15 },
+  { name: '羽球', count: 12 },
+  { name: '桌球', count: 8 },
+  { name: '游泳', count: 10 },
+  { name: '棒球', count: 6 }
+];
+
+function renderG4U10BarChart() {
+  const svg = document.getElementById('g4U10BarSvg');
+  const tableWrap = document.getElementById('g4U10TableWrap');
+  if (!svg) return;
+
+  const maxVal = 20;
+  const chartHeight = 160;
+  const chartWidth = 420;
+  const startX = 60;
+  const startY = 190;
+  const barWidth = 45;
+  const gap = 25;
+
+  let barsSvg = '';
+  // 橫軸與縱軸
+  barsSvg += `<line x1="${startX}" y1="${startY}" x2="${startX + chartWidth}" y2="${startY}" stroke="#1E293B" stroke-width="2"/>`;
+  barsSvg += `<line x1="${startX}" y1="${startY}" x2="${startX}" y2="${startY - chartHeight - 15}" stroke="#1E293B" stroke-width="2"/>`;
+  barsSvg += `<text x="${startX - 10}" y="${startY - chartHeight - 10}" font-size="11" font-weight="900" fill="#64748B" text-anchor="end">(人數)</text>`;
+
+  // 縱軸刻度 (每 5 人一格)
+  for (let v = 0; v <= maxVal; v += 5) {
+    const y = startY - (v / maxVal) * chartHeight;
+    barsSvg += `<line x1="${startX - 5}" y1="${y}" x2="${startX}" y2="${y}" stroke="#1E293B" stroke-width="1.5"/>`;
+    barsSvg += `<line x1="${startX}" y1="${y}" x2="${startX + chartWidth}" y2="${y}" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,3"/>`;
+    barsSvg += `<text x="${startX - 8}" y="${y + 4}" font-size="10" font-weight="800" fill="#64748B" text-anchor="end">${v}</text>`;
+  }
+
+  // 長條
+  g4U10Bars.forEach((b, idx) => {
+    const x = startX + 25 + idx * (barWidth + gap);
+    const h = (b.count / maxVal) * chartHeight;
+    const y = startY - h;
+
+    barsSvg += `
+      <rect x="${x}" y="${y}" width="${barWidth}" height="${h}" rx="6" fill="#3B82F6" stroke="#1D4ED8" stroke-width="1.5"/>
+      <text x="${x + barWidth / 2}" y="${y - 6}" font-size="12" font-weight="900" fill="#1D4ED8" text-anchor="middle">${b.count}</text>
+      <text x="${x + barWidth / 2}" y="${startY + 18}" font-size="12" font-weight="900" fill="#1E293B" text-anchor="middle">${b.name}</text>
+    `;
+  });
+
+  svg.innerHTML = barsSvg;
+
+  if (tableWrap) {
+    tableWrap.innerHTML = `
+      <table style="width:100%; border-collapse:collapse; text-align:center; font-size:0.9rem; font-weight:800;">
+        <thead>
+          <tr style="background:#F1F5F9; border-bottom:2px solid #CBD5E1;">
+            <th style="padding:0.5rem;">球類項目</th>
+            ${g4U10Bars.map(b => `<th style="padding:0.5rem;">${b.name}</th>`).join('')}
+            <th style="padding:0.5rem; background:#EFF6FF; color:#1E40AF;">合計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:0.5rem; background:#F8FAFC;">人數 (人)</td>
+            ${g4U10Bars.map((b, idx) => `
+              <td style="padding:0.5rem;">
+                <div style="display:flex; justify-content:center; align-items:center; gap:4px;">
+                  <button class="g4-digit-btn" onclick="adjustG4U10Bar(${idx}, -1)">▼</button>
+                  <span style="font-size:1.15rem; color:#1D4ED8; min-width:24px;">${b.count}</span>
+                  <button class="g4-digit-btn" onclick="adjustG4U10Bar(${idx}, 1)">▲</button>
+                </div>
+              </td>
+            `).join('')}
+            <td style="padding:0.5rem; background:#EFF6FF; color:#1E40AF; font-size:1.15rem;">
+              ${g4U10Bars.reduce((acc, cur) => acc + cur.count, 0)} 人
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+  }
+}
+
+function adjustG4U10Bar(idx, delta) {
+  playTone(550, 0.08);
+  g4U10Bars[idx].count = Math.max(0, Math.min(20, g4U10Bars[idx].count + delta));
+  renderG4U10BarChart();
+}
+
+// 10-B 折線圖
+let g4U10WaveEnabled = true;
+const g4U10Temps = [2, 3, 5, 7, 9, 10, 11, 10, 8, 6, 4, 2]; // 12個月氣溫
+
+function renderG4U10LineChart() {
+  const svg = document.getElementById('g4U10LineSvg');
+  if (!svg) return;
+
+  const minVal = g4U10WaveEnabled ? 0 : 0;
+  const maxVal = g4U10WaveEnabled ? 15 : 30;
+  const chartHeight = 170;
+  const chartWidth = 440;
+  const startX = 60;
+  const startY = 210;
+
+  let html = '';
+  html += `<line x1="${startX}" y1="${startY}" x2="${startX + chartWidth}" y2="${startY}" stroke="#1E293B" stroke-width="2"/>`;
+  html += `<line x1="${startX}" y1="${startY}" x2="${startX}" y2="${startY - chartHeight - 15}" stroke="#1E293B" stroke-width="2"/>`;
+  html += `<text x="${startX - 10}" y="${startY - chartHeight - 10}" font-size="11" font-weight="900" fill="#64748B" text-anchor="end">(氣溫°C)</text>`;
+
+  if (g4U10WaveEnabled) {
+    // 繪製波浪省略記號
+    html += `
+      <path d="M ${startX - 6} ${startY - 15} Q ${startX - 2} ${startY - 20} ${startX - 6} ${startY - 25} Q ${startX - 10} ${startY - 30} ${startX - 6} ${startY - 35}" fill="none" stroke="#EF4444" stroke-width="2"/>
+      <path d="M ${startX} ${startY - 15} Q ${startX + 4} ${startY - 20} ${startX} ${startY - 25} Q ${startX - 4} ${startY - 30} ${startX} ${startY - 35}" fill="none" stroke="#EF4444" stroke-width="2"/>
+    `;
+  }
+
+  // 刻度
+  const step = g4U10WaveEnabled ? 3 : 5;
+  for (let v = 0; v <= maxVal; v += step) {
+    const y = startY - (v / maxVal) * chartHeight;
+    html += `<line x1="${startX - 5}" y1="${y}" x2="${startX}" y2="${y}" stroke="#1E293B" stroke-width="1.5"/>`;
+    html += `<line x1="${startX}" y1="${y}" x2="${startX + chartWidth}" y2="${y}" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3,3"/>`;
+    html += `<text x="${startX - 8}" y="${y + 4}" font-size="10" font-weight="800" fill="#64748B" text-anchor="end">${v}</text>`;
+  }
+
+  // 描點與連線
+  const pts = [];
+  for (let m = 0; m < 12; m++) {
+    const x = startX + 20 + m * (chartWidth / 12);
+    const y = startY - (g4U10Temps[m] / maxVal) * chartHeight;
+    pts.push({ x, y, val: g4U10Temps[m], m: m + 1 });
+  }
+
+  // 繪製連線
+  let linePath = `M ${pts[0].x} ${pts[0].y}`;
+  for (let i = 1; i < pts.length; i++) {
+    linePath += ` L ${pts[i].x} ${pts[i].y}`;
+  }
+  html += `<path d="${linePath}" fill="none" stroke="#DC2626" stroke-width="3"/>`;
+
+  // 繪製圓點
+  pts.forEach(pt => {
+    html += `
+      <circle cx="${pt.x}" cy="${pt.y}" r="4.5" fill="#DC2626" stroke="white" stroke-width="2"/>
+      <text x="${pt.x}" y="${pt.y - 8}" font-size="9" font-weight="900" fill="#DC2626" text-anchor="middle">${pt.val}°</text>
+      <text x="${pt.x}" y="${startY + 15}" font-size="10" font-weight="800" fill="#1E293B" text-anchor="middle">${pt.m}月</text>
+    `;
+  });
+
+  svg.innerHTML = html;
+}
+
+function toggleG4U10Wave() {
+  playTone(550, 0.08);
+  g4U10WaveEnabled = !g4U10WaveEnabled;
+  const btn = document.getElementById('g4U10WaveBtn');
+  if (btn) btn.textContent = g4U10WaveEnabled ? '〰️ 目前狀態：使用波浪省略符號 (放大起伏)' : '📐 目前狀態：無省略符號 (全刻度展示)';
+  renderG4U10LineChart();
+}
+
+/* =========================================================
+   單元初始化分發器 (initG4Unit & initG4App)
+   ========================================================= */
+function initG4Unit(unitNum) {
+  if (unitNum === 1) {
+    renderG4U1();
+    renderG4U1Cities();
+  } else if (unitNum === 2) {
+    renderG4U2();
+    renderG4U2Magnet();
+  } else if (unitNum === 3) {
+    renderG4U3Protractor();
+    renderG4U3Clock();
+  } else if (unitNum === 4) {
+    renderG4U4();
+    renderG4U4Stories();
+  } else if (unitNum === 5) {
+    renderG4U5Track();
+    setG4U5Problem('add', 3, 450, 2, 750);
+  } else if (unitNum === 6) {
+    renderG4U6Canvas();
+    resetG4U6Tear();
+    initG4U6Events();
+  } else if (unitNum === 7) {
+    renderG4U7Grid();
+    setG4U7Problem(3.5, 1.28, '+');
+  } else if (unitNum === 8) {
+    setG4U8Expression('50 + 25 * 4');
+  } else if (unitNum === 9) {
+    renderG4U9Pizza();
+    setG4U9Problem('sub', 4, 1, 1, 3, 5);
+  } else if (unitNum === 10) {
+    renderG4U10BarChart();
+    renderG4U10LineChart();
+  }
+}
+
+function initG4App() {
+  initG4Unit(1);
+}
+
+// 監聽載入事件
+window.addEventListener('DOMContentLoaded', () => {
+  const savedGrade = localStorage.getItem('kx_active_grade') || '3上';
+  if (savedGrade === '1上' || savedGrade === '2上' || savedGrade === '4上' || savedGrade === '5上' || savedGrade === '6上') {
+    switchGrade(savedGrade);
+  }
+});
+
+if (typeof window !== 'undefined') {
+  window.switchGrade = switchGrade;
+  window.switchUnit = switchUnit;
+  window.switchG4Unit = switchG4Unit;
+  window.openUnitQuiz = openUnitQuiz;
+  window.openG4UnitQuiz = openG4UnitQuiz;
+  window.hideAllGradeSections = hideAllGradeSections;
+}

@@ -29,6 +29,55 @@ export async function onRequestPost(context) {
       });
     }
 
+    const cleanEmail = email.toLowerCase().trim();
+
+    // 0. 嚴格權限檢查：驗證帳號是否在 allowed_users 白名單中且狀態為 active
+    const authCheck = await queryD1(env, `
+      SELECT email, name, role, grade, status 
+      FROM allowed_users 
+      WHERE lower(email) = ?
+    `, [cleanEmail]);
+
+    if (!authCheck.results || authCheck.results.length === 0) {
+      return new Response(JSON.stringify({
+        error: '此帳號不在授權白名單中或已被管理員移除，拒絕記錄測驗成績！',
+        unauthorized: true
+      }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    const userRecord = authCheck.results[0];
+    if (userRecord.status !== 'active') {
+      return new Response(JSON.stringify({
+        error: '此帳號已被停用，無法記錄測驗成績！',
+        forbidden: true
+      }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // 0.1 年級權限核對：除了管理員與全學年帳號外，驗證帳號是否具備該年級權限 (支援 '3上,4上' 多年級設定)
+    const userGrades = (userRecord.grade || '').split(',').map(g => g.trim());
+    const hasGradePerm = (userRecord.role === 'admin') || userGrades.includes('all') || userGrades.includes(grade);
+    if (!hasGradePerm) {
+      return new Response(JSON.stringify({
+        error: `年級權限不符：您的帳號授權年級為【${userRecord.grade}】，無法登記【${grade}】的測驗成績！`,
+        forbidden: true
+      }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // 若為管理員試作且無特別填寫姓名，標註為管理員
+    let effectiveStudentName = studentName || '';
+    if (userRecord.role === 'admin' && (!effectiveStudentName || effectiveStudentName === '小小數學家')) {
+      effectiveStudentName = (userRecord.name || '系統管理員') + ' (試作)';
+    }
+
     // 1. 寫入 quiz_attempts 主紀錄
     const wrongCount = wrongQuestions.length;
     const insertAttempt = await queryD1(env, `
@@ -38,8 +87,8 @@ export async function onRequestPost(context) {
         total_count, wrong_count, time_spent_sec
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [
-      email.toLowerCase(),
-      studentName || '',
+      cleanEmail,
+      effectiveStudentName,
       studentClass || '',
       seatNum || '',
       grade,
@@ -65,7 +114,7 @@ export async function onRequestPost(context) {
           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `, [
           attemptId,
-          email.toLowerCase(),
+          cleanEmail,
           grade,
           unit,
           paperIdx,

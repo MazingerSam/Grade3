@@ -12,9 +12,20 @@
   <header class="top-header">
     <div class="header-inner">
       <div class="brand-area">
-        <span class="brand-badge">木新思達 3上</span>
-        <h1 class="brand-title">🎯 國小三年級數學互動學習樂園</h1>
+        <span class="brand-badge" id="brandBadge">木新思達 3上</span>
+        <h1 class="brand-title" id="brandTitle">🎯 國小三年級數學互動學習樂園</h1>
       </div>
+
+        <!-- 年級切換按鈕組 -->
+        <div class="grade-switcher" id="topGradeSwitcher">
+          <button class="grade-btn" id="gradeBtn1" onclick="switchGrade('1上')">🎓 1上 數學 (一年級)</button>
+          <button class="grade-btn" id="gradeBtn2" onclick="switchGrade('2上')">🎓 2上 數學 (二年級)</button>
+          <button class="grade-btn active" id="gradeBtn3" onclick="switchGrade('3上')">🎓 3上 數學 (三年級)</button>
+          <button class="grade-btn" id="gradeBtn4" onclick="switchGrade('4上')">🎓 4上 數學 (四年級)</button>
+          <button class="grade-btn" id="gradeBtn5" onclick="switchGrade('5上')">🎓 5上 數學 (五年級)</button>
+          <button class="grade-btn" id="gradeBtn6" onclick="switchGrade('6上')">🎓 6上 數學 (六年級)</button>
+        </div>
+
       <div class="score-bar">
         <!-- Google OAuth 登入/身分卡區塊 -->
         <button id="navLoginBtn" class="btn btn-outline" style="padding:0.4rem 0.85rem; border-radius:999px; font-size:0.88rem; background:white; color:#1E40AF; border-color:white;" onclick="showLoginModal()">
@@ -29,7 +40,7 @@
           <button class="btn btn-outline" style="padding:0.2rem 0.5rem; border-radius:999px; font-size:0.75rem; color:#FFFFFF; border-color:rgba(255,255,255,0.4);" onclick="logoutUser()">登出</button>
         </div>
 
-        <button class="btn btn-Amber" style="padding:0.4rem 0.95rem; border-radius:999px; font-size:0.95rem;" onclick="switchUnit(10)">📝 線上測驗中心 (45份卷)</button>
+        <button class="btn btn-Amber" style="padding:0.4rem 0.95rem; border-radius:999px; font-size:0.95rem;" onclick="switchUnit(10)">📝 線上測驗中心 (190份卷)</button>
         <div class="star-counter" title="完成互動挑戰獲得星星！">
           <span>⭐ 學習星星：</span>
           <span id="starCount">0</span>
@@ -39,8 +50,142 @@
     </div>
   </header>
 
+  <!-- 一年級 9大單元 + 線上測驗中心主選單 -->
+  <nav class="unit-nav" id="unitNavG1" style="display:none;" aria-label="一年級單元選單">
+    <button class="unit-tab active" onclick="switchG1Unit(1)" id="g1UnitTab1">
+      <span class="unit-num">第 1 單元</span>
+      <span class="unit-icon">🍎</span>
+      <span class="unit-name">10以內的數</span>
+      <span class="unit-desc">積木點子卡・五五數法・數字認知</span>
+    </button>
+    <button class="unit-tab" onclick="switchG1Unit(2)" id="g1UnitTab2">
+      <span class="unit-num">第 2 單元</span>
+      <span class="unit-icon">📏</span>
+      <span class="unit-name">比長短</span>
+      <span class="unit-desc">起點對齊基準線・直接比較與格子量</span>
+    </button>
+    <button class="unit-tab" onclick="switchG1Unit(3)" id="g1UnitTab3">
+      <span class="unit-num">第 3 單元</span>
+      <span class="unit-icon">🧍</span>
+      <span class="unit-name">排順序、比多少</span>
+      <span class="unit-desc">第幾個序數・一一對應一對一連線</span>
+    </button>
+    <button class="unit-tab" onclick="switchG1Unit(4)" id="g1UnitTab4">
+      <span class="unit-num">第 4 單元</span>
+      <span class="unit-icon">🌳</span>
+      <span class="unit-name">分與合</span>
+      <span class="unit-desc">蘋果樹分合模型・10的互補數分解</span>
+    </button>
+    <button class="unit-tab" onclick="switchG1Unit(5)" id="g1UnitTab5">
+      <span class="unit-num">第 5 單元</span>
+      <span class="unit-icon">📦</span>
+      <span class="unit-name">方盒、圓罐、球</span>
+      <span class="unit-desc">形體特徵・滾動滑動堆疊實驗室</span>
+    </button>
+    <button class="unit-tab" onclick="switchG1Unit(6)" id="g1UnitTab6">
+      <span class="unit-num">第 6 單元</span>
+      <span class="unit-icon">🪙</span>
+      <span class="unit-name">30以內的數</span>
+      <span class="unit-desc">十位個位位值板・10元與1元硬幣換算</span>
+    </button>
+    <button class="unit-tab" onclick="switchG1Unit(7)" id="g1UnitTab7">
+      <span class="unit-num">第 7 單元</span>
+      <span class="unit-icon">➕</span>
+      <span class="unit-name">10以內的加法</span>
+      <span class="unit-desc">合併添加情境・小鳥停樹枝動畫</span>
+    </button>
+    <button class="unit-tab" onclick="switchG1Unit(8)" id="g1UnitTab8">
+      <span class="unit-num">第 8 單元</span>
+      <span class="unit-icon">➖</span>
+      <span class="unit-name">10以內的減法</span>
+      <span class="unit-desc">拿走飛走破掉・氣球爆破動態演示</span>
+    </button>
+    <button class="unit-tab" onclick="switchG1Unit(9)" id="g1UnitTab9">
+      <span class="unit-num">第 9 單元</span>
+      <span class="unit-icon">⏰</span>
+      <span class="unit-name">幾點鐘</span>
+      <span class="unit-desc">鐘面指針認識・整點與半點精準判定</span>
+    </button>
+    <button class="unit-tab" onclick="switchG1Unit(10)" id="g1UnitTab10" style="border-color:#F59E0B; background:#FFFBEB;">
+      <span class="unit-num" style="background:#D97706; color:white;">自動批改評量</span>
+      <span class="unit-icon">📝</span>
+      <span class="unit-name">線上測驗中心</span>
+      <span class="unit-desc">1上 9單元 × 5卷 ＝ 45份卷</span>
+    </button>
+  </nav>
+
+  <!-- 二年級 10大單元 + 線上測驗中心主選單 -->
+  <nav class="unit-nav" id="unitNavG2" style="display:none;" aria-label="二年級單元選單">
+    <button class="unit-tab active" onclick="switchG2Unit(1)" id="g2UnitTab1">
+      <span class="unit-num">第 1 單元</span>
+      <span class="unit-icon">💵</span>
+      <span class="unit-name">200以內的數</span>
+      <span class="unit-desc">百十個位值表・百元十元一元鈔幣</span>
+    </button>
+    <button class="unit-tab" onclick="switchG2Unit(2)" id="g2UnitTab2">
+      <span class="unit-num">第 2 單元</span>
+      <span class="unit-icon">🧮</span>
+      <span class="unit-name">二位數直式加減</span>
+      <span class="unit-desc">直式進位退位演算機・借位圖解</span>
+    </button>
+    <button class="unit-tab" onclick="switchG2Unit(3)" id="g2UnitTab3">
+      <span class="unit-num">第 3 單元</span>
+      <span class="unit-icon">📐</span>
+      <span class="unit-name">量長度</span>
+      <span class="unit-desc">公分(cm)刻度尺・斷尺兩端相減</span>
+    </button>
+    <button class="unit-tab" onclick="switchG2Unit(4)" id="g2UnitTab4">
+      <span class="unit-num">第 4 單元</span>
+      <span class="unit-icon">🔄</span>
+      <span class="unit-name">加減關係與應用</span>
+      <span class="unit-desc">加減互逆線段圖・部分與整體關係</span>
+    </button>
+    <button class="unit-tab" onclick="switchG2Unit(5)" id="g2UnitTab5">
+      <span class="unit-num">第 5 單元</span>
+      <span class="unit-icon">🟩</span>
+      <span class="unit-name">面積的大小比較</span>
+      <span class="unit-desc">方格鋪滿點數・覆蓋重疊透視比較</span>
+    </button>
+    <button class="unit-tab" onclick="switchG2Unit(6)" id="g2UnitTab6">
+      <span class="unit-num">第 6 單元</span>
+      <span class="unit-icon">🚌</span>
+      <span class="unit-name">兩步驟的加減</span>
+      <span class="unit-desc">公車乘客上下車・先算與後算分步併式</span>
+    </button>
+    <button class="unit-tab" onclick="switchG2Unit(7)" id="g2UnitTab7">
+      <span class="unit-num">第 7 單元</span>
+      <span class="unit-icon">🐸</span>
+      <span class="unit-name">2、5、4、8的乘法</span>
+      <span class="unit-desc">連加的簡記・青蛙跳跳數線陣列</span>
+    </button>
+    <button class="unit-tab" onclick="switchG2Unit(8)" id="g2UnitTab8">
+      <span class="unit-num">第 8 單元</span>
+      <span class="unit-icon">🕰️</span>
+      <span class="unit-name">幾時幾分</span>
+      <span class="unit-desc">大格5分小格1分・指針連動精準報時</span>
+    </button>
+    <button class="unit-tab" onclick="switchG2Unit(9)" id="g2UnitTab9">
+      <span class="unit-num">第 9 單元</span>
+      <span class="unit-icon">✖️</span>
+      <span class="unit-name">3、6、9、7的乘法</span>
+      <span class="unit-desc">九九乘法矩陣・長方形旋轉交換律</span>
+    </button>
+    <button class="unit-tab" onclick="switchG2Unit(10)" id="g2UnitTab10">
+      <span class="unit-num">第 10 單元</span>
+      <span class="unit-icon">⚖️</span>
+      <span class="unit-name">容量與重量</span>
+      <span class="unit-desc">量杯倒水水位・天平平衡直接與代換比</span>
+    </button>
+    <button class="unit-tab" onclick="switchG2Unit(11)" id="g2UnitTab11" style="border-color:#F59E0B; background:#FFFBEB;">
+      <span class="unit-num" style="background:#D97706; color:white;">自動批改評量</span>
+      <span class="unit-icon">📝</span>
+      <span class="unit-name">線上測驗中心</span>
+      <span class="unit-desc">2上 10單元 × 5卷 ＝ 50份卷</span>
+    </button>
+  </nav>
+
   <!-- 9大單元 + 線上測驗中心主選單 (切換) -->
-  <nav class="unit-nav" aria-label="單元選單">
+  <nav class="unit-nav" id="unitNavG3" aria-label="三年級單元選單">
     <button class="unit-tab active" onclick="switchUnit(1)" id="unitTab1">
       <span class="unit-num">第 1 單元</span>
       <span class="unit-icon">🧮</span>
@@ -103,9 +248,612 @@
     </button>
   </nav>
 
+  <!-- 4上 10大單元 + 線上測驗中心選單 -->
+  <nav class="unit-nav" id="unitNavG4" style="display:none;" aria-label="四年級單元選單">
+    <button class="unit-tab active" onclick="switchG4Unit(1)" id="g4UnitTab1">
+      <span class="unit-num">第 1 單元</span>
+      <span class="unit-icon">🧮</span>
+      <span class="unit-name">一億以內的數</span>
+      <span class="unit-desc">大數定位板・國字讀法・人口比大小</span>
+    </button>
+    <button class="unit-tab" onclick="switchG4Unit(2)" id="g4UnitTab2">
+      <span class="unit-num">第 2 單元</span>
+      <span class="unit-icon">✖️</span>
+      <span class="unit-name">整數的乘法</span>
+      <span class="unit-desc">直式展開式・末尾0磁鐵吸附</span>
+    </button>
+    <button class="unit-tab" onclick="switchG4Unit(3)" id="g4UnitTab3">
+      <span class="unit-num">第 3 單元</span>
+      <span class="unit-icon">📐</span>
+      <span class="unit-name">角 度</span>
+      <span class="unit-desc">360°旋轉指針・透明量角器實測</span>
+    </button>
+    <button class="unit-tab" onclick="switchG4Unit(4)" id="g4UnitTab4">
+      <span class="unit-num">第 4 單元</span>
+      <span class="unit-icon">➗</span>
+      <span class="unit-name">整數的除法</span>
+      <span class="unit-desc">二位數估商試商・直式步驟・驗算</span>
+    </button>
+    <button class="unit-tab" onclick="switchG4Unit(5)" id="g4UnitTab5">
+      <span class="unit-num">第 5 單元</span>
+      <span class="unit-icon">🛤️</span>
+      <span class="unit-name">公 里 (km)</span>
+      <span class="unit-desc">操場200m跑道換算・複名數加減</span>
+    </button>
+    <button class="unit-tab" onclick="switchG4Unit(6)" id="g4UnitTab6">
+      <span class="unit-num">第 6 單元</span>
+      <span class="unit-icon">🔺</span>
+      <span class="unit-name">三 角 形</span>
+      <span class="unit-desc">動態頂點幾何板・等腰正三角・撕角拼平角</span>
+    </button>
+    <button class="unit-tab" onclick="switchG4Unit(7)" id="g4UnitTab7">
+      <span class="unit-num">第 7 單元</span>
+      <span class="unit-icon">🔢</span>
+      <span class="unit-name">小 數</span>
+      <span class="unit-desc">100格小數塗色板・小數點對齊直式</span>
+    </button>
+    <button class="unit-tab" onclick="switchG4Unit(8)" id="g4UnitTab8">
+      <span class="unit-num">第 8 單元</span>
+      <span class="unit-icon">🪜</span>
+      <span class="unit-name">整數四則計算</span>
+      <span class="unit-desc">運算順序階梯圖・先乘除後加減・分配律</span>
+    </button>
+    <button class="unit-tab" onclick="switchG4Unit(9)" id="g4UnitTab9">
+      <span class="unit-num">第 9 單元</span>
+      <span class="unit-icon">🍕</span>
+      <span class="unit-name">分 數</span>
+      <span class="unit-desc">披薩盤假分數帶分數互換・同分母加減</span>
+    </button>
+    <button class="unit-tab" onclick="switchG4Unit(10)" id="g4UnitTab10">
+      <span class="unit-num">第 10 單元</span>
+      <span class="unit-icon">📊</span>
+      <span class="unit-name">統 計 圖</span>
+      <span class="unit-desc">互動長條圖・玉山氣溫折線圖・波浪省略</span>
+    </button>
+    <button class="unit-tab" onclick="switchG4Unit(11)" id="g4UnitTab11" style="border-color:#F59E0B; background:#FFFBEB;">
+      <span class="unit-num" style="background:#D97706; color:white;">自動批改評量</span>
+      <span class="unit-icon">📝</span>
+      <span class="unit-name">線上測驗中心</span>
+      <span class="unit-desc">4上 10單元 × 5卷 ＝ 50份卷</span>
+    </button>
+  </nav>
+
+  <!-- 5上 10大單元 + 線上測驗中心選單 -->
+  <nav class="unit-nav" id="unitNavG5" style="display:none;" aria-label="五年級單元選單">
+    <button class="unit-tab active" onclick="switchG5Unit(1)" id="g5UnitTab1">
+      <span class="unit-num">第 1 單元</span>
+      <span class="unit-icon">🔢</span>
+      <span class="unit-name">多位小數與加減</span>
+      <span class="unit-desc">千分位定位板・直式對齊計算機</span>
+    </button>
+    <button class="unit-tab" onclick="switchG5Unit(2)" id="g5UnitTab2">
+      <span class="unit-num">第 2 單元</span>
+      <span class="unit-icon">🌈</span>
+      <span class="unit-name">因數與公因數</span>
+      <span class="unit-desc">因數彩虹圖・最大公因數 GCD</span>
+    </button>
+    <button class="unit-tab" onclick="switchG5Unit(3)" id="g5UnitTab3">
+      <span class="unit-num">第 3 單元</span>
+      <span class="unit-icon">💡</span>
+      <span class="unit-name">倍數與公倍數</span>
+      <span class="unit-desc">百數表點燈跳躍・最小公倍數 LCM</span>
+    </button>
+    <button class="unit-tab" onclick="switchG5Unit(4)" id="g5UnitTab4">
+      <span class="unit-num">第 4 單元</span>
+      <span class="unit-icon">🍕</span>
+      <span class="unit-name">擴分約分通分</span>
+      <span class="unit-desc">等值披薩切塊・通分天平比大小</span>
+    </button>
+    <button class="unit-tab" onclick="switchG5Unit(5)" id="g5UnitTab5">
+      <span class="unit-num">第 5 單元</span>
+      <span class="unit-icon">📐</span>
+      <span class="unit-name">多邊形與扇形</span>
+      <span class="unit-desc">正多邊形內角和・扇形圓心角儀</span>
+    </button>
+    <button class="unit-tab" onclick="switchG5Unit(6)" id="g5UnitTab6">
+      <span class="unit-num">第 6 單元</span>
+      <span class="unit-icon">🧪</span>
+      <span class="unit-name">異分母分數加減</span>
+      <span class="unit-desc">通分拼合運算・帶分數借位直式</span>
+    </button>
+    <button class="unit-tab" onclick="switchG5Unit(7)" id="g5UnitTab7">
+      <span class="unit-num">第 7 單元</span>
+      <span class="unit-icon">🪞</span>
+      <span class="unit-name">線對稱圖形</span>
+      <span class="unit-desc">對稱軸鏡射畫布・折紙開孔模擬</span>
+    </button>
+    <button class="unit-tab" onclick="switchG5Unit(8)" id="g5UnitTab8">
+      <span class="unit-num">第 8 單元</span>
+      <span class="unit-icon">🪜</span>
+      <span class="unit-name">整數四則運算</span>
+      <span class="unit-desc">優先順序階梯圖・分配律長方形</span>
+    </button>
+    <button class="unit-tab" onclick="switchG5Unit(9)" id="g5UnitTab9">
+      <span class="unit-num">第 9 單元</span>
+      <span class="unit-icon">🟩</span>
+      <span class="unit-name">面 積</span>
+      <span class="unit-desc">平行四邊形/三角形/梯形 割補實驗室</span>
+    </button>
+    <button class="unit-tab" onclick="switchG5Unit(10)" id="g5UnitTab10">
+      <span class="unit-num">第 10 單元</span>
+      <span class="unit-icon">🧊</span>
+      <span class="unit-name">柱體錐體與球</span>
+      <span class="unit-desc">3D幾何特徵算式・展開圖摺疊</span>
+    </button>
+    <button class="unit-tab" onclick="switchG5Unit(11)" id="g5UnitTab11" style="border-color:#F59E0B; background:#FFFBEB;">
+      <span class="unit-num" style="background:#D97706; color:white;">自動批改評量</span>
+      <span class="unit-icon">📝</span>
+      <span class="unit-name">線上測驗中心</span>
+      <span class="unit-desc">5上 10單元 × 5卷 ＝ 50份卷</span>
+    </button>
+  </nav>
+
+  <!-- 6上 9大單元 + 線上測驗中心選單 -->
+  <nav class="unit-nav" id="unitNavG6" style="display:none;" aria-label="六年級單元選單">
+    <button class="unit-tab active" onclick="switchG6Unit(1)" id="g6UnitTab1">
+      <span class="unit-num">第 1 單元</span>
+      <span class="unit-icon">🪜</span>
+      <span class="unit-name">最大公因數與最小公倍數</span>
+      <span class="unit-desc">短除法階梯演算・質因數分解樹</span>
+    </button>
+    <button class="unit-tab" onclick="switchG6Unit(2)" id="g6UnitTab2">
+      <span class="unit-num">第 2 單元</span>
+      <span class="unit-icon">➗</span>
+      <span class="unit-name">分數除法</span>
+      <span class="unit-desc">除以分數等於乘以倒數・分裝模擬</span>
+    </button>
+    <button class="unit-tab" onclick="switchG6Unit(3)" id="g6UnitTab3">
+      <span class="unit-num">第 3 單元</span>
+      <span class="unit-icon">🌲</span>
+      <span class="unit-name">數量關係</span>
+      <span class="unit-desc">植樹問題間隔數・牙籤正方形規律</span>
+    </button>
+    <button class="unit-tab" onclick="switchG6Unit(4)" id="g6UnitTab4">
+      <span class="unit-num">第 4 單元</span>
+      <span class="unit-icon">🧲</span>
+      <span class="unit-name">小數除法</span>
+      <span class="unit-desc">小數點右移直式・餘數小數點對齊</span>
+    </button>
+    <button class="unit-tab" onclick="switchG6Unit(5)" id="g6UnitTab5">
+      <span class="unit-num">第 5 單元</span>
+      <span class="unit-icon">⚖️</span>
+      <span class="unit-name">比與比值</span>
+      <span class="unit-desc">互動比值天平・最簡整數比調配</span>
+    </button>
+    <button class="unit-tab" onclick="switchG6Unit(6)" id="g6UnitTab6">
+      <span class="unit-num">第 6 單元</span>
+      <span class="unit-icon">🎡</span>
+      <span class="unit-name">圓周長與扇形周長</span>
+      <span class="unit-desc">圓滾一圈展平直線・扇形弧長+2半徑</span>
+    </button>
+    <button class="unit-tab" onclick="switchG6Unit(7)" id="g6UnitTab7">
+      <span class="unit-num">第 7 單元</span>
+      <span class="unit-icon">🥧</span>
+      <span class="unit-name">圓面積與扇形面積</span>
+      <span class="unit-desc">圓切拼極限長方形・圓環與扇形</span>
+    </button>
+    <button class="unit-tab" onclick="switchG6Unit(8)" id="g6UnitTab8">
+      <span class="unit-num">第 8 單元</span>
+      <span class="unit-icon">🏎️</span>
+      <span class="unit-name">認識速率</span>
+      <span class="unit-desc">距離/時間/速率魔法三角・競速賽</span>
+    </button>
+    <button class="unit-tab" onclick="switchG6Unit(9)" id="g6UnitTab9">
+      <span class="unit-num">第 9 單元</span>
+      <span class="unit-icon">🗺️</span>
+      <span class="unit-name">放大圖縮圖比例尺</span>
+      <span class="unit-desc">長度k倍 vs 面積k²倍・地圖距離換算</span>
+    </button>
+    <button class="unit-tab" onclick="switchG6Unit(10)" id="g6UnitTab10" style="border-color:#F59E0B; background:#FFFBEB;">
+      <span class="unit-num" style="background:#D97706; color:white;">自動批改評量</span>
+      <span class="unit-icon">📝</span>
+      <span class="unit-name">線上測驗中心</span>
+      <span class="unit-desc">6上 9單元 × 5卷 ＝ 45份卷</span>
+    </button>
+  </nav>
+
   <!-- 主內容區 -->
   <main class="main-container">
 
+
+    <!-- ==========================================
+         1上 第 1 單元：10以內的數
+         ========================================== -->
+    <section id="g1_unit1" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🍎 1上 第 1 單元：10以內的數</h2>
+          <p>積木點子卡、五五數法排列，直觀理解 1~10 具體量與數字符號。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG1UnitQuiz(1)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g1U1Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         1上 第 2 單元：比長短
+         ========================================== -->
+    <section id="g1_unit2" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📏 1上 第 2 單元：比長短</h2>
+          <p>起點對齊基準線，藉由長條比較與方格測量，建立長度直觀感。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG1UnitQuiz(2)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g1U2Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         1上 第 3 單元：排順序、比多少
+         ========================================== -->
+    <section id="g1_unit3" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🧍 1上 第 3 單元：排順序、比多少</h2>
+          <p>排隊前後順序（第幾個 vs 幾個）與一一對應連線比多少。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG1UnitQuiz(3)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g1U3Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         1上 第 4 單元：分與合
+         ========================================== -->
+    <section id="g1_unit4" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🌳 1上 第 4 單元：分與合</h2>
+          <p>蘋果樹分合模型與十雙色點子卡，奠定十進位與加減法基礎。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG1UnitQuiz(4)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g1U4Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         1上 第 5 單元：方盒、圓罐、球
+         ========================================== -->
+    <section id="g1_unit5" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📦 1上 第 5 單元：方盒、圓罐、球</h2>
+          <p>立體形體辨識實驗室，探索平平的面、滾動、滑動與堆疊。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG1UnitQuiz(5)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g1U5Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         1上 第 6 單元：30以內的數
+         ========================================== -->
+    <section id="g1_unit6" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🪙 1上 第 6 單元：30以內的數</h2>
+          <p>十個一捆位值板、10元與1元錢幣組合，培養二位數結構。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG1UnitQuiz(6)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g1U6Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         1上 第 7 單元：10以內的加法
+         ========================================== -->
+    <section id="g1_unit7" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>➕ 1上 第 7 單元：10以內的加法</h2>
+          <p>合併與添加情境，小鳥停樹枝互動動畫，理解加號與算式。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG1UnitQuiz(7)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g1U7Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         1上 第 8 單元：10以內的減法
+         ========================================== -->
+    <section id="g1_unit8" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>➖ 1上 第 8 單元：10以內的減法</h2>
+          <p>拿走與比較情境，動態戳破氣球，理解減號與差的意義。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG1UnitQuiz(8)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g1U8Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         1上 第 9 單元：幾點鐘
+         ========================================== -->
+    <section id="g1_unit9" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>⏰ 1上 第 9 單元：幾點鐘</h2>
+          <p>鐘面時針短針與分針長針認識，整點與半點精準轉動判定。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG1UnitQuiz(9)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g1U9Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         2上 第 1 單元：200以內的數
+         ========================================== -->
+    <section id="g2_unit1" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>💵 2上 第 1 單元：200以內的數</h2>
+          <p>百位、十位、個位位值表，鈔票硬幣換算與大小比較。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG2UnitQuiz(1)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g2U1Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         2上 第 2 單元：二位數直式加減
+         ========================================== -->
+    <section id="g2_unit2" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🧮 2上 第 2 單元：二位數直式加減</h2>
+          <p>直式進退位演算機，視覺化滿十進一、借十退位計算步驟。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG2UnitQuiz(2)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g2U2Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         2上 第 3 單元：量長度
+         ========================================== -->
+    <section id="g2_unit3" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📐 2上 第 3 單元：量長度</h2>
+          <p>公分 (cm) 刻度尺測量，對齊 0 刻度與斷尺兩端相減原理。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG2UnitQuiz(3)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g2U3Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         2上 第 4 單元：加減關係與應用
+         ========================================== -->
+    <section id="g2_unit4" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🔄 2上 第 4 單元：加減關係與應用</h2>
+          <p>部分-整體線段圖模型，加減互逆與求未知數框框。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG2UnitQuiz(4)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g2U4Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         2上 第 5 單元：面積的大小比較
+         ========================================== -->
+    <section id="g2_unit5" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🟩 2上 第 5 單元：面積的大小比較</h2>
+          <p>方格紙覆蓋計數、透明重疊透視比較，建立面積直觀。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG2UnitQuiz(5)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g2U5Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         2上 第 6 單元：兩步驟的加減
+         ========================================== -->
+    <section id="g2_unit6" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🚌 2上 第 6 單元：兩步驟的加減</h2>
+          <p>公車乘客上下車生活情境，掌握先算什麼、再算什麼。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG2UnitQuiz(6)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g2U6Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         2上 第 7 單元：2、5、4、8的乘法
+         ========================================== -->
+    <section id="g2_unit7" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🐸 2上 第 7 單元：2、5、4、8的乘法</h2>
+          <p>連加的簡記，青蛙跳跳數線與點子矩陣倍數模型。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG2UnitQuiz(7)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g2U7Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         2上 第 8 單元：幾時幾分
+         ========================================== -->
+    <section id="g2_unit8" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🕰️ 2上 第 8 單元：幾時幾分</h2>
+          <p>鐘面大格5分小格1分，分針時針連動精確報時。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG2UnitQuiz(8)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g2U8Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         2上 第 9 單元：3、6、9、7的乘法
+         ========================================== -->
+    <section id="g2_unit9" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>✖️ 2上 第 9 單元：3、6、9、7的乘法</h2>
+          <p>九九乘法表矩陣探索，長方形陣列旋轉發現交換律。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG2UnitQuiz(9)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g2U9Display"></div>
+      </div>
+    </section>
+  
+
+    <!-- ==========================================
+         2上 第 10 單元：容量與重量
+         ========================================== -->
+    <section id="g2_unit10" class="unit-section" style="display:none;">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>⚖️ 2上 第 10 單元：容量與重量</h2>
+          <p>量杯倒水水位高度比較，天平平衡直接與代換比輕重。</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG2UnitQuiz(10)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 互動教具容器 -->
+      <div class="workspace-card" style="margin-top:1rem;">
+        <div id="g2U10Display"></div>
+      </div>
+    </section>
+  
     <!-- ==========================================
          第 1 單元：10000以內的數
          ========================================== -->
@@ -1201,13 +1949,1810 @@
       </div>
     </section>
 
+
+    <!-- ==========================================
+         4上 第 1 單元：一億以內的數
+         ========================================== -->
+    <section id="g4_unit1" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🧮 4上 第 1 單元：一億以內的數</h2>
+          <p>認識個級、萬級、億級大數！動手操作億以內位值定位板、大數讀寫發音規則與台灣縣市人口大數比大小！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchG4Submode(1, 'A', this)">1-1 億以內大數計數器與定位板</button>
+          <button class="submode-btn" onclick="switchG4Submode(1, 'B', this)">1-2 台灣縣市人口大數比大小</button>
+          <button class="submode-btn quiz-cta" onclick="openG4UnitQuiz(1)">📝 4上 第1單元測驗 (5卷)</button>
+        </div>
+      </div>
+
+      <!-- 1-A: 億以內大數計數器與定位板 -->
+      <div id="g4_u1-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">1-1 大數十進位結構</span>
+              <span>每 4 位為一個「級」：<strong>億級</strong>、<strong>萬級</strong>、<strong>個級</strong>！點選下方各位的「▲ (+1)」或「▼ (-1)」觀察大數進位與即時國字讀法！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setG4U1Preset(23400000)">👥 台灣總人口數 (2340萬)</button>
+              <button class="btn btn-Amber" onclick="setG4U1Preset(50040008)">🧩 連續零讀法挑戰 (5004萬0008)</button>
+              <button class="btn btn-green" onclick="setG4U1Preset(100000000)">🌟 滿千萬進位成一億 (1億)</button>
+              <button class="btn btn-outline" onclick="resetG4U1()">🔄 歸零</button>
+            </div>
+          </div>
+
+          <!-- 億以內位值定位板 -->
+          <div class="place-value-board-g4" style="overflow-x:auto; margin-bottom:1.25rem;">
+            <table style="width:100%; min-width:720px; border-collapse:collapse; text-align:center; font-weight:900;">
+              <thead>
+                <tr style="background:#4338CA; color:white; font-size:1.05rem;">
+                  <th style="padding:0.6rem; border-right:2px solid #818CF8; background:#312E81;">億級</th>
+                  <th colspan="4" style="padding:0.6rem; border-right:2px solid #818CF8; background:#1E40AF;">萬級</th>
+                  <th colspan="4" style="padding:0.6rem; background:#065F46;">個級</th>
+                </tr>
+                <tr style="background:#F1F5F9; font-size:0.92rem; color:#1E293B; border-bottom:2px solid #CBD5E1;">
+                  <th style="padding:0.5rem; background:#EDE9FE; color:#5B21B6; border-right:2px solid #C4B5FD;">一億位</th>
+                  <th style="padding:0.5rem; background:#DBEAFE; color:#1E40AF;">千萬位</th>
+                  <th style="padding:0.5rem; background:#DBEAFE; color:#1E40AF;">百萬位</th>
+                  <th style="padding:0.5rem; background:#DBEAFE; color:#1E40AF;">十萬位</th>
+                  <th style="padding:0.5rem; background:#DBEAFE; color:#1E40AF; border-right:2px solid #93C5FD;">一萬位</th>
+                  <th style="padding:0.5rem; background:#D1FAE5; color:#065F46;">千位</th>
+                  <th style="padding:0.5rem; background:#D1FAE5; color:#065F46;">百位</th>
+                  <th style="padding:0.5rem; background:#D1FAE5; color:#065F46;">十位</th>
+                  <th style="padding:0.5rem; background:#D1FAE5; color:#065F46;">個位</th>
+                </tr>
+              </thead>
+              <tbody id="g4U1TableBody">
+                <!-- 動態注入各數值與按鈕 -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 快速增加大數按鈕群 -->
+          <div style="display:flex; justify-content:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.25rem;">
+            <button class="btn btn-outline" onclick="addG4U1Place(0, 1)">＋1</button>
+            <button class="btn btn-outline" onclick="addG4U1Place(1, 1)">＋10</button>
+            <button class="btn btn-outline" onclick="addG4U1Place(2, 1)">＋100</button>
+            <button class="btn btn-outline" onclick="addG4U1Place(3, 1)">＋1千</button>
+            <button class="btn btn-outline" onclick="addG4U1Place(4, 1)" style="border-color:#3B82F6; color:#1D4ED8; font-weight:800;">＋1萬</button>
+            <button class="btn btn-outline" onclick="addG4U1Place(5, 1)" style="border-color:#3B82F6; color:#1D4ED8; font-weight:800;">＋10萬</button>
+            <button class="btn btn-outline" onclick="addG4U1Place(6, 1)" style="border-color:#3B82F6; color:#1D4ED8; font-weight:800;">＋100萬</button>
+            <button class="btn btn-outline" onclick="addG4U1Place(7, 1)" style="border-color:#3B82F6; color:#1D4ED8; font-weight:800;">＋1000萬</button>
+            <button class="btn btn-outline" onclick="addG4U1Place(8, 1)" style="border-color:#8B5CF6; color:#6D28D9; font-weight:800;">＋1億</button>
+          </div>
+
+          <!-- 即時大數讀寫結果看板 -->
+          <div class="readout-box" id="g4U1Readout"></div>
+        </div>
+      </div>
+
+      <!-- 1-B: 台灣縣市人口大數比大小 -->
+      <div id="g4_u1-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">1-2 生活大數比大小</span>
+              <span>比較大數時，先比「位數」（位數多的比較大）；若位數相同，則從<strong>最高位</strong>開始依序往右比較！點選下方兩座城市來 PK 人口數：</span>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-bottom:1.25rem;" id="g4U1CityCards">
+            <!-- 城市卡片 -->
+          </div>
+
+          <div id="g4U1CityCompareResult" class="feedback-banner success"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4上 第 2 單元：整數的乘法
+         ========================================== -->
+    <section id="g4_unit2" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>✖️ 4上 第 2 單元：整數的乘法</h2>
+          <p>掌握三位數 × 二位數直式展開式、位值分層相乘與末尾有 0 的乘法簡便計算！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchG4Submode(2, 'A', this)">2-1 直式展開式分步拆解機</button>
+          <button class="submode-btn" onclick="switchG4Submode(2, 'B', this)">2-2 末尾 0 磁鐵吸附模擬器</button>
+          <button class="submode-btn quiz-cta" onclick="openG4UnitQuiz(2)">📝 4上 第2單元測驗 (5卷)</button>
+        </div>
+      </div>
+
+      <!-- 2-A: 直式展開式拆解機 -->
+      <div id="g4_u2-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">2-1 三位數 × 二位數</span>
+              <span>例如 <strong>324 × 46</strong>：乘數 46 拆成 <strong>6 (個位)</strong> 和 <strong>40 (十位)</strong>！點選「下一步」看直式如何分步相乘求和！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setG4U2Problem(324, 46)">範例：324 × 46</button>
+              <button class="btn btn-Amber" onclick="setG4U2Problem(228, 35)">範例：228 × 35</button>
+              <button class="btn btn-Amber" onclick="setG4U2Problem(604, 28)">跨0範例：604 × 28</button>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1.5rem; justify-content:center; align-items:flex-start; flex-wrap:wrap; margin-bottom:1.25rem;">
+            <div id="g4U2VerticalBoard" style="background:#F8FAFC; border:3px solid #CBD5E1; border-radius:16px; padding:1.25rem 2rem; min-width:280px; font-family:'Courier New', monospace; font-size:1.5rem; font-weight:900; line-height:1.6;">
+              <!-- 直式內容 -->
+            </div>
+
+            <div style="flex:1; min-width:260px; max-width:450px;">
+              <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+                <button class="btn btn-primary" onclick="nextG4U2Step()">👉 下一步演示</button>
+                <button class="btn btn-outline" onclick="resetG4U2Step()">🔄 重新開始</button>
+                <button class="btn btn-green" id="g4U2ModeToggleBtn" onclick="toggleG4U2Format()">切換為簡便式</button>
+              </div>
+              <div id="g4U2StepExplanation" class="readout-box">點選「下一步」開始拆解！</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-B: 末尾 0 磁鐵吸附模擬器 -->
+      <div id="g4_u2-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">2-2 末尾有 0 的乘法</span>
+              <span>例如 <strong>4500 × 30</strong>：先把所有末尾的 0 暫時吸走，算完非零部分後再把 0 一口氣補回！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setG4U2ZeroProblem(4500, 30)">4500 × 30</button>
+              <button class="btn btn-Amber" onclick="setG4U2ZeroProblem(280, 400)">280 × 400</button>
+              <button class="btn btn-Amber" onclick="setG4U2ZeroProblem(600, 500)">600 × 500</button>
+            </div>
+          </div>
+
+          <div id="g4U2MagnetStage" style="text-align:center; padding:1.5rem; background:linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border:3px solid #F59E0B; border-radius:18px; margin-bottom:1.25rem;">
+            <!-- 磁鐵動畫畫布 -->
+          </div>
+
+          <div style="display:flex; justify-content:center; gap:0.75rem;">
+            <button class="btn btn-primary" id="g4U2MagnetBtn" onclick="runG4U2MagnetStep()">🧲 步驟 1：吸走末尾的 0</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4上 第 3 單元：角度
+         ========================================== -->
+    <section id="g4_unit3" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📐 4上 第 3 單元：角度</h2>
+          <p>認識旋轉角、量角器內圈與外圈刻度對齊、平角 (180°)、周角 (360°) 與時鐘夾角計算！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchG4Submode(3, 'A', this)">3-1 360° 旋轉指針與透明量角器</button>
+          <button class="submode-btn" onclick="switchG4Submode(3, 'B', this)">3-2 時鐘時針分針夾角模擬器</button>
+          <button class="submode-btn quiz-cta" onclick="openG4UnitQuiz(3)">📝 4上 第3單元測驗 (5卷)</button>
+        </div>
+      </div>
+
+      <!-- 3-A: 360° 量角器 -->
+      <div id="g4_u3-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">3-1 角度與量角器</span>
+              <span>拉動滑桿旋轉指針，觀察量角器上的刻度！切換<strong>內圈</strong>與<strong>外圈</strong>，觀察始邊對齊哪一個 0 度線！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-outline" onclick="setG4U3Angle(45)">45° 銳角</button>
+              <button class="btn btn-outline" onclick="setG4U3Angle(90)">90° 直角</button>
+              <button class="btn btn-outline" onclick="setG4U3Angle(135)">135° 鈍角</button>
+              <button class="btn btn-outline" onclick="setG4U3Angle(180)">180° 平角</button>
+              <button class="btn btn-outline" onclick="setG4U3Angle(360)">360° 周角</button>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1.5rem; justify-content:center; align-items:center; flex-wrap:wrap;">
+            <div style="background:white; border:3px solid #CBD5E1; border-radius:18px; padding:1rem; text-align:center;">
+              <svg id="g4U3ProtractorSvg" viewBox="0 0 380 260" style="width:100%; max-width:380px; height:auto;"></svg>
+              <div style="margin-top:0.5rem; display:flex; justify-content:center; gap:0.5rem;">
+                <button class="btn btn-primary" id="g4U3ScaleBtn" onclick="toggleG4U3Scale()" style="font-size:0.85rem; padding:0.35rem 0.8rem;">目前刻度：外圈 (逆時針)</button>
+              </div>
+            </div>
+
+            <div style="flex:1; min-width:260px; max-width:400px;">
+              <div style="margin-bottom:1rem;">
+                <label style="font-weight:900; font-size:1.1rem;">旋轉角度：<span id="g4U3AngleDisplay" style="color:#2563EB; font-size:1.5rem;">60°</span></label>
+                <input type="range" id="g4U3AngleSlider" min="0" max="360" value="60" class="edu-slider" oninput="changeG4U3Angle(this.value)" />
+              </div>
+
+              <div id="g4U3AngleBadge" class="readout-box" style="margin-bottom:1rem;"></div>
+
+              <div style="background:#EFF6FF; border:2px solid #93C5FD; border-radius:14px; padding:0.9rem; font-size:0.9rem; color:#1E40AF;">
+                <strong>💡 量角器秘訣：</strong><br/>
+                1. 中心點對齊角的<strong>頂點</strong>。<br/>
+                2. 0 度線對齊角的一條<strong>邊（始邊）</strong>。<br/>
+                3. 看另一條邊指向幾度。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-B: 時鐘夾角 -->
+      <div id="g4_u3-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">3-2 時鐘上的角度</span>
+              <span>鐘面一圈 360° 平分成 12 個大格，每個大格是 <strong>30°</strong>！滑動滑桿改變時間，觀察時針與分針的夾角！</span>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1.5rem; justify-content:center; align-items:center; flex-wrap:wrap;">
+            <div style="background:white; border:3px solid #CBD5E1; border-radius:18px; padding:1rem; text-align:center;">
+              <svg id="g4U3ClockSvg" viewBox="0 0 300 300" style="width:100%; max-width:280px; height:auto;"></svg>
+            </div>
+
+            <div style="flex:1; min-width:260px; max-width:400px;">
+              <div style="margin-bottom:1rem;">
+                <label style="font-weight:900;">選擇整點時間：<span id="g4U3ClockHourLabel" style="color:#2563EB; font-size:1.3rem;">3:00</span></label>
+                <input type="range" id="g4U3ClockSlider" min="1" max="12" value="3" class="edu-slider" oninput="changeG4U3Clock(this.value)" />
+              </div>
+              <div id="g4U3ClockReadout" class="readout-box"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4上 第 4 單元：整數的除法
+         ========================================== -->
+    <section id="g4_unit4" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>➗ 4上 第 4 單元：整數的除法</h2>
+          <p>掌握二位數除法試商估商技巧、直式計算步驟、餘數小於除數原則與驗算公式！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchG4Submode(4, 'A', this)">4-1 二位數估商試商實驗室</button>
+          <button class="submode-btn" onclick="switchG4Submode(4, 'B', this)">4-2 商數要不要 +1 判斷室</button>
+          <button class="submode-btn quiz-cta" onclick="openG4UnitQuiz(4)">📝 4上 第4單元測驗 (5卷)</button>
+        </div>
+      </div>
+
+      <!-- 4-A: 估商試商實驗室 -->
+      <div id="g4_u4-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">4-1 除數是二位數</span>
+              <span>例如 <strong>385 ÷ 42</strong>：把除數 42 看成 40 估商！點選按鈕觀察試商與直式步驟！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setG4U4Problem(385, 42)">385 ÷ 42 (估商9)</button>
+              <button class="btn btn-Amber" onclick="setG4U4Problem(672, 21)">672 ÷ 21 (整除)</button>
+              <button class="btn btn-Amber" onclick="setG4U4Problem(925, 37)">925 ÷ 37 (二位商)</button>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1.5rem; justify-content:center; align-items:flex-start; flex-wrap:wrap;">
+            <div id="g4U4VerticalBoard" style="background:#F8FAFC; border:3px solid #CBD5E1; border-radius:16px; padding:1.25rem 2rem; min-width:280px; font-family:'Courier New', monospace; font-size:1.5rem; font-weight:900; line-height:1.6;">
+            </div>
+
+            <div style="flex:1; min-width:260px; max-width:450px;">
+              <div id="g4U4EstimateCard" style="background:#FFFBEB; border:2px solid #F59E0B; border-radius:14px; padding:1rem; margin-bottom:1rem;">
+                <!-- 試商指示燈與說明 -->
+              </div>
+              <div id="g4U4VerifyCard" class="readout-box">
+                <!-- 驗算公式 -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4-B: 商數加1情境 -->
+      <div id="g4_u4-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">4-2 餘數的意義</span>
+              <span>在生活情境中，剩下的餘數究竟需不需要「再多租一輛車/多搭一頂帳篷（商+1）」？</span>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;" id="g4U4StoryCards">
+            <!-- 情境互動卡 -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4上 第 5 單元：公里 (km)
+         ========================================== -->
+    <section id="g4_unit5" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🛤️ 4上 第 5 單元：公里 (km)</h2>
+          <p>掌握長度單位公里 (km) 與公尺 (m) 的關係 (1 km = 1000 m)、操場跑道圈數換算與複名數直式加減！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchG4Submode(5, 'A', this)">5-1 操場 200m 跑道圈數換算儀</button>
+          <button class="submode-btn" onclick="switchG4Submode(5, 'B', this)">5-2 公里與公尺複名數直式加減機</button>
+          <button class="submode-btn quiz-cta" onclick="openG4UnitQuiz(5)">📝 4上 第5單元測驗 (5卷)</button>
+        </div>
+      </div>
+
+      <!-- 5-A: 操場跑道換算 -->
+      <div id="g4_u5-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">5-1 公里與公尺化聚</span>
+              <span>學校操場一圈通常是 <strong>200 公尺</strong>！跑 5 圈剛好是 <strong>1000 公尺 ＝ 1 公里</strong>！滑動滑桿看跑了幾圈！</span>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1.5rem; justify-content:center; align-items:center; flex-wrap:wrap;">
+            <div style="background:white; border:3px solid #CBD5E1; border-radius:18px; padding:1rem; text-align:center;">
+              <svg id="g4U5TrackSvg" viewBox="0 0 320 200" style="width:100%; max-width:320px; height:auto;"></svg>
+            </div>
+
+            <div style="flex:1; min-width:260px; max-width:420px;">
+              <div style="margin-bottom:1rem;">
+                <label style="font-weight:900;">跑操場圈數：<span id="g4U5LapLabel" style="color:#2563EB; font-size:1.3rem;">5 圈</span></label>
+                <input type="range" id="g4U5LapSlider" min="1" max="25" value="5" class="edu-slider" oninput="changeG4U5Laps(this.value)" />
+              </div>
+              <div id="g4U5TrackReadout" class="readout-box"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5-B: 複名數直式加減 -->
+      <div id="g4_u5-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">5-2 複名數加減</span>
+              <span>公里與公尺直式計算：<strong>滿 1000 公尺進位 1 公里</strong>；公尺不夠減向<strong>公里借 1 換成 1000 公尺</strong>！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setG4U5Problem('add', 3, 450, 2, 750)">加法進位：3km 450m ＋ 2km 750m</button>
+              <button class="btn btn-Amber" onclick="setG4U5Problem('sub', 5, 200, 1, 800)">減法退位：5km 200m － 1km 800m</button>
+            </div>
+          </div>
+
+          <div id="g4U5VerticalBoard" style="background:#F8FAFC; border:3px solid #CBD5E1; border-radius:16px; padding:1.25rem 2rem; max-width:400px; margin:0 auto; font-size:1.25rem; font-weight:900;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4上 第 6 單元：三角形
+         ========================================== -->
+    <section id="g4_unit6" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🔺 4上 第 6 單元：三角形</h2>
+          <p>掌握等腰三角形、正三角形、直角/銳角/鈍角三角形性質與內角和 180° 撕角拼平角動態演示！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchG4Submode(6, 'A', this)">6-1 動態頂點幾何三角板</button>
+          <button class="submode-btn" onclick="switchG4Submode(6, 'B', this)">6-2 撕角拼平角 (180°) 動畫</button>
+          <button class="submode-btn quiz-cta" onclick="openG4UnitQuiz(6)">📝 4上 第6單元測驗 (5卷)</button>
+        </div>
+      </div>
+
+      <!-- 6-A: 動態三角板 -->
+      <div id="g4_u6-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">6-1 三角形分類與性質</span>
+              <span>用滑鼠或觸控拖拉下方畫布上的 <strong>A、B、C 三個頂點</strong>，即時計算三邊長與三內角，系統會自動辨識三角形種類！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-outline" onclick="setG4U6Preset('iso')">✨ 等腰三角形</button>
+              <button class="btn btn-outline" onclick="setG4U6Preset('equi')">🌟 正三角形 (60°-60°-60°)</button>
+              <button class="btn btn-outline" onclick="setG4U6Preset('right')">📐 直角三角形 (90°)</button>
+              <button class="btn btn-outline" onclick="setG4U6Preset('obtuse')">🪓 鈍角三角形</button>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1.5rem; justify-content:center; align-items:flex-start; flex-wrap:wrap;">
+            <div style="background:white; border:3px solid #CBD5E1; border-radius:18px; padding:0.5rem; text-align:center;">
+              <canvas id="g4U6Canvas" width="340" height="260" style="touch-action:none; cursor:grab; border-radius:12px; background:#F8FAFC;"></canvas>
+              <div style="font-size:0.8rem; color:#64748B; margin-top:0.3rem;">👆 拖拉 A、B、C 圓點自由改變形狀</div>
+            </div>
+
+            <div style="flex:1; min-width:260px; max-width:400px;">
+              <div id="g4U6Readout" class="readout-box" style="margin-bottom:1rem;"></div>
+              <div id="g4U6SumCheck" class="feedback-banner success" style="margin-top:0.5rem;">
+                📐 內角和檢驗：∠A ＋ ∠B ＋ ∠C ＝ <strong>180°</strong> (恆成立)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6-B: 撕角拼平角 -->
+      <div id="g4_u6-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">6-2 內角和 180° 驗證</span>
+              <span>把三角形的三個角剪下來拼在一起，剛好會拼成一條直線（平角 180°）！點擊按鈕觀賞撕角拼平角動畫！</span>
+            </div>
+          </div>
+
+          <div style="text-align:center; padding:1.5rem; background:#F8FAFC; border:3px solid #E2E8F0; border-radius:18px; margin-bottom:1rem;">
+            <svg id="g4U6TearSvg" viewBox="0 0 420 220" style="width:100%; max-width:420px; height:auto;"></svg>
+          </div>
+
+          <div style="display:flex; justify-content:center; gap:0.5rem;">
+            <button class="btn btn-primary" onclick="animateG4U6Tear()">✂️ 撕下三個角並拼成直線 (180°)</button>
+            <button class="btn btn-outline" onclick="resetG4U6Tear()">🔄 復原三角形</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4上 第 7 單元：小數
+         ========================================== -->
+    <section id="g4_unit7" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🔢 4上 第 7 單元：小數 (二位小數)</h2>
+          <p>掌握二位小數概念 (0.01 是百分之一)、十分位與百分位、100格小數塗色板與小數點對齊直式加減！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchG4Submode(7, 'A', this)">7-1 100格二位小數塗色板</button>
+          <button class="submode-btn" onclick="switchG4Submode(7, 'B', this)">7-2 小數點對齊直式計算機</button>
+          <button class="submode-btn quiz-cta" onclick="openG4UnitQuiz(7)">📝 4上 第7單元測驗 (5卷)</button>
+        </div>
+      </div>
+
+      <!-- 7-A: 100格小數塗色板 -->
+      <div id="g4_u7-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">7-1 二位小數的意義</span>
+              <span>一大格正方形代表 1，平分成 100 個小格，每一小格代表 <strong>0.01（也就是 1/100）</strong>！一整排 10 格代表 <strong>0.1（1/10）</strong>！點選方格塗色：</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-outline" onclick="addG4U7Grid(1)">＋0.01 (1格)</button>
+              <button class="btn btn-outline" onclick="addG4U7Grid(10)">＋0.10 (一排10格)</button>
+              <button class="btn btn-outline" onclick="addG4U7Grid(-1)">－0.01</button>
+              <button class="btn btn-outline" onclick="setG4U7Grid(45)">45格 (0.45)</button>
+              <button class="btn btn-outline" onclick="setG4U7Grid(100)">100格 (1.00整)</button>
+              <button class="btn btn-outline" onclick="setG4U7Grid(0)">🔄 清空</button>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1.5rem; justify-content:center; align-items:center; flex-wrap:wrap;">
+            <div style="background:white; border:3px solid #CBD5E1; border-radius:16px; padding:0.75rem; text-align:center;">
+              <div id="g4U7GridWrap" style="display:grid; grid-template-columns:repeat(10, 24px); grid-template-rows:repeat(10, 24px); gap:2px; margin:0 auto; cursor:pointer;">
+                <!-- 100格動態注入 -->
+              </div>
+              <div style="font-size:0.8rem; color:#64748B; margin-top:0.5rem;">👆 點擊單格直接塗色或取消</div>
+            </div>
+
+            <div style="flex:1; min-width:260px; max-width:400px;">
+              <div id="g4U7Readout" class="readout-box"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7-B: 直式對齊機 -->
+      <div id="g4_u7-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">7-2 小數加減算則</span>
+              <span>直式算小數加減時，<strong>小數點一定要上下對齊</strong>！整數末尾沒有小數點可補上「.00」對齊！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setG4U7Problem(3.5, 1.28, '+')">3.5 ＋ 1.28 (補0相加)</button>
+              <button class="btn btn-Amber" onclick="setG4U7Problem(8, 3.45, '-')">8 － 3.45 (8.00 退位減)</button>
+            </div>
+          </div>
+
+          <div id="g4U7VerticalBoard" style="background:#F8FAFC; border:3px solid #CBD5E1; border-radius:16px; padding:1.25rem 2rem; max-width:380px; margin:0 auto; font-size:1.35rem; font-weight:900;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4上 第 8 單元：整數四則計算
+         ========================================== -->
+    <section id="g4_unit8" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🪜 4上 第 8 單元：整數四則計算</h2>
+          <p>掌握先乘除後加減、由左而右、有括號先算與乘法分配律簡便運算！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchG4Submode(8, 'A', this)">8-1 四則運算優先順序階梯圖</button>
+          <button class="submode-btn" onclick="switchG4Submode(8, 'B', this)">8-2 乘法分配律簡便計算對照</button>
+          <button class="submode-btn quiz-cta" onclick="openG4UnitQuiz(8)">📝 4上 第8單元測驗 (5卷)</button>
+        </div>
+      </div>
+
+      <!-- 8-A: 運算階梯圖 -->
+      <div id="g4_u8-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">8-1 運算順序法則</span>
+              <span>1️⃣ 有括號先算括號內！ 2️⃣ 先乘除後加減！ 3️⃣ 同級由左而右！點選下方算式看階梯逐步化簡：</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setG4U8Expression('50 + 25 * 4')">50 ＋ 25 × 4 (先乘後加)</button>
+              <button class="btn btn-Amber" onclick="setG4U8Expression('(120 - 40) / 8')">(120 － 40) ÷ 8 (括號先算)</button>
+              <button class="btn btn-Amber" onclick="setG4U8Expression('100 - 20 / 4 * 3')">100 － 20 ÷ 4 × 3 (先除後乘再減)</button>
+            </div>
+          </div>
+
+          <div id="g4U8StepLadder" style="background:#F8FAFC; border:3px solid #CBD5E1; border-radius:16px; padding:1.25rem; margin-bottom:1rem;">
+          </div>
+        </div>
+      </div>
+
+      <!-- 8-B: 乘法分配律 -->
+      <div id="g4_u8-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">8-2 乘法分配律</span>
+              <span>小思買了 25 枝鉛筆（每枝 8 元）和 25 枝原子筆（每枝 12 元）：看看分開算與合起來算有什麼差別！</span>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
+            <div style="background:#EFF6FF; border:2px solid #93C5FD; border-radius:16px; padding:1.25rem;">
+              <h3 style="color:#1E40AF; margin-bottom:0.5rem;">方法一：分開算 (慢)</h3>
+              <p style="font-weight:800; font-size:1.1rem; color:#1E293B;">8 × 25 ＋ 12 × 25</p>
+              <p style="color:#64748B; margin-top:0.4rem;">＝ 200 ＋ 300 ＝ <strong>500 元</strong></p>
+              <span style="font-size:0.85rem; color:#6B7280;">要算兩次二位數乘法！</span>
+            </div>
+
+            <div style="background:#ECFDF5; border:2px solid #6EE7B7; border-radius:16px; padding:1.25rem;">
+              <h3 style="color:#065F46; margin-bottom:0.5rem;">方法二：湊整分配律 (快且準！)</h3>
+              <p style="font-weight:800; font-size:1.1rem; color:#064E3B;">(8 ＋ 12) × 25</p>
+              <p style="color:#047857; margin-top:0.4rem;">＝ 20 × 25 ＝ <strong>500 元</strong></p>
+              <span style="font-size:0.85rem; color:#047857; font-weight:800;">✨ 8+12 剛好湊成整十數 20，心算秒殺！</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4上 第 9 單元：分數
+         ========================================== -->
+    <section id="g4_unit9" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🍕 4上 第 9 單元：分數 (假分數與帶分數)</h2>
+          <p>認識真分數、假分數、帶分數、互換公式與同分母帶分數借位加減！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchG4Submode(9, 'A', this)">9-1 披薩盤假分數帶分數轉換台</button>
+          <button class="submode-btn" onclick="switchG4Submode(9, 'B', this)">9-2 同分母帶分數借位加減操作台</button>
+          <button class="submode-btn quiz-cta" onclick="openG4UnitQuiz(9)">📝 4上 第9單元測驗 (5卷)</button>
+        </div>
+      </div>
+
+      <!-- 9-A: 披薩盤轉換 -->
+      <div id="g4_u9-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">9-1 假分數與帶分數互換</span>
+              <span>點選按鈕拿切片，每湊滿一整盤就會<strong>自動聚合成 1 整塊完整披薩</strong>！對照假分數與帶分數！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-outline" onclick="changeG4U9Denom(3)">分母 3 等分</button>
+              <button class="btn btn-outline" onclick="changeG4U9Denom(4)">分母 4 等分</button>
+              <button class="btn btn-outline" onclick="changeG4U9Denom(6)">分母 6 等分</button>
+              <button class="btn btn-Amber" onclick="addG4U9Slice(1)">➕ 拿 1 片披薩</button>
+              <button class="btn btn-outline" onclick="addG4U9Slice(-1)">➖ 放回 1 片</button>
+              <button class="btn btn-outline" onclick="resetG4U9Slices()">🔄 重置</button>
+            </div>
+          </div>
+
+          <div style="text-align:center; padding:1rem; background:white; border:3px solid #CBD5E1; border-radius:18px; margin-bottom:1rem;">
+            <div id="g4U9PizzasWrap" style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+              <!-- 披薩盤 SVG -->
+            </div>
+          </div>
+
+          <div id="g4U9Readout" class="readout-box"></div>
+        </div>
+      </div>
+
+      <!-- 9-B: 帶分數加減 -->
+      <div id="g4_u9-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">9-2 帶分數減法借位</span>
+              <span>例如 <strong>4 1/5 － 1 3/5</strong>：分數 1/5 不夠減 3/5，向整數 4 借 1 化為 5/5，變成 <strong>3 6/5</strong> 再減！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-Amber" onclick="setG4U9Problem('sub', 4, 1, 1, 3, 5)">4 1/5 － 1 3/5 (借位)</button>
+              <button class="btn btn-Amber" onclick="setG4U9Problem('add', 2, 3, 1, 4, 7)">2 3/7 ＋ 1 4/7 (進位成整數)</button>
+            </div>
+          </div>
+
+          <div id="g4U9VerticalBoard" style="background:#F8FAFC; border:3px solid #CBD5E1; border-radius:16px; padding:1.25rem 2rem; max-width:450px; margin:0 auto; font-size:1.25rem; font-weight:900;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4上 第 10 單元：統計圖
+         ========================================== -->
+    <section id="g4_unit10" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📊 4上 第 10 單元：統計圖 (長條圖與折線圖)</h2>
+          <p>掌握長條圖報讀與繪製、連續時間趨勢折線圖與波浪省略符號的妙用！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="submode-btn active" onclick="switchG4Submode(10, 'A', this)">10-1 互動長條圖拖拉繪製器</button>
+          <button class="submode-btn" onclick="switchG4Submode(10, 'B', this)">10-2 玉山氣溫折線圖與波浪省略符號</button>
+          <button class="submode-btn quiz-cta" onclick="openG4UnitQuiz(10)">📝 4上 第10單元測驗 (5卷)</button>
+        </div>
+      </div>
+
+      <!-- 10-A: 長條圖 -->
+      <div id="g4_u10-subA" class="submode-panel active">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">10-1 長條圖</span>
+              <span>調查四年一班同學最喜愛的球類運動！點選長條上方的「▲」或「▼」直接調整人數，看長條圖與統計表即時連動！</span>
+            </div>
+          </div>
+
+          <div style="background:white; border:3px solid #CBD5E1; border-radius:18px; padding:1rem; text-align:center; margin-bottom:1rem;">
+            <svg id="g4U10BarSvg" viewBox="0 0 500 240" style="width:100%; max-width:500px; height:auto;"></svg>
+          </div>
+
+          <div id="g4U10TableWrap" style="overflow-x:auto;">
+          </div>
+        </div>
+      </div>
+
+      <!-- 10-B: 折線圖 -->
+      <div id="g4_u10-subB" class="submode-panel">
+        <div class="workspace-card">
+          <div class="story-prompt">
+            <div class="story-text">
+              <span class="story-badge">10-2 折線圖與波浪省略號</span>
+              <span>玉山觀測站四季氣溫都在 2°C ~ 10°C 之間！切換<strong>是否使用波浪省略符號</strong>，體會氣溫起伏曲線如何瞬間變得清晰可辨！</span>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-primary" id="g4U10WaveBtn" onclick="toggleG4U10Wave()">〰️ 目前狀態：使用波浪省略符號 (放大起伏)</button>
+            </div>
+          </div>
+
+          <div style="background:white; border:3px solid #CBD5E1; border-radius:18px; padding:1rem; text-align:center;">
+            <svg id="g4U10LineSvg" viewBox="0 0 540 260" style="width:100%; max-width:540px; height:auto;"></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==========================================
+         5上 第 1 單元：多位小數與加減
+         ========================================== -->
+    <section id="g5_unit1" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🔢 5上 第 1 單元：多位小數與加減</h2>
+          <p>掌握千分位 (0.001 是千分之一)、位值定位板動手調、小數點垂直對齊直式計算與精準讀寫！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG5UnitQuiz(1)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.75rem;">🧮 多位小數千分位定位板</h3>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; align-items:center; background:#F8FAFC; border:2px solid #E2E8F0; border-radius:14px; padding:1.25rem;">
+          <div style="text-align:center;">
+            <div style="font-weight:800; color:#475569; font-size:0.85rem;">個位 (1)</div>
+            <div style="font-size:2rem; font-weight:900; color:#1E293B;" id="g5U1IntText">3</div>
+            <div style="margin-top:0.3rem;">
+              <button class="btn btn-outline" style="padding:2px 8px;" onclick="changeG5U1('intVal', 1)">▲</button>
+              <button class="btn btn-outline" style="padding:2px 8px;" onclick="changeG5U1('intVal', -1)">▼</button>
+            </div>
+          </div>
+          <div style="font-size:2.5rem; font-weight:900; color:#DC2626;">.</div>
+          <div style="text-align:center;">
+            <div style="font-weight:800; color:#475569; font-size:0.85rem;">十分位 (0.1)</div>
+            <div style="font-size:2rem; font-weight:900; color:#2563EB;" id="g5U1TenthsText">4</div>
+            <div style="margin-top:0.3rem;">
+              <button class="btn btn-outline" style="padding:2px 8px;" onclick="changeG5U1('tenths', 1)">▲</button>
+              <button class="btn btn-outline" style="padding:2px 8px;" onclick="changeG5U1('tenths', -1)">▼</button>
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-weight:800; color:#475569; font-size:0.85rem;">百分位 (0.01)</div>
+            <div style="font-size:2rem; font-weight:900; color:#059669;" id="g5U1HundredthsText">5</div>
+            <div style="margin-top:0.3rem;">
+              <button class="btn btn-outline" style="padding:2px 8px;" onclick="changeG5U1('hundredths', 1)">▲</button>
+              <button class="btn btn-outline" style="padding:2px 8px;" onclick="changeG5U1('hundredths', -1)">▼</button>
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-weight:800; color:#475569; font-size:0.85rem;">千分位 (0.001)</div>
+            <div style="font-size:2rem; font-weight:900; color:#D97706;" id="g5U1ThousandthsText">6</div>
+            <div style="margin-top:0.3rem;">
+              <button class="btn btn-outline" style="padding:2px 8px;" onclick="changeG5U1('thousandths', 1)">▲</button>
+              <button class="btn btn-outline" style="padding:2px 8px;" onclick="changeG5U1('thousandths', -1)">▼</button>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:1rem; text-align:center;">
+          <div style="font-size:1.5rem; font-weight:900; color:#1E3A8A;">數值：<span id="g5U1ValDisplay">3.456</span></div>
+          <div style="font-size:1.05rem; color:#0D9488; font-weight:800; margin-top:0.3rem;">國字讀法：<span id="g5U1ReadDisplay">三點四五六</span></div>
+          <div id="g5U1CompDisplay" style="margin-top:0.4rem; color:#475569; font-size:0.95rem;"></div>
+        </div>
+        <hr style="margin:1.25rem 0; border:none; border-top:1px dashed #CBD5E1;"/>
+        <h4 style="font-size:1.05rem; color:#1E3A8A; margin-bottom:0.5rem;">📏 多位小數直式加減計算機</h4>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center; justify-content:center; margin-bottom:0.75rem;">
+          <input type="number" step="0.001" id="g5U1Add1" value="3.456" style="width:110px; padding:0.4rem 0.6rem; font-size:1.1rem; font-weight:800; border:2px solid #CBD5E1; border-radius:8px;" />
+          <select id="g5U1Op" style="padding:0.4rem 0.6rem; font-size:1.1rem; font-weight:900; border:2px solid #3B82F6; border-radius:8px;">
+            <option value="+">＋</option>
+            <option value="-">－</option>
+          </select>
+          <input type="number" step="0.001" id="g5U1Add2" value="2.780" style="width:110px; padding:0.4rem 0.6rem; font-size:1.1rem; font-weight:800; border:2px solid #CBD5E1; border-radius:8px;" />
+          <button class="btn btn-primary" onclick="calcG5U1Vertical()">計算直式</button>
+        </div>
+        <div id="g5U1VertResult" style="margin-top:0.5rem;"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         5上 第 2 單元：因數與公因數
+         ========================================== -->
+    <section id="g5_unit2" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🌈 5上 第 2 單元：因數與公因數</h2>
+          <p>掌握因數列舉法、成對彩虹連結、公因數交集與最大公因數 (GCD) 計算！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG5UnitQuiz(2)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.5rem;">🌈 因數彩虹對照儀</h3>
+        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:0.75rem;">
+          <label style="font-weight:800;">輸入整數：</label>
+          <input type="number" id="g5U2TargetNum" value="24" min="2" max="100" style="width:80px; padding:0.4rem; font-weight:900; font-size:1.1rem; border:2px solid #3B82F6; border-radius:8px;" />
+          <button class="btn btn-primary" onclick="renderG5U2()">繪製因數彩虹</button>
+        </div>
+        <div id="g5U2FactorsList" style="margin-bottom:0.5rem;"></div>
+        <div style="overflow-x:auto; text-align:center;">
+          <svg id="g5U2RainbowSvg" width="500" height="90" viewBox="0 0 500 90" style="max-width:100%;"></svg>
+        </div>
+        <hr style="margin:1.25rem 0; border:none; border-top:1px dashed #CBD5E1;"/>
+        <h4 style="font-size:1.05rem; color:#1E3A8A; margin-bottom:0.5rem;">🤝 兩數公因數與最大公因數 (GCD)</h4>
+        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:0.5rem;">
+          <input type="number" id="g5U2NumA" value="18" min="2" max="100" style="width:75px; padding:0.4rem; font-weight:900; border:2px solid #CBD5E1; border-radius:8px;" />
+          <span>與</span>
+          <input type="number" id="g5U2NumB" value="24" min="2" max="100" style="width:75px; padding:0.4rem; font-weight:900; border:2px solid #CBD5E1; border-radius:8px;" />
+          <button class="btn btn-green" onclick="calcG5U2Common()">求最大公因數</button>
+        </div>
+        <div id="g5U2CommonResult"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         5上 第 3 單元：倍數與公倍數
+         ========================================== -->
+    <section id="g5_unit3" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>💡 5上 第 3 單元：倍數與公倍數</h2>
+          <p>百數表點燈跳躍、2/3/5/10 的倍數特徵、公倍數相遇與最小公倍數 (LCM)！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG5UnitQuiz(3)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+      <div class="workspace-card">
+        <div style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center; margin-bottom:0.75rem;">
+          <label style="font-weight:800; color:#1D4ED8;">🔵 數字甲的倍數：</label>
+          <input type="number" id="g5U3MulA" value="4" min="2" max="15" style="width:65px; padding:0.35rem; font-weight:900; border:2px solid #3B82F6; border-radius:8px;" onchange="renderG5U3()" />
+          <label style="font-weight:800; color:#047857;">🟢 數字乙的倍數：</label>
+          <input type="number" id="g5U3MulB" value="6" min="2" max="15" style="width:65px; padding:0.35rem; font-weight:900; border:2px solid #10B981; border-radius:8px;" onchange="renderG5U3()" />
+          <button class="btn btn-primary" onclick="renderG5U3()">重新點燈</button>
+        </div>
+        <div id="g5U3LcmDisplay" style="font-size:1.1rem; font-weight:800; margin-bottom:0.75rem; background:#EFF6FF; padding:0.6rem 1rem; border-radius:10px;"></div>
+        <div id="g5U3HundredGrid" style="display:grid; grid-template-columns:repeat(10, 1fr); gap:4px; max-width:600px; margin:0 auto;"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         5上 第 4 單元：擴分、約分與通分
+         ========================================== -->
+    <section id="g5_unit4" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🍕 5上 第 4 單元：擴分、約分與通分</h2>
+          <p>等值分數動態披薩切塊、分子分母同乘同除、最簡分數判定與異分母通分比大小！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG5UnitQuiz(4)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.5rem;">🍕 擴分切披薩模擬器（原分數 1/2）</h3>
+        <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap; margin-bottom:0.75rem;">
+          <label style="font-weight:800;">切塊倍數：</label>
+          <input type="range" id="g5U4ScaleSlider" min="1" max="8" value="2" oninput="renderG5U4()" style="width:160px;" />
+          <div id="g5U4ScaleFormula" style="font-size:1.2rem; font-weight:900;"></div>
+        </div>
+        <div style="text-align:center;">
+          <svg id="g5U4PizzaSvg" width="200" height="200" viewBox="0 0 200 200"></svg>
+        </div>
+        <hr style="margin:1.25rem 0; border:none; border-top:1px dashed #CBD5E1;"/>
+        <h4 style="font-size:1.05rem; color:#1E3A8A; margin-bottom:0.5rem;">⚖️ 異分母分數通分比大小實驗室</h4>
+        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:0.5rem;">
+          <input type="number" id="g5U4CmpN1" value="3" min="1" max="20" style="width:55px; padding:0.35rem; font-weight:800; border-radius:6px; border:1px solid #CBD5E1;" />
+          <span>/</span>
+          <input type="number" id="g5U4CmpD1" value="4" min="2" max="20" style="width:55px; padding:0.35rem; font-weight:800; border-radius:6px; border:1px solid #CBD5E1;" />
+          <span style="font-weight:900;">與</span>
+          <input type="number" id="g5U4CmpN2" value="5" min="1" max="20" style="width:55px; padding:0.35rem; font-weight:800; border-radius:6px; border:1px solid #CBD5E1;" />
+          <span>/</span>
+          <input type="number" id="g5U4CmpD2" value="6" min="2" max="20" style="width:55px; padding:0.35rem; font-weight:800; border-radius:6px; border:1px solid #CBD5E1;" />
+          <button class="btn btn-green" onclick="compareG5U4Fractions()">通分比大小</button>
+        </div>
+        <div id="g5U4CmpResult"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         5上 第 5 單元：多邊形與扇形
+         ========================================== -->
+    <section id="g5_unit5" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📐 5上 第 5 單元：多邊形與扇形</h2>
+          <p>正多邊形內角和與對角線切剖、撕角拼平角 (180°)、扇形圓心角量測與幾分之幾圓！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG5UnitQuiz(5)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+      <div class="workspace-card">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; align-items:center;">
+          <div>
+            <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.5rem;">🔷 正多邊形幾何分割探索器</h3>
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+              <label style="font-weight:800;">邊數 (n)：</label>
+              <input type="range" id="g5U5SidesSlider" min="3" max="10" value="5" oninput="renderG5U5()" style="width:140px;" />
+            </div>
+            <div id="g5U5PolygonInfo" style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:10px; padding:0.8rem;"></div>
+          </div>
+          <div style="text-align:center;">
+            <svg id="g5U5PolySvg" width="220" height="220" viewBox="0 0 220 220"></svg>
+          </div>
+        </div>
+        <hr style="margin:1.25rem 0; border:none; border-top:1px dashed #CBD5E1;"/>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; align-items:center;">
+          <div>
+            <h4 style="font-size:1.05rem; color:#1E3A8A; margin-bottom:0.5rem;">🍕 扇形圓心角旋轉儀</h4>
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+              <label style="font-weight:800;">圓心角：</label>
+              <input type="range" id="g5U5AngleSlider" min="15" max="360" step="15" value="120" oninput="renderG5U5Sector()" style="width:160px;" />
+            </div>
+            <div id="g5U5SectorInfo" style="font-size:1.15rem; font-weight:800; color:#B45309;"></div>
+          </div>
+          <div style="text-align:center;">
+            <svg id="g5U5SectorSvg" width="200" height="200" viewBox="0 0 200 200"></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         5上 第 6 單元：異分母分數的加減
+         ========================================== -->
+    <section id="g5_unit6" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🧪 5上 第 6 單元：異分母分數的加減</h2>
+          <p>掌握異分母通分相加減、帶分數向整數借位化假分數、標準水平橫線分數排版！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG5UnitQuiz(6)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.75rem;">🧪 異分母分數通分運算機</h3>
+        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem;">
+          <input type="number" id="g5U6N1" value="1" min="1" max="20" style="width:55px; padding:0.4rem; font-weight:800; border-radius:6px; border:1px solid #CBD5E1;" />
+          <span>/</span>
+          <input type="number" id="g5U6D1" value="3" min="2" max="20" style="width:55px; padding:0.4rem; font-weight:800; border-radius:6px; border:1px solid #CBD5E1;" />
+          <select id="g5U6Op" style="padding:0.4rem 0.6rem; font-weight:900; border:2px solid #3B82F6; border-radius:8px;">
+            <option value="+">＋</option>
+            <option value="-">－</option>
+          </select>
+          <input type="number" id="g5U6N2" value="1" min="1" max="20" style="width:55px; padding:0.4rem; font-weight:800; border-radius:6px; border:1px solid #CBD5E1;" />
+          <span>/</span>
+          <input type="number" id="g5U6D2" value="4" min="2" max="20" style="width:55px; padding:0.4rem; font-weight:800; border-radius:6px; border:1px solid #CBD5E1;" />
+          <button class="btn btn-primary" onclick="renderG5U6()">計算通分加減</button>
+        </div>
+        <div id="g5U6ResultWrap" style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:12px; padding:1.25rem; text-align:center;"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         5上 第 7 單元：線對稱圖形
+         ========================================== -->
+    <section id="g5_unit7" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🪞 5上 第 7 單元：線對稱圖形</h2>
+          <p>對稱軸、對稱點、對稱邊等長、對稱角等大，動態鏡像畫布即時互動！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG5UnitQuiz(7)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+      <div class="workspace-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+          <h3 style="font-size:1.15rem; color:#1E3A8A;">🪞 互動線對稱鏡射畫布 (在左側繪圖，右側即時鏡射)</h3>
+          <button class="btn btn-outline" onclick="clearG5U7Canvas()">🗑️ 清空畫布</button>
+        </div>
+        <div style="text-align:center;">
+          <canvas id="g5U7Canvas" width="460" height="260" style="background:#FFFFFF; border:2px solid #CBD5E1; border-radius:12px; cursor:crosshair; max-width:100%; box-shadow:inset 0 2px 4px rgba(0,0,0,0.05);"></canvas>
+          <div style="font-size:0.88rem; color:#64748B; margin-top:0.4rem;">
+            🔵 藍色：左側原筆跡 ｜ 🔴 紅色：右側即時對稱鏡像 ｜ 灰色虛線：對稱軸
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         5上 第 8 單元：整數四則運算
+         ========================================== -->
+    <section id="g5_unit8" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🪜 5上 第 8 單元：整數四則運算</h2>
+          <p>括號先算、先乘除後加減、由左至右，乘法分配律長方形面積拆解！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG5UnitQuiz(8)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.5rem;">🪜 四則運算順序階梯分步演繹</h3>
+        <div style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:12px; padding:1.25rem; margin-bottom:1rem; text-align:center;">
+          <div id="g5U8ExprDisplay" style="font-size:1.4rem; font-weight:900; color:#1E293B; margin-bottom:0.5rem;"></div>
+          <div id="g5U8HintDisplay" style="font-size:1rem; color:#2563EB; font-weight:800;"></div>
+          <div style="margin-top:0.75rem; display:flex; gap:0.5rem; justify-content:center;">
+            <button class="btn btn-primary" onclick="nextG5U8Step()">▶️ 下一步拆解</button>
+            <button class="btn btn-outline" onclick="resetG5U8Step()">🔄 重新演練</button>
+          </div>
+        </div>
+        <hr style="margin:1.25rem 0; border:none; border-top:1px dashed #CBD5E1;"/>
+        <h4 style="font-size:1.05rem; color:#1E3A8A; margin-bottom:0.5rem;">📐 乘法分配律面積模型：(A ＋ B) × C ＝ A × C ＋ B × C</h4>
+        <div id="g5U8DistDisplay" style="background:#EFF6FF; border:1px solid #93C5FD; border-radius:10px; padding:0.85rem; text-align:center;"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         5上 第 9 單元：面積
+         ========================================== -->
+    <section id="g5_unit9" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🟩 5上 第 9 單元：面積</h2>
+          <p>平行四邊形 (底×高)、三角形 (底×高÷2)、梯形 ((上底+下底)×高÷2) 割補旋轉實驗室！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG5UnitQuiz(9)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+      <div class="workspace-card">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+          <button class="btn btn-primary" onclick="setG5U9Shape('parallelogram')">🟩 平行四邊形割補</button>
+          <button class="btn btn-Amber" onclick="setG5U9Shape('triangle')">🔺 三角形倍拼</button>
+          <button class="btn btn-green" onclick="setG5U9Shape('trapezoid')">📐 梯形倒拼</button>
+        </div>
+        <div id="g5U9CanvasWrap" style="background:#F8FAFC; border:2px solid #CBD5E1; border-radius:12px; padding:1.25rem; text-align:center;"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         5上 第 10 單元：柱體、錐體和球
+         ========================================== -->
+    <section id="g5_unit10" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🧊 5上 第 10 單元：柱體、錐體和球</h2>
+          <p>底面、側面、頂點、邊的幾何數量關係，歐拉公式驗證與正方體展開圖探索！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG5UnitQuiz(10)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+      <div class="workspace-card">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+          <button class="btn btn-primary" onclick="setG5U10Type('prism', 3)">三角柱</button>
+          <button class="btn btn-primary" onclick="setG5U10Type('prism', 4)">四角柱</button>
+          <button class="btn btn-primary" onclick="setG5U10Type('prism', 6)">六角柱</button>
+          <button class="btn btn-Amber" onclick="setG5U10Type('pyramid', 3)">三角錐</button>
+          <button class="btn btn-Amber" onclick="setG5U10Type('pyramid', 4)">四角錐</button>
+          <button class="btn btn-Amber" onclick="setG5U10Type('pyramid', 5)">五角錐</button>
+          <button class="btn btn-green" onclick="setG5U10Type('cylinder', 0)">圓柱</button>
+          <button class="btn btn-green" onclick="setG5U10Type('cone', 0)">圓錐</button>
+          <button class="btn btn-green" onclick="setG5U10Type('sphere', 0)">球體</button>
+        </div>
+        <div id="g5U10CalcResult"></div>
+      </div>
+    </section>
+
+
+    <!-- ==========================================
+         6上 第 1 單元：最大公因數與最小公倍數
+         ========================================== -->
+    <section id="g6_unit1" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🪜 6上 第 1 單元：最大公因數與最小公倍數</h2>
+          <p>短除法階梯演繹、質因數分解、三個數與四個數的計算，徹底掌握 GCD 與 LCM 在短除法上的根本不同！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG6UnitQuiz(1)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 核心觀念深度解析卡片 -->
+      <div class="g6-concept-card">
+        <div class="g6-concept-title">
+          <span>💡</span> 短除法核心觀念：最大公因數 (GCD) vs 最小公倍數 (LCM) 的根本不同
+        </div>
+        <div class="g6-grid-2">
+          <div class="g6-subcard" style="border-top:4px solid #DC2626;">
+            <div class="g6-subcard-title" style="color:#DC2626;">
+              <span>🔴</span> 最大公因數 (GCD) 規則
+            </div>
+            <ul style="padding-left:1.2rem; line-height:1.7; font-size:0.95rem; color:#334155; margin:0;">
+              <li><strong>全體共同才能除</strong>：挑選的質因數必須能<strong>同時整除所有的數</strong>！</li>
+              <li><strong>停止條件</strong>：只要有任何一個數不能整除，短除法就<strong>立刻停止</strong>（全體互質）。</li>
+              <li><strong>結果算法</strong>：只把<strong>左側所有的共同質因數相乘</strong>。</li>
+            </ul>
+          </div>
+          <div class="g6-subcard" style="border-top:4px solid #059669;">
+            <div class="g6-subcard-title" style="color:#059669;">
+              <span>🟢</span> 最小公倍數 (LCM) 規則
+            </div>
+            <ul style="padding-left:1.2rem; line-height:1.7; font-size:0.95rem; color:#334155; margin:0;">
+              <li><strong>任兩數有公因數就可除</strong>：在 3 個或 4 個數中，只要有<strong>至少 2 個數</strong>能被整除，就可繼續除！</li>
+              <li><strong>不能整除直接照抄</strong>：不能被該質因數整除的數，<strong>直接抄下來移到下一層</strong>。</li>
+              <li><strong>停止條件</strong>：直到所有底層的商<strong>兩兩互質</strong>（任兩數都沒有大於 1 的公因數）才停止。</li>
+              <li><strong>結果算法</strong>：把<strong>左側所有質因數 與 底層所有商 全數相乘 (L 型全乘)</strong>。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="g6-rule-box" style="margin-top:1rem;">
+          <strong>🎯 經典例題對照解析：</strong><br/>
+          • <strong>兩個數例題</strong>：(24, 36) ＝ 2 × 2 × 3 ＝ <strong>12</strong> ； [24, 36] ＝ 2 × 2 × 3 × 2 × 3 ＝ <strong>72</strong>。<br/>
+          • <strong>三個數例題</strong>：求 18, 24, 36 的 GCD 與 LCM：<br/>
+          &nbsp;&nbsp;1. 求 GCD：共同除以 2 得 9, 12, 18；再共同除以 3 得 3, 4, 6。此時 3, 4, 6 <strong>沒有三個數的共同質因數</strong>，短除法停止！<strong>GCD ＝ 2 × 3 ＝ 6</strong>。<br/>
+          &nbsp;&nbsp;2. 求 LCM：3, 4, 6 中，3 和 6 還可除以 3（4 照抄）；接著 4 和 2 還可除以 2。直到底層兩兩互質，<strong>LCM ＝ 2 × 3 × 3 × 2 × 1 × 2 × 1 ＝ 72</strong>！<br/>
+          • <strong>四個數例題</strong>：求 12, 18, 24, 36 ➔ <strong>GCD ＝ 6</strong>，<strong>LCM ＝ 72</strong>。
+        </div>
+      </div>
+
+      <!-- 互動計算儀工作區 -->
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.75rem;">🪜 短除法階梯動態計算儀 (支援 2、3、4 個數)</h3>
+        
+        <!-- 切換個數按鈕 -->
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.85rem;">
+          <button id="g6U1BtnCount2" class="btn btn-outline" onclick="setG6U1Count(2)">2 個數計算</button>
+          <button id="g6U1BtnCount3" class="btn btn-primary" onclick="setG6U1Count(3)">3 個數計算 (推薦例題)</button>
+          <button id="g6U1BtnCount4" class="btn btn-outline" onclick="setG6U1Count(4)">4 個數計算</button>
+          <span style="border-left:1px solid #CBD5E1; margin:0 0.4rem;"></span>
+          <button class="btn btn-green" onclick="loadG6U1Preset('2num')">載入 (24, 36)</button>
+          <button class="btn btn-green" onclick="loadG6U1Preset('3num')">載入 (18, 24, 36)</button>
+          <button class="btn btn-green" onclick="loadG6U1Preset('4num')">載入 (12, 18, 24, 36)</button>
+        </div>
+
+        <!-- 數字輸入欄位 -->
+        <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:0.75rem;">
+          <div style="display:inline-flex; align-items:center; gap:0.3rem;">
+            <label style="font-weight:800;">第 1 數：</label>
+            <input type="number" id="g6U1Num1" value="18" min="2" max="999" style="width:75px; padding:0.35rem; font-weight:900; border:2px solid #3B82F6; border-radius:6px;" onchange="renderG6U1()" />
+          </div>
+          <div style="display:inline-flex; align-items:center; gap:0.3rem;">
+            <label style="font-weight:800;">第 2 數：</label>
+            <input type="number" id="g6U1Num2" value="24" min="2" max="999" style="width:75px; padding:0.35rem; font-weight:900; border:2px solid #3B82F6; border-radius:6px;" onchange="renderG6U1()" />
+          </div>
+          <div id="g6U1InputWrap3" style="display:inline-flex; align-items:center; gap:0.3rem;">
+            <label style="font-weight:800;">第 3 數：</label>
+            <input type="number" id="g6U1Num3" value="36" min="2" max="999" style="width:75px; padding:0.35rem; font-weight:900; border:2px solid #3B82F6; border-radius:6px;" onchange="renderG6U1()" />
+          </div>
+          <div id="g6U1InputWrap4" style="display:none; align-items:center; gap:0.3rem;">
+            <label style="font-weight:800;">第 4 數：</label>
+            <input type="number" id="g6U1Num4" value="48" min="2" max="999" style="width:75px; padding:0.35rem; font-weight:900; border:2px solid #3B82F6; border-radius:6px;" onchange="renderG6U1()" />
+          </div>
+          <button class="btn btn-primary" onclick="renderG6U1()">執行短除法階梯</button>
+        </div>
+
+        <div id="g6U1ShortDivDisplay"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         6上 第 2 單元：分數除法
+         ========================================== -->
+    <section id="g6_unit2" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>➗ 6上 第 2 單元：分數除法</h2>
+          <p>顛倒相乘的幾何本質！為什麼除法的除數要變成倒數？四大除法情境圖形化解構！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG6UnitQuiz(2)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 為何使用倒數核心觀念卡片 -->
+      <div class="g6-concept-card">
+        <div class="g6-concept-title">
+          <span>💡</span> 為什麼除以分數要「顛倒相乘（乘以倒數）」？
+        </div>
+        <div style="line-height:1.8; font-size:1rem; color:#334155;">
+          <p>國小數學除法最重要的本質是<strong>「包含除」</strong>（被除數裡面包含多少個除數？可以分裝成幾份？）。</p>
+          <div class="g6-grid-2">
+            <div class="g6-subcard">
+              <div class="g6-subcard-title" style="color:#1D4ED8;">
+                <span>1️⃣</span> 先看除以單位分數（<span class="math-frac" role="math" aria-label="b分之1"><span class="math-frac-num">1</span><span class="math-frac-bar"></span><span class="math-frac-den">b</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>1</mn><mi>b</mi></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>1</m:t></m:r></m:num><m:den><m:r><m:t>b</m:t></m:r></m:den></m:f></m:oMath></span>）：
+              </div>
+              <div>任何 1 條繩子，如果每 <span class="math-frac" role="math" aria-label="3分之1"><span class="math-frac-num">1</span><span class="math-frac-bar"></span><span class="math-frac-den">3</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>1</mn><mn>3</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>1</m:t></m:r></m:num><m:den><m:r><m:t>3</m:t></m:r></m:den></m:f></m:oMath></span> 條剪成一段，1 條繩子就可以剪出 <strong>3</strong> 段！</div>
+              <div style="font-weight:800; color:#DC2626; margin-top:0.3rem;">
+                ➔ 1 裡面有 3 個 <span class="math-frac" role="math" aria-label="3分之1"><span class="math-frac-num">1</span><span class="math-frac-bar"></span><span class="math-frac-den">3</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>1</mn><mn>3</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>1</m:t></m:r></m:num><m:den><m:r><m:t>3</m:t></m:r></m:den></m:f></m:oMath></span>，所以「<strong>÷ <span class="math-frac" role="math" aria-label="3分之1"><span class="math-frac-num">1</span><span class="math-frac-bar"></span><span class="math-frac-den">3</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>1</mn><mn>3</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>1</m:t></m:r></m:num><m:den><m:r><m:t>3</m:t></m:r></m:den></m:f></m:oMath></span> ＝ × 3</strong>」！
+              </div>
+            </div>
+            <div class="g6-subcard">
+              <div class="g6-subcard-title" style="color:#047857;">
+                <span>2️⃣</span> 再看除以非單位分數（<span class="math-frac" role="math" aria-label="b分之a"><span class="math-frac-num">a</span><span class="math-frac-bar"></span><span class="math-frac-den">b</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mi>a</mi><mi>b</mi></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>a</m:t></m:r></m:num><m:den><m:r><m:t>b</m:t></m:r></m:den></m:f></m:oMath></span>）：
+              </div>
+              <div>如果每 <span class="math-frac" role="math" aria-label="3分之2"><span class="math-frac-num">2</span><span class="math-frac-bar"></span><span class="math-frac-den">3</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>2</mn><mn>3</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>2</m:t></m:r></m:num><m:den><m:r><m:t>3</m:t></m:r></m:den></m:f></m:oMath></span> 條剪成一段，相當於每份要拿 <strong>2 個 <span class="math-frac" role="math" aria-label="3分之1"><span class="math-frac-num">1</span><span class="math-frac-bar"></span><span class="math-frac-den">3</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>1</mn><mn>3</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>1</m:t></m:r></m:num><m:den><m:r><m:t>3</m:t></m:r></m:den></m:f></m:oMath></span></strong>。</div>
+              <div style="font-weight:800; color:#DC2626; margin-top:0.3rem;">
+                ➔ 先乘 3（算出總共有多少小塊），再除以 2（每份拿 2 塊），也就是「<strong>× <span class="math-frac" role="math" aria-label="2分之3"><span class="math-frac-num">3</span><span class="math-frac-bar"></span><span class="math-frac-den">2</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>3</mn><mn>2</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>3</m:t></m:r></m:num><m:den><m:r><m:t>2</m:t></m:r></m:den></m:f></m:oMath></span></strong>」！
+              </div>
+            </div>
+          </div>
+          <div class="g6-rule-box" style="margin-top:0.85rem; line-height:2.2;">
+            ✨ <strong>四大除法情境統整歸納（OMML / MathML 標準符號排版）：</strong><br/>
+            <div style="margin:0.4rem 0;">
+              1. <strong>真分數的除法</strong>：
+              2 ÷ <span class="math-frac" role="math" aria-label="3分之1"><span class="math-frac-num">1</span><span class="math-frac-bar"></span><span class="math-frac-den">3</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>1</mn><mn>3</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>1</m:t></m:r></m:num><m:den><m:r><m:t>3</m:t></m:r></m:den></m:f></m:oMath></span>
+              ＝ 2 × 3 ＝ 6
+              <span style="color:#64748B; font-size:0.92rem;">（2 條繩子，每條切 3 份，共有 2 × 3 ＝ 6 份）。</span>
+            </div>
+            <div style="margin:0.4rem 0;">
+              2. <strong>同分母的除法</strong>：
+              <span class="math-frac" role="math" aria-label="5分之4"><span class="math-frac-num">4</span><span class="math-frac-bar"></span><span class="math-frac-den">5</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>4</mn><mn>5</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>4</m:t></m:r></m:num><m:den><m:r><m:t>5</m:t></m:r></m:den></m:f></m:oMath></span>
+              ÷
+              <span class="math-frac" role="math" aria-label="5分之2"><span class="math-frac-num">2</span><span class="math-frac-bar"></span><span class="math-frac-den">5</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>2</mn><mn>5</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>2</m:t></m:r></m:num><m:den><m:r><m:t>5</m:t></m:r></m:den></m:f></m:oMath></span>
+              ＝
+              <span class="math-frac" role="math" aria-label="2分之4"><span class="math-frac-num">4</span><span class="math-frac-bar"></span><span class="math-frac-den">2</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>4</mn><mn>2</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>4</m:t></m:r></m:num><m:den><m:r><m:t>2</m:t></m:r></m:den></m:f></m:oMath></span>
+              ＝ 2
+              <span style="color:#64748B; font-size:0.92rem;">（分母相同表示基準單位一樣大，直接以分子相除！）。</span>
+            </div>
+            <div style="margin:0.4rem 0;">
+              3. <strong>異分母的除法</strong>：
+              <span class="math-frac" role="math" aria-label="3分之2"><span class="math-frac-num">2</span><span class="math-frac-bar"></span><span class="math-frac-den">3</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>2</mn><mn>3</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>2</m:t></m:r></m:num><m:den><m:r><m:t>3</m:t></m:r></m:den></m:f></m:oMath></span>
+              ÷
+              <span class="math-frac" role="math" aria-label="4分之1"><span class="math-frac-num">1</span><span class="math-frac-bar"></span><span class="math-frac-den">4</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>1</mn><mn>4</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>1</m:t></m:r></m:num><m:den><m:r><m:t>4</m:t></m:r></m:den></m:f></m:oMath></span>
+              ＝
+              <span class="math-frac" role="math" aria-label="12分之8"><span class="math-frac-num">8</span><span class="math-frac-bar"></span><span class="math-frac-den">12</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>8</mn><mn>12</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>8</m:t></m:r></m:num><m:den><m:r><m:t>12</m:t></m:r></m:den></m:f></m:oMath></span>
+              ÷
+              <span class="math-frac" role="math" aria-label="12分之3"><span class="math-frac-num">3</span><span class="math-frac-bar"></span><span class="math-frac-den">12</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>3</mn><mn>12</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>3</m:t></m:r></m:num><m:den><m:r><m:t>12</m:t></m:r></m:den></m:f></m:oMath></span>
+              ＝
+              <span class="math-frac" role="math" aria-label="3分之8"><span class="math-frac-num">8</span><span class="math-frac-bar"></span><span class="math-frac-den">3</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>8</mn><mn>3</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>8</m:t></m:r></m:num><m:den><m:r><m:t>3</m:t></m:r></m:den></m:f></m:oMath></span>
+              ＝
+              <span class="math-mixed" role="math" aria-label="2又3分之2"><span class="math-whole">2</span><span class="math-frac"><span class="math-frac-num">2</span><span class="math-frac-bar"></span><span class="math-frac-den">3</span></span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mn>2</mn><mfrac><mn>2</mn><mn>3</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:r><m:t>2</m:t></m:r><m:f><m:num><m:r><m:t>2</m:t></m:r></m:num><m:den><m:r><m:t>3</m:t></m:r></m:den></m:f></m:oMath></span>
+              <span style="color:#64748B; font-size:0.92rem;">（通分後化為相同單位網格，看 8 格能裝幾個 3 格）。</span>
+            </div>
+            <div style="margin:0.4rem 0;">
+              4. <strong>分子不為 1 的除法</strong>：
+              <span class="math-frac" role="math" aria-label="4分之3"><span class="math-frac-num">3</span><span class="math-frac-bar"></span><span class="math-frac-den">4</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>3</mn><mn>4</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>3</m:t></m:r></m:num><m:den><m:r><m:t>4</m:t></m:r></m:den></m:f></m:oMath></span>
+              ÷
+              <span class="math-frac" role="math" aria-label="5分之2"><span class="math-frac-num">2</span><span class="math-frac-bar"></span><span class="math-frac-den">5</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>2</mn><mn>5</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>2</m:t></m:r></m:num><m:den><m:r><m:t>5</m:t></m:r></m:den></m:f></m:oMath></span>
+              ＝
+              <span class="math-frac" role="math" aria-label="4分之3"><span class="math-frac-num">3</span><span class="math-frac-bar"></span><span class="math-frac-den">4</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>3</mn><mn>4</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>3</m:t></m:r></m:num><m:den><m:r><m:t>4</m:t></m:r></m:den></m:f></m:oMath></span>
+              ×
+              <span class="math-frac" role="math" aria-label="2分之5"><span class="math-frac-num">5</span><span class="math-frac-bar"></span><span class="math-frac-den">2</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>5</mn><mn>2</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>5</m:t></m:r></m:num><m:den><m:r><m:t>2</m:t></m:r></m:den></m:f></m:oMath></span>
+              ＝
+              <span class="math-frac" role="math" aria-label="8分之15"><span class="math-frac-num">15</span><span class="math-frac-bar"></span><span class="math-frac-den">8</span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mfrac><mn>15</mn><mn>8</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:f><m:num><m:r><m:t>15</m:t></m:r></m:num><m:den><m:r><m:t>8</m:t></m:r></m:den></m:f></m:oMath></span>
+              ＝
+              <span class="math-mixed" role="math" aria-label="1又8分之7"><span class="math-whole">1</span><span class="math-frac"><span class="math-frac-num">7</span><span class="math-frac-bar"></span><span class="math-frac-den">8</span></span><math xmlns="http://www.w3.org/1998/Math/MathML" class="sr-only-mathml" aria-hidden="true"><mn>1</mn><mfrac><mn>7</mn><mn>8</mn></mfrac></math><m:oMath xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" style="display:none;" aria-hidden="true"><m:r><m:t>1</m:t></m:r><m:f><m:num><m:r><m:t>7</m:t></m:r></m:num><m:den><m:r><m:t>8</m:t></m:r></m:den></m:f></m:oMath></span>
+              <span style="color:#64748B; font-size:0.92rem;">（先乘 5 放大至 5 等份單位數，再除以 2 份）。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 互動教具工作區 -->
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.75rem;">🔄 分數除法四大情境圖解與演算機</h3>
+        
+        <!-- 4大情境切換按鈕 -->
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.85rem;">
+          <button id="g6U2Btn_proper" class="btn btn-primary" onclick="setG6U2Scenario('proper')">1. 真分數除法 (2 ÷ 1/3)</button>
+          <button id="g6U2Btn_same_den" class="btn btn-outline" onclick="setG6U2Scenario('same_den')">2. 同分母除法 (4/5 ÷ 2/5)</button>
+          <button id="g6U2Btn_diff_den" class="btn btn-outline" onclick="setG6U2Scenario('diff_den')">3. 異分母除法 (2/3 ÷ 1/4)</button>
+          <button id="g6U2Btn_multi_num" class="btn btn-outline" onclick="setG6U2Scenario('multi_num')">4. 分子不為 1 (3/4 ÷ 2/5)</button>
+        </div>
+
+        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:0.6rem 0.85rem;">
+          <span style="font-weight:800;">自訂分數算式：</span>
+          <input type="number" id="g6U2N1" value="2" min="1" max="50" style="width:55px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" oninput="renderG6U2()" onchange="renderG6U2()" />
+          <span>/</span>
+          <input type="number" id="g6U2D1" value="1" min="1" max="50" style="width:55px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" oninput="renderG6U2()" onchange="renderG6U2()" />
+          <span style="font-weight:900; font-size:1.3rem;">÷</span>
+          <input type="number" id="g6U2N2" value="1" min="1" max="50" style="width:55px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" oninput="renderG6U2()" onchange="renderG6U2()" />
+          <span>/</span>
+          <input type="number" id="g6U2D2" value="3" min="1" max="50" style="width:55px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" oninput="renderG6U2()" onchange="renderG6U2()" />
+          <button class="btn btn-primary" onclick="renderG6U2()">計算並產出圖像</button>
+        </div>
+
+        <div id="g6U2ResultWrap" style="text-align:center;"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         6上 第 3 單元：數量關係
+         ========================================== -->
+    <section id="g6_unit3" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🌲 6上 第 3 單元：數與量關係</h2>
+          <p>植樹問題三大狀況圖形解構（兩端都種、只種一端、兩端都不種）與牙籤排列連續正方形代數規律！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG6UnitQuiz(3)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 植樹問題核心概念卡片 -->
+      <div class="g6-concept-card">
+        <div class="g6-concept-title">
+          <span>💡</span> 植樹問題三大狀況：如何計算「間隔數」與「樹的棵數」？
+        </div>
+        <div style="font-size:0.95rem; line-height:1.7; color:#334155;">
+          <p>植樹問題的核心先求<strong>「間隔數」</strong>：<strong>間隔數 ＝ 總長度 ÷ 每個間隔長度</strong>。接著依據端點狀況決定棵數：</p>
+          <div class="g6-grid-4">
+            <div class="g6-subcard" style="border-top:3px solid #059669;">
+              <div class="g6-subcard-title" style="color:#059669;">1. 兩端都種 🌲</div>
+              <div style="font-weight:900; color:#DC2626; font-size:1.05rem;">棵數 ＝ 間隔數 ＋ 1</div>
+              <div style="font-size:0.85rem; color:#64748B; margin-top:0.25rem;">頭尾都有樹，比間隔多 1 棵。<br/>例：4 個間隔種 5 棵樹。</div>
+            </div>
+            <div class="g6-subcard" style="border-top:3px solid #2563EB;">
+              <div class="g6-subcard-title" style="color:#2563EB;">2. 只有一端種 🌲🚪</div>
+              <div style="font-weight:900; color:#DC2626; font-size:1.05rem;">棵數 ＝ 間隔數</div>
+              <div style="font-size:0.85rem; color:#64748B; margin-top:0.25rem;">一端有樹、另一端為大門或路口，一棵樹配一個間隔。</div>
+            </div>
+            <div class="g6-subcard" style="border-top:3px solid #D97706;">
+              <div class="g6-subcard-title" style="color:#D97706;">3. 兩端都不種 🏮🌲🏮</div>
+              <div style="font-weight:900; color:#DC2626; font-size:1.05rem;">棵數 ＝ 間隔數 － 1</div>
+              <div style="font-size:0.85rem; color:#64748B; margin-top:0.25rem;">兩端已有路燈或牆壁，樹只種在中間，比間隔少 1 棵。</div>
+            </div>
+            <div class="g6-subcard" style="border-top:3px solid #7C3AED;">
+              <div class="g6-subcard-title" style="color:#7C3AED;">4. 封閉環形池塘 ⭕</div>
+              <div style="font-weight:900; color:#DC2626; font-size:1.05rem;">棵數 ＝ 間隔數</div>
+              <div style="font-size:0.85rem; color:#64748B; margin-top:0.25rem;">首尾封閉相接，每一棵樹剛好對應一個間隔。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 植樹與數量關係工作區 -->
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.5rem;">🌲 道路植樹問題動態幾何模擬器</h3>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+          <button id="g6U3Btn_both" class="btn btn-primary" onclick="setG6U3Mode('both')">1. 兩端都種 (＋1)</button>
+          <button id="g6U3Btn_one" class="btn btn-outline" onclick="setG6U3Mode('one')">2. 只有一端種 (棵數＝間隔)</button>
+          <button id="g6U3Btn_none" class="btn btn-outline" onclick="setG6U3Mode('none')">3. 兩端都不種 (－1)</button>
+          <button id="g6U3Btn_circle" class="btn btn-outline" onclick="setG6U3Mode('circle')">4. 封閉環形池塘 (棵數＝間隔)</button>
+        </div>
+        <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap; margin-bottom:0.75rem; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:0.6rem 0.85rem;">
+          <label style="font-weight:800;">道路全長 (m)：</label>
+          <input type="number" id="g6U3Len" value="80" min="10" max="500" step="10" style="width:75px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U3()" />
+          <label style="font-weight:800;">每個間隔 (m)：</label>
+          <input type="number" id="g6U3Interval" value="20" min="5" max="50" step="5" style="width:65px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U3()" />
+        </div>
+        <div id="g6U3TreeResult" style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:10px; padding:0.85rem; margin-bottom:1.25rem;"></div>
+        
+        <hr style="margin:1.25rem 0; border:none; border-top:1px dashed #CBD5E1;"/>
+        <h4 style="font-size:1.05rem; color:#1E3A8A; margin-bottom:0.5rem;">🪡 連續相連正方形牙籤規律（公式：1 ＋ 3n）</h4>
+        <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+          <label style="font-weight:800;">正方形數量 (n)：</label>
+          <input type="range" id="g6U3SqSlider" min="1" max="15" value="5" oninput="renderG6U3()" style="width:160px;" />
+        </div>
+        <div id="g6U3MatchResult"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         6上 第 4 單元：小數除法
+         ========================================== -->
+    <section id="g6_unit4" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🧲 6上 第 4 單元：小數的除法</h2>
+          <p>四大直式計算狀況全剖析：整數除小數、小數除整數、小數除小數、大小數除以 0 點幾！小數點定位與餘數對齊規範！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG6UnitQuiz(4)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 核心觀念解說卡片 -->
+      <div class="g6-concept-card">
+        <div class="g6-concept-title">
+          <span>💡</span> 小數除法直式計算四大狀況與運算規則
+        </div>
+        <div class="g6-grid-4">
+          <div class="g6-subcard" style="border-top:3px solid #3B82F6;">
+            <div class="g6-subcard-title" style="color:#1D4ED8;">1. 整數除以小數</div>
+            <div style="font-size:0.95rem; font-weight:800; color:#DC2626;">例：12 ÷ 0.4 ＝ 30</div>
+            <div style="font-size:0.85rem; color:#64748B; margin-top:0.25rem;">除數 0.4 移 1 位變 4，被除數 12 同步移位補 0 變 120，算 120 ÷ 4 ＝ 30。</div>
+          </div>
+          <div class="g6-subcard" style="border-top:3px solid #10B981;">
+            <div class="g6-subcard-title" style="color:#047857;">2. 小數除以整數</div>
+            <div style="font-size:0.95rem; font-weight:800; color:#DC2626;">例：4.8 ÷ 3 ＝ 1.6</div>
+            <div style="font-size:0.85rem; color:#64748B; margin-top:0.25rem;">除數已是整數不需移位，商的小數點直接向上對齊被除數小數點！</div>
+          </div>
+          <div class="g6-subcard" style="border-top:3px solid #F59E0B;">
+            <div class="g6-subcard-title" style="color:#B45309;">3. 小數除以小數</div>
+            <div style="font-size:0.95rem; font-weight:800; color:#DC2626;">例：7.5 ÷ 1.5 ＝ 5</div>
+            <div style="font-size:0.85rem; color:#64748B; margin-top:0.25rem;">除數 1.5 移 1 位變 15，被除數 7.5 同步移 1 位變 75，商的小數點對齊新位。</div>
+          </div>
+          <div class="g6-subcard" style="border-top:3px solid #EC4899;">
+            <div class="g6-subcard-title" style="color:#BE185D;">4. 大小數除 0.幾小數</div>
+            <div style="font-size:0.95rem; font-weight:800; color:#DC2626;">例：15.6 ÷ 0.03 ＝ 520</div>
+            <div style="font-size:0.85rem; color:#64748B; margin-top:0.25rem;">除數移 2 位變 3，被除數 15.6 移 2 位補 0 變 1560，商大幅放大為 520！</div>
+          </div>
+        </div>
+
+        <div class="g6-rule-box" style="margin-top:0.85rem;">
+          ⚠️ <strong>直式計算三大黃金法則：</strong><br/>
+          1. <strong>除數變整數</strong>：看除數有幾位小數，就向右移幾位劃掉小數點；被除數必須<strong>同步向右移動相同位數</strong>（位數不足要補 0）。<br/>
+          2. <strong>商的小數點</strong>：向上對齊<strong>【移動後的新小數點位置】</strong>。<br/>
+          3. <strong>餘數的小數點</strong>：向下垂直對齊<strong>【原本被除數的小數點位置】</strong>！千萬不能對齊移動後的新點！
+        </div>
+      </div>
+
+      <!-- 直式計算器工作區 -->
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.75rem;">🧲 小數除法直式演算與餘數對齊檢驗器</h3>
+        
+        <!-- 4大情境按鈕 -->
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.85rem;">
+          <button id="g6U4Btn_1" class="btn btn-primary" onclick="setG6U4Scenario(1)">1. 整數除以小數 (12 ÷ 0.4)</button>
+          <button id="g6U4Btn_2" class="btn btn-outline" onclick="setG6U4Scenario(2)">2. 小數除以整數 (4.8 ÷ 3)</button>
+          <button id="g6U4Btn_3" class="btn btn-outline" onclick="setG6U4Scenario(3)">3. 小數除以小數 (7.5 ÷ 1.5)</button>
+          <button id="g6U4Btn_4" class="btn btn-outline" onclick="setG6U4Scenario(4)">4. 大數除 0.幾小數 (15.6 ÷ 0.03)</button>
+        </div>
+
+        <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:0.6rem 0.85rem;">
+          <label style="font-weight:800;">被除數：</label>
+          <input type="number" step="0.01" id="g6U4Dividend" value="12" style="width:90px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U4()" />
+          <span style="font-weight:900; font-size:1.3rem;">÷</span>
+          <label style="font-weight:800;">除數：</label>
+          <input type="number" step="0.01" id="g6U4Divisor" value="0.4" style="width:80px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U4()" />
+          <button class="btn btn-primary" onclick="renderG6U4()">執行直式計算</button>
+        </div>
+
+        <div id="g6U4ResultWrap"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         6上 第 5 單元：比與比值
+         ========================================== -->
+    <section id="g6_unit5" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>⚖️ 6上 第 5 單元：比與比值 (比例的應用)</h2>
+          <p>前項、後項、基準量、比較量的嚴謹定義，生活三大比例實例（珍珠奶茶、美術調色、烘焙蛋糕）與配方圖解！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG6UnitQuiz(5)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 比例觀念核心解說卡片 -->
+      <div class="g6-concept-card">
+        <div class="g6-concept-title">
+          <span>💡</span> 什麼是比與比值？基準量與比較量的概念解析
+        </div>
+        <div class="g6-grid-2">
+          <div class="g6-subcard">
+            <div class="g6-subcard-title" style="color:#1D4ED8;">
+              <span>📌</span> 比與比值的結構：A : B
+            </div>
+            <ul style="padding-left:1.2rem; line-height:1.7; font-size:0.95rem; color:#334155; margin:0;">
+              <li><strong>前項 (A)</strong>：代表<strong>「比較量」</strong>（拿來比較的數量）。</li>
+              <li><strong>後項 (B)</strong>：代表<strong>「基準量」</strong>（被當作標準 1 倍的數量，相當於分數的分母，<strong>絕對不能為 0</strong>！）。</li>
+              <li><strong>比值</strong>：比較量 ÷ 基準量 ＝ 前項 ÷ 後項 ＝ <strong>A / B</strong>。</li>
+              <li><strong>最簡整數比</strong>：前項和後項互質的整數比。</li>
+            </ul>
+          </div>
+          <div class="g6-subcard">
+            <div class="g6-subcard-title" style="color:#059669;">
+              <span>🥤</span> 三大生活比例應用實例
+            </div>
+            <ul style="padding-left:1.2rem; line-height:1.7; font-size:0.95rem; color:#334155; margin:0;">
+              <li><strong>實例 1：珍珠奶茶黃金比例</strong>：紅茶與鮮奶的比是 <strong>3 : 2</strong>。若要調製 500 mL，紅茶佔 3/5 (300 mL)，鮮奶佔 2/5 (200 mL)。</li>
+              <li><strong>實例 2：美術調色</strong>：黃色與藍色顏料比為 <strong>2 : 1</strong>，混調出草綠色。</li>
+              <li><strong>實例 3：烘焙海綿蛋糕</strong>：低筋麵粉與細砂糖的比為 <strong>5 : 3</strong>。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 互動比例實驗室 -->
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.75rem;">⚖️ 互動比例調配與配方分配模擬器</h3>
+        
+        <!-- 3大生活情境按鈕 -->
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.85rem;">
+          <button id="g6U5Btn_milktea" class="btn btn-primary" onclick="setG6U5Scenario('milktea')">🥤 實例 1：珍珠奶茶 (紅茶 3 : 鮮奶 2)</button>
+          <button id="g6U5Btn_paint" class="btn btn-outline" onclick="setG6U5Scenario('paint')">🎨 實例 2：美術調色 (黃色 2 : 藍色 1)</button>
+          <button id="g6U5Btn_cake" class="btn btn-outline" onclick="setG6U5Scenario('cake')">🍰 實例 3：烘焙蛋糕 (麵粉 5 : 砂糖 3)</button>
+        </div>
+
+        <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:0.6rem 0.85rem;">
+          <label style="font-weight:800;">前項 (比較量 A)：</label>
+          <input type="number" id="g6U5NumA" value="3" min="1" max="100" style="width:65px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U5()" />
+          <label style="font-weight:800;">後項 (基準量 B)：</label>
+          <input type="number" id="g6U5NumB" value="2" min="1" max="100" style="width:65px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U5()" />
+          <label style="font-weight:800;">製作總量：</label>
+          <input type="number" id="g6U5Total" value="500" min="10" max="5000" step="50" style="width:85px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U5()" />
+          <button class="btn btn-primary" onclick="renderG6U5()">化簡求比值並分配</button>
+        </div>
+
+        <div id="g6U5RatioResult"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         6上 第 6 單元：圓周長與扇形周長
+         ========================================== -->
+    <section id="g6_unit6" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🎡 6上 第 6 單元：圓周長與扇形周長</h2>
+          <p>什麼是圓？什麼是扇形？扇形周長三大組成（弧長 ＋ 兩條半徑）與圓周長公式全解析！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG6UnitQuiz(6)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 圓與扇形周長觀念卡片 -->
+      <div class="g6-concept-card">
+        <div class="g6-concept-title">
+          <span>💡</span> 圓心、半徑、直徑、弧長與扇形周長核心定義
+        </div>
+        <div class="g6-grid-2">
+          <div class="g6-subcard">
+            <div class="g6-subcard-title" style="color:#1D4ED8;">
+              <span>⚪</span> 1. 什麼是圓與圓的各部位？
+            </div>
+            <ul style="padding-left:1.2rem; line-height:1.7; font-size:0.95rem; color:#334155; margin:0;">
+              <li><strong>圓心 (O)</strong>：圓正中心的定點。</li>
+              <li><strong>半徑 (r)</strong>：圓心到圓周上任意一點的直線距離。</li>
+              <li><strong>直徑 (d)</strong>：通過圓心且兩端都在圓周上的線段（直徑 ＝ 2 × 半徑）。</li>
+              <li><strong>圓周長公式</strong>：<strong>直徑 × 3.14 ＝ 半徑 × 2 × 3.14</strong>。</li>
+            </ul>
+          </div>
+          <div class="g6-subcard">
+            <div class="g6-subcard-title" style="color:#D97706;">
+              <span>🍕</span> 2. 什麼是扇形與各種不同的扇形？
+            </div>
+            <ul style="padding-left:1.2rem; line-height:1.7; font-size:0.95rem; color:#334155; margin:0;">
+              <li><strong>扇形定義</strong>：由圓的<strong>兩條半徑</strong>和兩條半徑所夾的<strong>一段圓弧</strong>所圍成的封閉圖形。</li>
+              <li><strong>常見扇形</strong>：
+                半圓（180°，1/2圓）、四分之一圓（90°，1/4圓）、三分之一圓（120°，1/3圓）、六分之一圓（60°，1/6圓）。
+              </li>
+              <li><strong>弧長公式</strong>：圓周長 × (圓心角 / 360°) ＝ <strong>直徑 × 3.14 × (圓心角 / 360°)</strong>。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="g6-rule-box" style="margin-top:0.85rem;">
+          🔥 <strong>重要必考陷阱：扇形的周長包含哪些部分？</strong><br/>
+          扇形是個「封閉」的圖形，周長是由<strong>外圍的「彎曲弧長」加上兩側的「兩條筆直半徑」</strong>所組成！<br/>
+          👉 <span style="font-size:1.15rem; font-weight:900; color:#DC2626;">扇形周長 ＝ 弧長 ＋ 半徑 × 2</span>（絕對不能漏加兩條半徑！）。
+        </div>
+      </div>
+
+      <!-- 圓周長與扇形周長互動計算 -->
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.75rem;">🎡 圓周長與扇形周長解剖圖解計算機</h3>
+        <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:0.6rem 0.85rem;">
+          <label style="font-weight:800;">圓半徑 (cm)：</label>
+          <input type="number" id="g6U6Radius" value="5" min="1" max="50" style="width:70px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U6()" />
+          <label style="font-weight:800;">扇形圓心角 (度)：</label>
+          <input type="number" id="g6U6Angle" value="90" min="1" max="360" step="15" style="width:75px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U6()" />
+          <button class="btn btn-primary" onclick="renderG6U6()">計算周長並檢視解剖圖</button>
+        </div>
+        <div id="g6U6ResultWrap"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         6上 第 7 單元：圓面積與扇形面積
+         ========================================== -->
+    <section id="g6_unit7" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🥧 6上 第 7 單元：圓面積與扇形面積</h2>
+          <p>割拼極限長方形推導、扇形面積、同心圓（圓環）面積公式與精選例題練習！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG6UnitQuiz(7)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 圓面積核心推導卡片 -->
+      <div class="g6-concept-card">
+        <div class="g6-concept-title">
+          <span>💡</span> 圓面積推導、扇形面積與同心圓（圓環）計算方式
+        </div>
+        <div class="g6-grid-2">
+          <div class="g6-subcard">
+            <div class="g6-subcard-title" style="color:#1D4ED8;">
+              <span>1️⃣</span> 圓面積如何計算？割拼長方形推導
+            </div>
+            <div style="font-size:0.95rem; line-height:1.7; color:#334155;">
+              將圓細分成無限個小扇形，上下交錯拼合，當分割越多份時，越接近<strong>長方形</strong>：<br/>
+              • 長方形的長 ＝ <strong>圓周長的一半 ＝ 半徑 × 3.14</strong><br/>
+              • 長方形的寬 ＝ <strong>圓的半徑 (r)</strong><br/>
+              • 長方形面積 ＝ 長 × 寬 ＝ (半徑 × 3.14) × 半徑<br/>
+              👉 <strong style="color:#DC2626; font-size:1.1rem;">圓面積 ＝ 半徑 × 半徑 × 3.14 (r² × π)</strong>
+            </div>
+          </div>
+          <div class="g6-subcard">
+            <div class="g6-subcard-title" style="color:#059669;">
+              <span>2️⃣</span> 扇形面積與同心圓（圓環）面積
+            </div>
+            <div style="font-size:0.95rem; line-height:1.7; color:#334155;">
+              • <strong>扇形面積</strong>：圓面積按照圓心角所佔的比例計算：<br/>
+              &nbsp;&nbsp;👉 <strong style="color:#059669;">扇形面積 ＝ (半徑 × 半徑 × 3.14) × (圓心角 / 360°)</strong><br/>
+              • <strong>同心圓（圓環）面積</strong>：大圓外半徑 R，小圓內半徑 r：<br/>
+              &nbsp;&nbsp;👉 <strong style="color:#2563EB;">圓環面積 ＝ 大圓面積 － 小圓面積 ＝ (R² － r²) × 3.14</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="g6-rule-box" style="margin-top:0.85rem;">
+          <strong>🎯 精選三道圓面積練習例題：</strong><br/>
+          • <strong>例題 1 (整圓披薩)</strong>：半徑 10 公分的圓形披薩，面積是多少？<br/>
+          &nbsp;&nbsp;算式：10 × 10 × 3.14 ＝ <strong>314 cm²</strong>。<br/>
+          • <strong>例題 2 (扇形鬆餅)</strong>：半徑 6 公分、圓心角 90° 的扇形鬆餅，面積是多少？<br/>
+          &nbsp;&nbsp;算式：(6 × 6 × 3.14) × (90/360) ＝ 113.04 × (1/4) ＝ <strong>28.26 cm²</strong>。<br/>
+          • <strong>例題 3 (同心圓甜甜圈)</strong>：外半徑 8 公分、內半徑 4 公分的甜甜圈，圓環面積是多少？<br/>
+          &nbsp;&nbsp;算式：(8² － 4²) × 3.14 ＝ (64 － 16) × 3.14 ＝ 48 × 3.14 ＝ <strong>150.72 cm²</strong>。
+        </div>
+      </div>
+
+      <!-- 互動面積實驗室 -->
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.75rem;">🥧 圓面積、扇形面積與同心圓動態計算機</h3>
+        <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:0.6rem 0.85rem;">
+          <label style="font-weight:800;">圓半徑 (cm)：</label>
+          <input type="number" id="g6U7Radius" value="6" min="1" max="50" style="width:65px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U7()" />
+          <label style="font-weight:800;">扇形圓心角：</label>
+          <input type="number" id="g6U7Angle" value="90" min="1" max="360" step="15" style="width:70px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U7()" />
+          <span style="border-left:1px solid #CBD5E1; margin:0 0.3rem;"></span>
+          <label style="font-weight:800;">同心外半徑 R：</label>
+          <input type="number" id="g6U7OuterR" value="8" min="2" max="50" style="width:65px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U7()" />
+          <label style="font-weight:800;">同心內半徑 r：</label>
+          <input type="number" id="g6U7InnerR" value="4" min="1" max="49" style="width:65px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U7()" />
+          <button class="btn btn-primary" onclick="renderG6U7()">執行面積計算</button>
+        </div>
+        <div id="g6U7ResultWrap"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         6上 第 8 單元：認識速率
+         ========================================== -->
+    <section id="g6_unit8" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🏎️ 6上 第 8 單元：認識速率</h2>
+          <p>速率單位發明的歷史由來、各大交通工具平均速率對照、單位換算與速率魔法三角形三大題型計算！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG6UnitQuiz(8)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 速率歷史與單位觀念卡片 -->
+      <div class="g6-concept-card">
+        <div class="g6-concept-title">
+          <span>💡</span> 速率單位的發明原因、交通工具平均速率與三大計算題型
+        </div>
+        
+        <div class="g6-grid-2">
+          <div class="g6-subcard">
+            <div class="g6-subcard-title" style="color:#1D4ED8;">
+              <span>📜</span> 1. 速率這個單位是怎麼發明的？
+            </div>
+            <div style="font-size:0.92rem; line-height:1.7; color:#334155;">
+              • <strong>大航海時代（拋繩計節）</strong>：16世紀船員在海中為掌握航位，在繩索上每隔固定距離打一個「結」，配以沙漏計時看拉出多少個結，誕生了航海速率單位<strong>「節 (Knot)」</strong>（1 節 ＝ 1 海里/時 ＝ 1.852 km/h）。<br/>
+              • <strong>伽利略運動學革命</strong>：伽利略用水鐘與斜面實驗精確量化距離與時間的比值，確立了「等速率」與「加速度」的物理定義。<br/>
+              • <strong>工業革命與火車鐵路</strong>：19世紀火車普及，為統一全線列車時刻表與行車調度，大眾需要明確計量每小時跑幾公里，催生了現代<strong>「公里/時 (km/h)」</strong>與國際標準單位<strong>「公尺/秒 (m/s)」</strong>。
+            </div>
+          </div>
+          <div class="g6-subcard">
+            <div class="g6-subcard-title" style="color:#059669;">
+              <span>🚄</span> 2. 各交通工具一般平均行走速率
+            </div>
+            <ul style="padding-left:1.2rem; line-height:1.7; font-size:0.92rem; color:#334155; margin:0;">
+              <li>🚶 <strong>人類一般步行</strong>：約 <strong>4 ~ 5 km/h</strong> (約 1.2 m/s)。</li>
+              <li>🚲 <strong>自行車通勤</strong>：約 <strong>15 ~ 20 km/h</strong>。</li>
+              <li>🚗 <strong>市區汽車 / 機車</strong>：約 <strong>40 ~ 50 km/h</strong> (國道約 100~110 km/h)。</li>
+              <li>🚄 <strong>台灣高鐵列車</strong>：營運時速高達 <strong>300 km/h</strong> (秒速 83.3 m/s)！</li>
+              <li>✈️ <strong>民航噴射客機</strong>：巡航時速約 <strong>800 ~ 900 km/h</strong> (秒速 250 m/s)。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="g6-rule-box" style="margin-top:0.85rem;">
+          <strong>🎯 速率三大組成單位與三大求法例題：</strong><br/>
+          • <strong>單位換算</strong>：1 公里 (km) ＝ 1000 公尺 (m) ； 1 小時 ＝ 60 分 ＝ 3600 秒。<br/>
+          &nbsp;&nbsp;黃金速算：<strong>時速 (km/h) ÷ 3.6 ＝ 秒速 (m/s)</strong> ； <strong>秒速 (m/s) × 3.6 ＝ 時速 (km/h)</strong>。<br/>
+          • <strong>三大求法實戰例題</strong>：<br/>
+          &nbsp;&nbsp;1. <strong>求速率</strong>：高鐵行駛 150 公里花了 0.5 小時，時速是多少？<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;算式：距離 ÷ 時間 ＝ 150 ÷ 0.5 ＝ <strong>300 km/h</strong>。<br/>
+          &nbsp;&nbsp;2. <strong>求距離</strong>：以時速 60 km/h 開車 2.5 小時，一共行駛了多少公里？<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;算式：速率 × 時間 ＝ 60 × 2.5 ＝ <strong>150 公里</strong>。<br/>
+          &nbsp;&nbsp;3. <strong>求時間</strong>：走路 12 公里，步行速率 4 km/h，需要走多少小時？<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;算式：距離 ÷ 速率 ＝ 12 ÷ 4 ＝ <strong>3 小時</strong>。
+        </div>
+      </div>
+
+      <!-- 速率魔法三角工作區 -->
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.5rem;">🏎️ 距離・時間・速率魔法三角轉盤 (Speed Triangle)</h3>
+        
+        <!-- 交通工具快選 -->
+        <div style="display:flex; gap:0.4rem; align-items:center; flex-wrap:wrap; margin-bottom:0.75rem;">
+          <span style="font-weight:800; font-size:0.9rem;">載入交通工具時速：</span>
+          <button class="btn btn-outline" style="padding:0.25rem 0.5rem; font-size:0.85rem;" onclick="selectG6U8Vehicle('walk')">🚶 步行 4 km/h</button>
+          <button class="btn btn-outline" style="padding:0.25rem 0.5rem; font-size:0.85rem;" onclick="selectG6U8Vehicle('bike')">🚲 自行車 15 km/h</button>
+          <button class="btn btn-outline" style="padding:0.25rem 0.5rem; font-size:0.85rem;" onclick="selectG6U8Vehicle('car')">🚗 汽車 60 km/h</button>
+          <button class="btn btn-outline" style="padding:0.25rem 0.5rem; font-size:0.85rem;" onclick="selectG6U8Vehicle('hightrain')">🚄 高鐵 300 km/h</button>
+          <button class="btn btn-outline" style="padding:0.25rem 0.5rem; font-size:0.85rem;" onclick="selectG6U8Vehicle('plane')">✈️ 飛機 900 km/h</button>
+        </div>
+
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.85rem;">
+          <button id="g6U8Btn_speed" class="btn btn-primary" onclick="setG6U8Target('speed')">求 速率 (距離 ÷ 時間)</button>
+          <button id="g6U8Btn_dist" class="btn btn-outline" onclick="setG6U8Target('dist')">求 距離 (速率 × 時間)</button>
+          <button id="g6U8Btn_time" class="btn btn-outline" onclick="setG6U8Target('time')">求 時間 (距離 ÷ 速率)</button>
+        </div>
+
+        <div style="display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:0.6rem 0.85rem;">
+          <label style="font-weight:800;">距離 (km)：</label>
+          <input type="number" id="g6U8Dist" value="150" style="width:80px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U8()" />
+          <label style="font-weight:800;">時間 (小時)：</label>
+          <input type="number" id="g6U8Time" value="2.5" step="0.5" style="width:70px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U8()" />
+          <label style="font-weight:800;">速率 (km/h)：</label>
+          <input type="number" id="g6U8Speed" value="60" style="width:80px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U8()" />
+          <button class="btn btn-primary" onclick="renderG6U8()">執行速率演算</button>
+        </div>
+
+        <div id="g6U8ResultWrap" style="text-align:center;"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         6上 第 9 單元：放大圖、縮圖與比例尺
+         ========================================== -->
+    <section id="g6_unit9" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🗺️ 6上 第 9 單元：放大圖、縮圖與比例尺</h2>
+          <p>地圖比例尺三大標示與長度換算，長度放大 k 倍對應面積擴大為 k² 倍幾何定律與向量圖解！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openG6UnitQuiz(9)">📝 參加本單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <!-- 比例尺與面積變化觀念卡片 -->
+      <div class="g6-concept-card">
+        <div class="g6-concept-title">
+          <span>💡</span> 地圖比例尺的應用與「長度 k 倍 vs 面積 k² 倍」幾何規律
+        </div>
+        <div class="g6-grid-2">
+          <div class="g6-subcard">
+            <div class="g6-subcard-title" style="color:#1D4ED8;">
+              <span>🗺️</span> 1. 地圖比例尺的三種標示法與換算
+            </div>
+            <ul style="padding-left:1.2rem; line-height:1.7; font-size:0.95rem; color:#334155; margin:0;">
+              <li><strong>比的表示法</strong>：<strong>1 : 50000</strong>（地圖上 1 公分代表實際 50000 公分）。</li>
+              <li><strong>比值/分數表示法</strong>：<strong>1 / 50000</strong>。</li>
+              <li><strong>線段圖表示法</strong>：在地圖角落畫出標尺，例如每格長 1 cm 標示 500 m（即 0.5 km）。</li>
+              <li><strong>實際長度換算</strong>：<strong>實際長度 ＝ 圖上長度 × 比例尺分母</strong>。<br/>
+                例：圖上量得 5 公分，比例尺 1 : 50000 ➔ 實際長度 ＝ 5 × 50000 ＝ 250000 cm ＝ <strong>2500 m ＝ 2.5 km</strong>。
+              </li>
+            </ul>
+          </div>
+          <div class="g6-subcard">
+            <div class="g6-subcard-title" style="color:#DC2626;">
+              <span>📐</span> 2. 放大縮小時：長度 vs 面積的幾何變化
+            </div>
+            <ul style="padding-left:1.2rem; line-height:1.7; font-size:0.95rem; color:#334155; margin:0;">
+              <li><strong>對應長度</strong>：長度放大為原圖的 <strong>k 倍</strong>。</li>
+              <li><strong>對應周長</strong>：周長放大為原圖的 <strong>k 倍</strong>。</li>
+              <li>🔥 <strong>對應面積</strong>：<strong>面積擴大為原圖的 k × k ＝ k² 倍！</strong><br/>
+                例：長度放大 2 倍 ➔ 面積變成 2² ＝ <strong>4 倍</strong>！<br/>
+                長度放大 3 倍 ➔ 面積變成 3² ＝ <strong>9 倍</strong>！
+              </li>
+              <li>⭐ <strong>對應角大小</strong>：<strong>完全保持不變！</strong>角度不會隨圖形縮放而改變。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 放大縮小工作區 -->
+      <div class="workspace-card">
+        <h3 style="font-size:1.15rem; color:#1E3A8A; margin-bottom:0.75rem;">📐 幾何放大縮小探索器（長度 k 倍 vs 面積 k² 倍）與地圖換算</h3>
+        
+        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; margin-bottom:1rem; background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:0.6rem 0.85rem;">
+          <label style="font-weight:800;">長度放大倍數 (k)：</label>
+          <input type="range" id="g6U9ScaleSlider" min="1" max="4" value="2" oninput="renderG6U9()" style="width:140px;" />
+          <span style="border-left:1px solid #CBD5E1; margin:0 0.4rem;"></span>
+          <label style="font-weight:800;">地圖測量長度 (cm)：</label>
+          <input type="number" id="g6U9MapCm" value="5" min="0.1" max="100" step="0.5" style="width:65px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U9()" />
+          <label style="font-weight:800;">地圖比例尺分母：</label>
+          <input type="number" id="g6U9MapRatio" value="50000" min="100" max="1000000" step="5000" style="width:95px; padding:0.35rem; font-weight:800; border:1px solid #CBD5E1; border-radius:6px;" onchange="renderG6U9()" />
+        </div>
+
+        <div id="g6U9ScaleResult"></div>
+      </div>
+    </section>
+
     <!-- ==========================================
          第 10 專區：線上測驗中心 (9單元 × 5份測驗卷 ＝ 45份卷)
          ========================================== -->
     <section id="unit10" class="unit-section">
       <div class="unit-banner">
         <div class="unit-banner-info">
-          <h2>📝 木新思達 3上 線上測驗中心（全冊 9 單元 × 每單元 5 份測驗卷）</h2>
+          <h2 id="quizCenterBannerTitle">📝 木新思達 國小數學線上測驗中心（3上 45份卷 ｜ 4上 50份卷 ｜ 5上 50份卷 ｜ 6上 45份卷）</h2>
           <p>涵蓋學前檢測、基礎能力、隨堂練習、學後檢測與素養挑戰，支援學生姓名登錄、自動批改給分、錯題詳解與成績匯出！</p>
         </div>
       </div>
@@ -1227,21 +3772,43 @@
         每位學生帳號限定登入單一年級（3上），系統將自動記錄每次測驗成績與錯題本！
       </p>
 
-      <!-- Google 官方 Sign-In 按鈕容器 -->
-      <div style="display:flex; justify-content:center; margin-bottom:1.25rem;">
-        <div id="g_id_signin_container"></div>
+      <!-- 方式 1：學生已授權 Google 信箱驗證登入 -->
+      <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:14px; padding:1.1rem; margin-bottom:1.25rem; text-align:left;">
+        <label for="studentDirectEmail" style="display:block; font-size:0.88rem; font-weight:800; color:#1E293B; margin-bottom:0.4rem;">
+          ✉️ 學生已授權 Google 信箱登入：
+        </label>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <input type="email" id="studentDirectEmail" placeholder="請輸入老師已授權的信箱 (如: sam0927x@gmail.com)" onkeydown="if(event.key==='Enter') handleDirectStudentLogin()" style="flex:1; min-width:200px; padding:0.55rem 0.85rem; border:1.5px solid #94A3B8; border-radius:8px; font-size:0.9rem;" />
+          <button type="button" class="btn btn-primary" onclick="handleDirectStudentLogin()" style="padding:0.55rem 1.15rem; font-size:0.9rem; font-weight:700; white-space:nowrap;">驗證進入 🚀</button>
+        </div>
+        <div style="font-size:0.78rem; color:#64748B; margin-top:0.45rem; line-height:1.4;">
+          * 系統將嚴格比對後台授權白名單，每組學生帳號限定登入單一年級（3上）。
+        </div>
       </div>
 
-      <div style="margin:1.5rem 0; display:flex; align-items:center; gap:0.75rem; color:#94A3B8; font-size:0.85rem;">
+      <div style="margin:1rem 0; display:flex; align-items:center; gap:0.75rem; color:#94A3B8; font-size:0.82rem;">
+        <div style="flex:1; height:1px; background:#E2E8F0;"></div>
+        <span>或使用 Google 官方一鍵登入</span>
+        <div style="flex:1; height:1px; background:#E2E8F0;"></div>
+      </div>
+
+      <!-- Google 官方 Sign-In 按鈕容器 -->
+      <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:1rem;">
+        <div id="g_id_signin_container"></div>
+        <div style="font-size:0.75rem; color:#94A3B8; margin-top:0.4rem;">
+          * 若出現 Google 401: invalid_client，請直接在上方輸入信箱驗證進入。
+        </div>
+      </div>
+
+      <div style="margin:1.25rem 0 1rem; display:flex; align-items:center; gap:0.75rem; color:#94A3B8; font-size:0.85rem;">
         <div style="flex:1; height:1px; background:#E2E8F0;"></div>
         <span>體驗與管理功能</span>
         <div style="flex:1; height:1px; background:#E2E8F0;"></div>
       </div>
 
-      <!-- 快速體驗或身分測試按鈕 -->
+      <!-- 管理功能按鈕 -->
       <div style="display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap;">
         <button class="btn btn-outline" style="font-size:0.85rem; padding:0.4rem 0.8rem;" onclick="devQuickLogin('admin')">👑 管理員快速登入 (Pipdapha)</button>
-        <button class="btn btn-outline" style="font-size:0.85rem; padding:0.4rem 0.8rem;" onclick="devQuickLogin('student')">🎓 學生快速登入 (3上)</button>
       </div>
 
       <div style="margin-top:1.25rem; font-size:0.78rem; color:#94A3B8; text-align:center;">
@@ -1274,22 +3841,46 @@
         <button class="btn btn-outline" style="padding:0.3rem 0.75rem;" onclick="document.getElementById('adminDashboardModal').style.display='none'">✕ 關閉</button>
       </div>
 
+      <!-- Google OAuth Client ID 設定卡片 -->
+      <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:14px; padding:1rem; margin-bottom:1.25rem;">
+        <h4 style="font-size:0.95rem; color:#1E40AF; margin-bottom:0.4rem; font-weight:700;">🔑 Google OAuth Client ID 設定</h4>
+        <p style="font-size:0.8rem; color:#3B82F6; margin-bottom:0.6rem; line-height:1.4;">
+          若需啟用 Google 官方登入彈窗，請至 Google Cloud Console 申請 Web Client ID，並將此網址加入「已授權的 JavaScript 來源」：
+        </p>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <input type="text" id="customGoogleClientIdInput" placeholder="請貼上您的 Google Client ID (以 .apps.googleusercontent.com 結尾)" style="flex:1; min-width:250px; padding:0.45rem 0.75rem; border:1px solid #93C5FD; border-radius:8px; font-size:0.85rem;" />
+          <button type="button" class="btn btn-primary" onclick="saveCustomGoogleClientId()" style="padding:0.45rem 1rem; font-size:0.85rem;">儲存 Client ID</button>
+        </div>
+      </div>
+
       <!-- 新增授權帳號表單 -->
       <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:1rem; margin-bottom:1.25rem;">
         <h4 style="font-size:0.95rem; color:#0F172A; margin-bottom:0.6rem; font-weight:700;">➕ 新增或指派 Google 帳號</h4>
         <form onsubmit="handleAddUserSubmit(event)" style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
           <input type="email" id="newAdminUserEmail" placeholder="例: student1@gmail.com" required style="flex:2; min-width:180px; padding:0.45rem 0.75rem; border:1px solid #CBD5E1; border-radius:8px; font-size:0.88rem;" />
           <input type="text" id="newAdminUserName" placeholder="學生姓名 (如: 陳小明)" style="flex:1; min-width:120px; padding:0.45rem 0.75rem; border:1px solid #CBD5E1; border-radius:8px; font-size:0.88rem;" />
-          <select id="newAdminUserRole" style="padding:0.45rem; border:1px solid #CBD5E1; border-radius:8px; font-size:0.88rem;">
+          <select id="newAdminUserRole" onchange="onAdminRoleChange(this.value)" style="padding:0.45rem; border:1px solid #CBD5E1; border-radius:8px; font-size:0.88rem;">
             <option value="student">🎓 學生</option>
             <option value="admin">👑 管理員</option>
           </select>
-          <select id="newAdminUserGrade" style="padding:0.45rem; border:1px solid #CBD5E1; border-radius:8px; font-size:0.88rem;">
-            <option value="3上">3上 (三年級上)</option>
-            <option value="3下">3下 (三年級下)</option>
-            <option value="4上">4上 (四年級上)</option>
-            <option value="all">全學年 (管理員)</option>
-          </select>
+          <div style="display:flex; align-items:center; gap:0.6rem; background:white; padding:0.35rem 0.75rem; border:1px solid #CBD5E1; border-radius:8px; font-size:0.85rem;">
+            <span style="font-weight:700; color:#475569;">開通年級 (可複選)：</span>
+            <label style="display:inline-flex; align-items:center; gap:3px; cursor:pointer; font-weight:800; color:#1E40AF;">
+              <input type="checkbox" name="adminUserGradeCheck" value="1上" style="width:15px; height:15px;" /> 1上 </label> <label style="display:flex; align-items:center; gap:0.25rem; font-size:0.92rem; cursor:pointer;"> <input type="checkbox" name="adminUserGradeCheck" value="2上" style="width:15px; height:15px;" /> 2上 </label> <label style="display:flex; align-items:center; gap:0.25rem; font-size:0.92rem; cursor:pointer;"> <input type="checkbox" name="adminUserGradeCheck" value="3上" checked style="width:15px; height:15px;" /> 3上
+            </label>
+            <label style="display:inline-flex; align-items:center; gap:3px; cursor:pointer; font-weight:800; color:#0D9488;">
+              <input type="checkbox" name="adminUserGradeCheck" value="4上" style="width:15px; height:15px;" /> 4上
+            </label>
+            <label style="display:inline-flex; align-items:center; gap:3px; cursor:pointer; font-weight:800; color:#EA580C;">
+              <input type="checkbox" name="adminUserGradeCheck" value="5上" style="width:15px; height:15px;" /> 5上
+            </label>
+            <label style="display:inline-flex; align-items:center; gap:3px; cursor:pointer; font-weight:800; color:#DC2626;">
+              <input type="checkbox" name="adminUserGradeCheck" value="6上" style="width:15px; height:15px;" /> 6上
+            </label>
+            <label style="display:inline-flex; align-items:center; gap:3px; cursor:pointer; font-weight:800; color:#6D28D9;">
+              <input type="checkbox" name="adminUserGradeCheck" value="all" id="adminUserGradeCheckAll" onchange="onAdminGradeAllChange(this)" style="width:15px; height:15px;" /> 全學年
+            </label>
+          </div>
           <button type="submit" class="btn btn-primary" style="padding:0.45rem 1rem; font-size:0.88rem;">授權儲存</button>
         </form>
       </div>
@@ -1298,6 +3889,43 @@
       <div style="margin-bottom:1.25rem;">
         <h4 style="font-size:0.95rem; color:#0F172A; margin-bottom:0.6rem; font-weight:700;">📊 全冊 9 單元錯題累計分佈 (供評估加強練習)</h4>
         <div id="adminStatsWrap">載入統計中...</div>
+      </div>
+
+      <!-- 全體學生測驗成績與作答歷程總表 -->
+      <div style="margin-bottom:1.25rem; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:1.1rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+          <div>
+            <h4 style="font-size:1.05rem; color:#0F172A; font-weight:800; display:flex; align-items:center; gap:0.4rem;">
+              <span>🏆 各學生測驗成績與作答歷程總表</span>
+              <span id="adminAttemptsCountBadge" style="font-size:0.75rem; background:#DBEAFE; color:#1E40AF; padding:2px 8px; border-radius:99px;">0 筆紀錄</span>
+            </h4>
+            <p style="font-size:0.8rem; color:#64748B;">即時讀取 Cloudflare D1 雲端紀錄，支援個別學生篩選與成績單匯出</p>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+            <select id="adminFilterStudentEmail" onchange="filterAdminAttempts()" style="padding:0.4rem 0.65rem; border:1px solid #CBD5E1; border-radius:8px; font-size:0.82rem; font-weight:700; background:white;">
+              <option value="all">👥 全部學生帳號</option>
+            </select>
+            <select id="adminFilterUnit" onchange="filterAdminAttempts()" style="padding:0.4rem 0.65rem; border:1px solid #CBD5E1; border-radius:8px; font-size:0.82rem; font-weight:700; background:white;">
+              <option value="all">📚 全冊 10 單元</option>
+              <option value="1">第 1 單元</option>
+              <option value="2">第 2 單元</option>
+              <option value="3">第 3 單元</option>
+              <option value="4">第 4 單元</option>
+              <option value="5">第 5 單元</option>
+              <option value="6">第 6 單元</option>
+              <option value="7">第 7 單元</option>
+              <option value="8">第 8 單元</option>
+              <option value="9">第 9 單元</option>
+              <option value="10">第 10 單元</option>
+            </select>
+            <button class="btn btn-green" onclick="exportAdminAttemptsCSV()" style="padding:0.4rem 0.8rem; font-size:0.82rem;">📥 匯出成績單 (CSV)</button>
+            <button class="btn btn-outline" onclick="loadAdminData()" style="padding:0.4rem 0.65rem; font-size:0.82rem;">🔄 重新整理</button>
+          </div>
+        </div>
+
+        <div id="adminAttemptsWrap" style="max-height:280px; overflow-y:auto; border:1px solid #CBD5E1; border-radius:10px; background:white;">
+          載入學生測驗紀錄中...
+        </div>
       </div>
 
       <!-- 授權使用者清單 -->
@@ -1310,14 +3938,29 @@
     </div>
   </div>
 
+  <!-- ================= 測驗卷批改結果與錯題診斷彈窗 ================= -->
+  <div id="quizAttemptDetailModal" class="auth-modal-overlay" style="display:none; z-index:10005;">
+    <div class="auth-modal-card admin-wide" style="max-width:760px; width:92%; max-height:85vh; overflow-y:auto; padding:1.5rem;" id="quizAttemptDetailContent">
+    </div>
+  </div>
+
   <style>
     @keyframes spin { 100% { transform: rotate(360deg); } }
   </style>
 
   <!-- 外部腳本庫 -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="mathml.js"></script>
+  <script src="quiz.js"></script>
+  <script src="quiz_g1.js"></script>
+  <script src="quiz_g2.js"></script>
+  <script src="quiz_g5.js"></script>
+  <script src="quiz_g6.js"></script>
   <script src="auth.js"></script>
   <script src="app.js"></script>
-  <script src="quiz.js"></script>
+  <script src="app_g1.js"></script>
+  <script src="app_g2.js"></script>
+  <script src="app_g5.js"></script>
+  <script src="app_g6.js"></script>
 </body>
 </html>
