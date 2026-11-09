@@ -72,6 +72,16 @@
 
 ---
 
+## 🛠️ 備課教材互動網頁化標準技能 (making_math_interaction.md)
+
+本專案現已正式制定並提供通用型教材互動化開發技能 [making_math_interaction.md](file:///c:/Users/sam09/OneDrive/文件/AiAgent/Grade4/making_math_interaction.md)，適用於任何年級與出版社之新備課教材擴充：
+- **CPA 理念與教具實作**：具體物操弄 ➔ 圖像化表徵 ➔ 符號化抽象。
+- **仿三年級標準卡片架構**：`.unit-banner`、`.story-prompt`（3~4組情境預設+隨機出題）、`.g6-concept-card`、教具操作區、`.feedback-banner`。
+- **全方位測驗卷 SOP**：每單元 5 份試卷，4 大題型標準化 JSON 格式。
+- **避坑防護指引**：嚴禁在 `<section>` 加 inline `style="display:none;"`、全面採用 Cache-Busting 版本戳記、支援 URL 參數直達路由（`?grade=1&unit=2`）。
+
+---
+
 ## 🚀 部署指引 (Cloudflare Pages)
 
 ```bash
