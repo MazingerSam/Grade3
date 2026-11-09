@@ -2495,6 +2495,9 @@ function hideAllGradeSections() {
     const sec = document.getElementById(`g6_unit${i}`);
     if (sec) { sec.classList.remove('active'); sec.style.display = 'none'; }
   }
+  if (typeof hideAllNyCustomSections === 'function') {
+    hideAllNyCustomSections();
+  }
 }
 
 function switchGrade(grade) {
@@ -2508,6 +2511,8 @@ function switchGrade(grade) {
 
   currentGrade = grade;
   localStorage.setItem('kx_active_grade', grade);
+  const curPub = (typeof window !== 'undefined' && window.activePublisher) ? window.activePublisher : (localStorage.getItem('kx_active_publisher') || 'kangxuan');
+  const pubPrefix = (curPub === 'nanyi') ? '南一版' : '康軒版';
 
   const btn1 = document.getElementById('gradeBtn1');
   const btn2 = document.getElementById('gradeBtn2');
@@ -2524,14 +2529,14 @@ function switchGrade(grade) {
 
   const brandBadge = document.getElementById('brandBadge');
   const brandTitle = document.getElementById('brandTitle');
-  if (brandBadge) brandBadge.textContent = `木新思達 ${grade}`;
+  if (brandBadge) brandBadge.textContent = `木新思達・${pubPrefix} ${grade}`;
   if (brandTitle) {
-    if (grade === '6上') brandTitle.textContent = '🎯 國小六年級數學互動學習樂園';
-    else if (grade === '5上') brandTitle.textContent = '🎯 國小五年級數學互動學習樂園';
-    else if (grade === '4上') brandTitle.textContent = '🎯 國小四年級數學互動學習樂園';
-    else if (grade === '3上') brandTitle.textContent = '🎯 國小三年級數學互動學習樂園';
-    else if (grade === '2上') brandTitle.textContent = '🎯 國小二年級數學互動學習樂園';
-    else if (grade === '1上') brandTitle.textContent = '🎯 國小一年級數學互動學習樂園';
+    if (grade === '6上') brandTitle.textContent = `🎯 國小六年級 (${pubPrefix}) 數學互動學習樂園`;
+    else if (grade === '5上') brandTitle.textContent = `🎯 國小五年級 (${pubPrefix}) 數學互動學習樂園`;
+    else if (grade === '4上') brandTitle.textContent = `🎯 國小四年級 (${pubPrefix}) 數學互動學習樂園`;
+    else if (grade === '3上') brandTitle.textContent = `🎯 國小三年級 (${pubPrefix}) 數學互動學習樂園`;
+    else if (grade === '2上') brandTitle.textContent = `🎯 國小二年級 (${pubPrefix}) 數學互動學習樂園`;
+    else if (grade === '1上') brandTitle.textContent = `🎯 國小一年級 (${pubPrefix}) 數學互動學習樂園`;
   }
 
   const navG1 = document.getElementById('unitNavG1');
@@ -2552,6 +2557,12 @@ function switchGrade(grade) {
   }
 
   hideAllGradeSections();
+
+  // 若當前為南一版，交由 switchNyUnit 載入南一版該年級第 1 單元
+  if (curPub === 'nanyi' && typeof switchNyUnit === 'function') {
+    switchNyUnit(grade, 1);
+    return;
+  }
 
   if (grade === '6上') {
     if (typeof switchG6Unit === 'function') switchG6Unit(1);
@@ -3937,9 +3948,18 @@ function initG4App() {
   initG4Unit(1);
 }
 
-// 監聽載入事件（支援 URL 查詢參數 ?grade=1 / ?grade=1上 / ?grade=2 等直達與 LocalStorage 記憶）
+// 監聽載入事件（支援 URL 查詢參數 ?pub=nanyi / ?grade=1 / ?unit=2 等直達與 LocalStorage 記憶）
 window.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
+  let pubParam = urlParams.get('pub') || urlParams.get('publisher') || urlParams.get('v_pub');
+  let targetPub = localStorage.getItem('kx_active_publisher') || 'nanyi';
+
+  if (pubParam) {
+    pubParam = pubParam.trim().toLowerCase();
+    if (pubParam === 'nanyi' || pubParam === 'ny' || pubParam === '南一') targetPub = 'nanyi';
+    else if (pubParam === 'kangxuan' || pubParam === 'kx' || pubParam === '康軒') targetPub = 'kangxuan';
+  }
+
   let gradeParam = urlParams.get('grade') || urlParams.get('g');
   let targetGrade = null;
 
@@ -3957,19 +3977,29 @@ window.addEventListener('DOMContentLoaded', () => {
     targetGrade = localStorage.getItem('kx_active_grade') || '1上';
   }
 
-  switchGrade(targetGrade);
+  localStorage.setItem('kx_active_grade', targetGrade);
+
+  if (typeof switchPublisher === 'function') {
+    switchPublisher(targetPub);
+  } else {
+    switchGrade(targetGrade);
+  }
 
   // 支援單元直達參數 ?unit=... / ?u=...
   const unitParam = urlParams.get('unit') || urlParams.get('u');
   if (unitParam) {
     const uNum = parseInt(unitParam, 10);
-    if (!isNaN(uNum) && uNum >= 1 && uNum <= 10) {
-      if (targetGrade === '1上' && typeof switchG1Unit === 'function') switchG1Unit(uNum);
-      else if (targetGrade === '2上' && typeof switchG2Unit === 'function') switchG2Unit(uNum);
-      else if (targetGrade === '3上' && typeof switchUnit === 'function') switchUnit(uNum);
-      else if (targetGrade === '4上' && typeof switchG4Unit === 'function') switchG4Unit(uNum);
-      else if (targetGrade === '5上' && typeof switchG5Unit === 'function') switchG5Unit(uNum);
-      else if (targetGrade === '6上' && typeof switchG6Unit === 'function') switchG6Unit(uNum);
+    if (!isNaN(uNum) && uNum >= 1 && uNum <= 11) {
+      if (targetPub === 'nanyi' && typeof switchNyUnit === 'function') {
+        switchNyUnit(targetGrade, uNum);
+      } else {
+        if (targetGrade === '1上' && typeof switchG1Unit === 'function') switchG1Unit(uNum);
+        else if (targetGrade === '2上' && typeof switchG2Unit === 'function') switchG2Unit(uNum);
+        else if (targetGrade === '3上' && typeof switchUnit === 'function') switchUnit(uNum);
+        else if (targetGrade === '4上' && typeof switchG4Unit === 'function') switchG4Unit(uNum);
+        else if (targetGrade === '5上' && typeof switchG5Unit === 'function') switchG5Unit(uNum);
+        else if (targetGrade === '6上' && typeof switchG6Unit === 'function') switchG6Unit(uNum);
+      }
     }
   }
 });

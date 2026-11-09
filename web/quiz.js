@@ -3947,6 +3947,10 @@ const QUIZ_BANK = QUIZ_BANK_G3;
 
 function getActiveQuizBank() {
   const g = quizState.activeGrade || '3上';
+  const pub = (typeof window !== 'undefined' && window.activePublisher) ? window.activePublisher : (localStorage.getItem('kx_active_publisher') || 'kangxuan');
+  if (pub === 'nanyi' && typeof window !== 'undefined' && window.QUIZ_BANKS_NANYI && window.QUIZ_BANKS_NANYI[g]) {
+    return window.QUIZ_BANKS_NANYI[g];
+  }
   if (g === '1上') {
     if (typeof window !== 'undefined' && window.QUIZ_BANK_G1) return window.QUIZ_BANK_G1;
     if (typeof QUIZ_BANK_G1 !== 'undefined') return QUIZ_BANK_G1;
@@ -3968,11 +3972,21 @@ function getActiveQuizBank() {
 
 function getActiveUnitTitles() {
   const g = quizState.activeGrade || '3上';
+  const pub = (typeof window !== 'undefined' && window.activePublisher) ? window.activePublisher : (localStorage.getItem('kx_active_publisher') || 'kangxuan');
+  if (pub === 'nanyi' && typeof window !== 'undefined' && window.NANYI_UNIT_TITLES && window.NANYI_UNIT_TITLES[g]) {
+    return window.NANYI_UNIT_TITLES[g];
+  }
   return unitTitles[g] || unitTitles['3上'];
 }
 
 function getMaxUnits() {
   const g = quizState.activeGrade || '3上';
+  const pub = (typeof window !== 'undefined' && window.activePublisher) ? window.activePublisher : (localStorage.getItem('kx_active_publisher') || 'kangxuan');
+  if (pub === 'nanyi') {
+    if (g === '6上') return 8;
+    if (g === '2上' || g === '4上' || g === '5上') return 10;
+    return 9;
+  }
   if (g === '2上' || g === '4上' || g === '5上') return 10;
   if (g === '1上' || g === '3上' || g === '6上') return 9;
   return 9;
@@ -4043,6 +4057,8 @@ function renderQuizCenter() {
   if (!container) return;
 
   const currentGrade = quizState.activeGrade || '3上';
+  const curPub = (typeof window !== 'undefined' && window.activePublisher) ? window.activePublisher : (localStorage.getItem('kx_active_publisher') || 'kangxuan');
+  const pubLabel = (curPub === 'nanyi') ? '南一版' : '康軒版';
   const maxUnits = getMaxUnits();
   if (quizState.currentUnit > maxUnits) quizState.currentUnit = 1;
 
@@ -4174,15 +4190,14 @@ function renderQuizCenter() {
           </span>
         </div>
 
-        <!-- 測驗中心年級切換按鈕組 (受帳號授權限制並連動全站) -->
-        <div style="display:flex; align-items:center; gap:0.4rem; background:white; padding:3px 6px; border-radius:999px; border:1.5px solid #818CF8;">
-          <span style="font-size:0.82rem; font-weight:900; color:#4338CA; padding-left:4px;">學期切換：</span>
-          <button class="btn ${currentGrade === '3上' ? 'btn-primary' : 'btn-outline'}" style="padding:0.25rem 0.75rem; font-size:0.82rem; border-radius:999px;" onclick="typeof switchGrade === 'function' ? switchGrade('3上') : setQuizGrade('3上')">
-            三年級 (3上・45卷)
-          </button>
-          <button class="btn ${currentGrade === '4上' ? 'btn-primary' : 'btn-outline'}" style="padding:0.25rem 0.75rem; font-size:0.82rem; border-radius:999px;" onclick="typeof switchGrade === 'function' ? switchGrade('4上') : setQuizGrade('4上')">
-            四年級 (4上・50卷)
-          </button>
+        <!-- 測驗中心年級與版本切換按鈕組 (受帳號授權限制並連動全站) -->
+        <div style="display:flex; align-items:center; gap:0.35rem; flex-wrap:wrap; background:white; padding:4px 8px; border-radius:999px; border:1.5px solid #818CF8;">
+          <span style="font-size:0.82rem; font-weight:900; color:#4338CA; padding-left:4px;">版本與年級：</span>
+          ${['1上', '2上', '3上', '4上', '5上', '6上'].map(g => `
+            <button class="btn ${currentGrade === g ? 'btn-primary' : 'btn-outline'}" style="padding:0.2rem 0.6rem; font-size:0.8rem; border-radius:999px;" onclick="typeof switchGrade === 'function' ? switchGrade('${g}') : setQuizGrade('${g}')">
+              ${g}
+            </button>
+          `).join('')}
         </div>
       </div>
 
@@ -4204,7 +4219,7 @@ function renderQuizCenter() {
     <div class="workspace-card">
       <div style="margin-bottom:0.85rem;">
         <div style="font-weight:900; color:#1E3A8A; margin-bottom:0.45rem;">
-          1️⃣ 選擇【${currentGrade}】測驗單元（全冊 ${maxUnits} 單元 × 每單元 5 份卷 ＝ 共 ${maxUnits * 5} 份線上測驗卷）：
+          1️⃣ 選擇【${pubLabel} ${currentGrade}】測驗單元（全冊 ${maxUnits} 單元 × 每單元 5 份卷 ＝ 共 ${maxUnits * 5} 份線上測驗卷）：
         </div>
         <div style="display:flex; flex-wrap:wrap; gap:0.45rem;">${unitBtnsHtml}</div>
       </div>
@@ -4222,7 +4237,7 @@ function renderQuizCenter() {
       <div style="background:#FFFBEB; border:3px solid ${pInfo.color}; border-radius:16px; padding:1rem 1.25rem; margin-bottom:1.25rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
         <div>
           <span style="background:${pInfo.color}; color:white; font-weight:900; font-size:0.82rem; padding:3px 10px; border-radius:99px;">${pInfo.tag}</span>
-          <span style="background:#E0E7FF; color:#3730A3; font-weight:900; font-size:0.82rem; padding:3px 10px; border-radius:99px; margin-left:6px;">🎓 ${currentGrade}</span>
+          <span style="background:#E0E7FF; color:#3730A3; font-weight:900; font-size:0.82rem; padding:3px 10px; border-radius:99px; margin-left:6px;">🎓 ${pubLabel} ${currentGrade}</span>
           <h3 style="font-size:1.3rem; font-weight:900; color:#1E293B; margin-top:0.25rem;">${titles[u]} — ${pInfo.name}</h3>
         </div>
         <div id="quizLiveScoreBadge" style="font-family:'Fredoka', sans-serif; font-size:1.6rem; font-weight:900; color:#B91C1C; background:white; padding:0.4rem 1.1rem; border-radius:12px; border:2px solid #FCA5A5;">

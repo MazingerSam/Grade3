@@ -6,8 +6,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>木新思達 國小1~6年級數學互動學習樂園</title>
-  <link rel="stylesheet" href="styles.css?v=20261101_v4" />
+  <title>木新思達 國小1~6年級數學互動學習樂園（康軒版・南一版雙版本）</title>
+  <link rel="stylesheet" href="styles.css?v=20261109_ny1" />
 </head>
 <body>
 
@@ -15,8 +15,19 @@
   <header class="top-header">
     <div class="header-inner">
       <div class="brand-area">
-        <span class="brand-badge" id="brandBadge">木新思達 3上</span>
-        <h1 class="brand-title" id="brandTitle">🎯 國小三年級數學互動學習樂園</h1>
+        <span class="brand-badge" id="brandBadge">木新思達・南一版 1上</span>
+        <h1 class="brand-title" id="brandTitle">🎯 國小一年級 (南一版) 數學互動學習樂園</h1>
+      </div>
+
+      <!-- 出版社版本切換按鈕組 (康軒版 vs 南一版) -->
+      <div class="publisher-switcher" style="display:flex; align-items:center; gap:0.4rem; background:rgba(15,23,42,0.28); padding:0.3rem 0.5rem; border-radius:999px; border:1.5px solid rgba(255,255,255,0.35);">
+        <span style="font-size:0.82rem; font-weight:900; color:#FEF3C7; padding-left:0.35rem;">📚 教材版本：</span>
+        <button id="pubBtnNanyi" class="grade-btn active" onclick="switchPublisher('nanyi')" style="background:#10B981; color:#FFFFFF; font-weight:900; padding:0.32rem 0.85rem; border-radius:999px; border:none; cursor:pointer; box-shadow:0 3px 0 #047857;">
+          📗 南一版 (1上~6上)
+        </button>
+        <button id="pubBtnKangxuan" class="grade-btn" onclick="switchPublisher('kangxuan')" style="background:rgba(255,255,255,0.15); color:#FFFFFF; font-weight:900; padding:0.32rem 0.85rem; border-radius:999px; border:none; cursor:pointer;">
+          📘 康軒版 (1上~6上)
+        </button>
       </div>
 
         <!-- 年級切換按鈕組 -->
@@ -43,7 +54,7 @@
           <button class="btn btn-outline" style="padding:0.2rem 0.5rem; border-radius:999px; font-size:0.75rem; color:#FFFFFF; border-color:rgba(255,255,255,0.4);" onclick="logoutUser()">登出</button>
         </div>
 
-        <button class="btn btn-Amber" style="padding:0.4rem 0.95rem; border-radius:999px; font-size:0.95rem;" onclick="switchUnit(10)">📝 線上測驗中心 (190份卷)</button>
+        <button id="topQuizCenterBtn" class="btn btn-Amber" style="padding:0.4rem 0.95rem; border-radius:999px; font-size:0.95rem;" onclick="window.activePublisher==='nanyi' ? switchNyUnit(currentGrade || '1上', 99) : switchUnit(10)">📝 南一測驗中心 (280份卷)</button>
         <div class="star-counter" title="完成互動挑戰獲得星星！">
           <span>⭐ 學習星星：</span>
           <span id="starCount">0</span>
@@ -4379,6 +4390,245 @@
       </div>
     </section>
 
+    <!-- ==========================================================
+         📗 南一版 (1上~6上) 專屬獨立單元互動區 (6 大特色單元)
+         ========================================================== -->
+
+    <!-- 南一 2上 第 10 單元：平面圖形 -->
+    <section id="ny_g2_unit10" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🎯 【南一版 2上】第 10 單元：平面圖形</h2>
+          <p>結合南一版「祕密花園、Follow Me 神射手學習單」，認識封閉圖形的周界、內部與外部，並探索三角形、正方形、長方形的邊角頂點！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openNyUnitQuiz('2上', 10)">📝 參加南一第10單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">神射手與祕密花園</span>
+            <span id="nyG2U10TaskText">【Follow Me 神射手】棠棠參加固定靶射擊比賽，靶心 10 分區射中 4 發、6 分區 3 發、2 分區 5 發，靶外（外部）0 分有 6 發，觀察靶的周界、內部與外部！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setNyG2U10Preset('target', 4, 3, 5, 6, '【Follow Me 神射手】棠棠射擊固定靶：10分區 4 發、6分區 3 發、2分區 5 發、靶外(0分) 6 發，靶的內部共 12 個彈孔，總分 68 分！')">範例1：棠棠射擊紀錄</button>
+            <button class="btn btn-Amber" onclick="setNyG2U10Preset('target', 6, 4, 2, 3, '【神射手金牌戰】小宇射中 10分區 6 發、6分區 4 發、2分區 2 發，靶的外部有 3 發，靶內共 12 發，總分高達 88 分！')">範例2：金牌選手紀錄</button>
+            <button class="btn btn-Amber" onclick="setNyG2U10Preset('target', 3, 5, 4, 2, '【周界與內外部判讀】固定靶紅圈是「周界」，圈內是「內部」（共 12 發有計分），圈外是「外部」（2 發 0 分）！')">範例3：周界與內外部</button>
+            <button class="btn btn-primary" onclick="randomNyG2U10Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：周界、內部、外部與簡單平面圖形</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>周界</strong>：封閉圖形外圍那一圈完整的邊界線（沒有缺口才能分出內部和外部）。<strong>周界長（周長）</strong>就是把周界上所有邊的長度加起來。<br/>
+            2. <strong>平面圖形的邊、角、頂點</strong>：三角形有 <strong>3 條邊、3 個角、3 個頂點</strong>；正方形與長方形都有 <strong>4 條邊、4 個角、4 個頂點</strong>（正方形 4 條邊一樣長；長方形對邊一樣長）。
+          </div>
+        </div>
+
+        <div id="nyG2U10Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 點選右側「＋ / －」按鈕改變各分數區與外部的彈孔數，觀察內部彈孔總數與得分變化！</div>
+      </div>
+    </section>
+
+    <!-- 南一 3上 第 9 單元：圓 -->
+    <section id="ny_g3_unit9" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🛡️ 【南一版 3上】第 9 單元：圓</h2>
+          <p>結合南一版「修理盾牌、小人國設計家學習單」，操作圓規畫圓、對摺再對摺找圓心，掌握「直徑 ＝ 半徑 × 2」！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openNyUnitQuiz('3上', 9)">📝 參加南一第9單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">修理盾牌＆設計家</span>
+            <span id="nyG3U9TaskText">【設計家＆修理盾牌】小噹來到小人國，以圓柱當「圓心」，把圓規張開「半徑 3 公分」畫出圓形遊樂場，直徑剛好是 6 公分！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setNyG3U9Preset(3, true, '【小人國圓形遊樂場】小噹以圓柱為圓心，圓規張開半徑 3 公分畫圓，直徑是 3 × 2 ＝ 6 公分！')">範例1：半徑 3cm 遊樂場</button>
+            <button class="btn btn-Amber" onclick="setNyG3U9Preset(5, true, '【修理圓形盾牌】把圓形紙片「對摺再對摺」，兩條摺痕（直徑 10 公分）交叉的點就是「圓心」，半徑是 5 公分！')">範例2：對摺找盾牌圓心</button>
+            <button class="btn btn-Amber" onclick="setNyG3U9Preset(4, false, '【小人國噴水池】圓規針尖固定在圓心，兩腳張開 4 公分畫圓，圓心到圓周的距離（半徑）到處都是 4 公分！')">範例3：半徑 4cm 噴水池</button>
+            <button class="btn btn-primary" onclick="randomNyG3U9Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：圓心、半徑、直徑與圓規用法</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>圓心與半徑</strong>：圓規針尖固定的中心點叫作「<strong>圓心</strong>」（只有 1 個）；圓規兩腳張開的距離就是「<strong>半徑</strong>」（圓心到圓周的線段，有無限多條且一樣長）。<br/>
+            2. <strong>直徑的性質</strong>：通過圓心且兩端在圓周上的線段叫作「<strong>直徑</strong>」。<strong>直徑 ＝ 半徑 × 2</strong>，且<strong>直徑是圓裡面最長的線段</strong>！将圓對摺再對摺，兩條摺痕的交點就是圓心。
+          </div>
+        </div>
+
+        <div id="nyG3U9Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 拉動滑桿調整圓規張開的「半徑」，或切換「對摺線」觀察兩條直徑如何交會於圓心！</div>
+      </div>
+    </section>
+
+    <!-- 南一 4上 第 7 單元：數量關係 -->
+    <section id="ny_g4_unit7" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🎲 【南一版 4上】第 7 單元：數量關係</h2>
+          <p>結合南一版「好玩的數學學習單」，探索百數表骰子展開圖規律、奇偶數加減乘規律，以及餐廳方桌併攏圖形規律！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openNyUnitQuiz('4上', 7)">📝 參加南一第7單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">好玩的數學規律</span>
+            <span id="nyG4U7TaskText">【好玩的數學】湯基郎和內紫蔻拿百數表剪成骰子展開圖！觀察百數表中「左右相鄰差 1、上下相鄰差 10」以及「奇數 × 奇數 ＝ 奇數」的規律！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setNyG4U7Preset(55, 4, '【百數表展開圖】中心數是 55 時，左邊是 54(-1)、右邊是 56(+1)、上面是 45(-10)、下面是 65(+10)！')">範例1：百數表展開圖(55)</button>
+            <button class="btn btn-Amber" onclick="setNyG4U7Preset(67, 6, '【奇偶數相乘挑戰】湯基郎擲出奇數 67，因為「奇數 × 奇數 ＝ 奇數」，再乘以奇數才會得到奇數積！')">範例2：奇偶數運算規律</button>
+            <button class="btn btn-Amber" onclick="setNyG4U7Preset(34, 5, '【餐廳方桌併攏】1 張方桌坐 4 人，每多併 1 張方桌多坐 2 人，5 張方桌併攏可坐 2 ＋ 2×5 ＝ 12 人！')">範例3：5張方桌併攏規律</button>
+            <button class="btn btn-primary" onclick="randomNyG4U7Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：數字規律、圖形規律與奇偶數性質</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>百數表與日曆規律</strong>：百數表同一橫列左右相鄰相差 <strong>1</strong>，同一直行上下相鄰相差 <strong>10</strong>（月曆上下相鄰則相差 <strong>7</strong>）。<br/>
+            2. <strong>奇偶數規律</strong>：奇＋奇＝偶、偶＋偶＝偶、奇＋偶＝奇；乘法中<strong>「奇 × 奇 ＝ 奇」</strong>，只要乘數中有一個偶數，積就一定是<strong>偶數</strong>！
+          </div>
+        </div>
+
+        <div id="nyG4U7Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 點選方向鍵移動百數表中心格，或拖動滑桿改變併攏的方桌數量，觀察人數如何規律增加！</div>
+      </div>
+    </section>
+
+    <!-- 南一 5上 第 1 單元：折線圖 -->
+    <section id="ny_g5_unit1" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📈 【南一版 5上】第 1 單元：折線圖</h2>
+          <p>結合南一版「南北溫差大、5月31日氣溫變化學習單」，判讀雙折線圖交會點、溫差變化趨勢與縱軸「波浪省略記號 (〰️)」！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openNyUnitQuiz('5上', 1)">📝 參加南一第1單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">南北溫差大</span>
+            <span id="nyG5U1TaskText">【南北溫差大】觀察南部與北部 8 時到 17 時的平均氣溫雙折線圖！點選時刻比較兩地溫差，看看幾時兩地氣溫一樣高！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setNyG5U1Preset(10, true, '【學習單第(1)題】10 時南部的平均氣溫是 21°C，北部的平均氣溫是 17°C，兩地相差 4°C！')">範例1：10時南北氣溫比較</button>
+            <button class="btn btn-Amber" onclick="setNyG5U1Preset(13, true, '【學習單第(3)題】在 13 時，南部和北部的折線交會在同一個點（都是 29°C），代表兩地氣溫一樣高（相差 0°C）！')">範例2：13時折線交會點</button>
+            <button class="btn btn-Amber" onclick="setNyG5U1Preset(17, true, '【學習單第(4)題】17 時南部 23°C、北部 17°C，兩地相差 6°C，是全天南北溫差最大的時刻！')">範例3：17時最大溫差</button>
+            <button class="btn btn-primary" onclick="randomNyG5U1Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：折線圖繪製、波浪省略線與雙折線圖判讀</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>長條圖 vs 折線圖</strong>：比較不同項目的數量多少用「長條圖」；觀察<strong>隨時間連續變化的趨勢</strong>（如氣溫、身高體重變化）則用「<strong>折線圖</strong>」。<br/>
+            2. <strong>波浪省略記號 (〰️)</strong>：當數值都集中在較高區間時，用波浪線省去 0 到起始刻度間的空白，能讓<strong>折線起伏變化更明顯</strong>！線段越陡峭代表變化幅度越大。
+          </div>
+        </div>
+
+        <div id="nyG5U1Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 點選折線圖上的圓點或右側時刻按鈕，立即比對南、北兩地氣溫，並可切換「波浪省略記號」觀察斜率變化！</div>
+      </div>
+    </section>
+
+    <!-- 南一 5上 第 9 單元：時間的乘除 -->
+    <section id="ny_g5_unit9" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>⏱️ 【南一版 5上】第 9 單元：時間的乘除</h2>
+          <p>結合南一版「幸福動物園運動大會學習單」，掌握日、時、分、秒複名數的直式乘法（滿60進1、滿24進1）與時間除法！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openNyUnitQuiz('5上', 9)">📝 參加南一第9單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">幸福動物園運動大會</span>
+            <span id="nyG5U9TaskText">【幸福動物園運動大會】猴子阿宏爬樹花了 1 分鐘 36 秒鐘，阿銘花的時間是阿宏的 2 倍，滿 60 秒進 1 分鐘，阿銘共花了 3 分鐘 12 秒鐘！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setNyG5U9Preset('mul', 1, 36, 2, 3, 12, 2, '【學習單第(1)題】猴子阿宏爬樹花 1 分 36 秒，阿銘是他的 2 倍：1分36秒 × 2 ＝ 2分72秒 ＝ 3 分 12 秒！')">範例1：猴子爬樹(時間乘法)</button>
+            <button class="btn btn-Amber" onclick="setNyG5U9Preset('mul', 0, 39, 5, 3, 15, 5, '【學習單第(2)題】豬小妹吃 5 盤鐵板麵共花 3 分 15 秒（195 秒），平均吃 1 盤花 195 ÷ 5 ＝ 39 秒！')">範例2：豬小妹吃麵(等分除)</button>
+            <button class="btn btn-Amber" onclick="setNyG5U9Preset('mul', 1, 44, 2, 3, 28, 2, '【學習單第(5)題】黑馬媽媽跑馬拉松花 1 時 44 分（104分），黑馬妹妹花 3 時 28 分（208分），是媽媽的 208÷104 ＝ 2 倍！')">範例3：馬拉松倍數(包含除)</button>
+            <button class="btn btn-primary" onclick="randomNyG5U9Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：時間複名數的乘法與除法</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>時間的乘法</strong>：分別將大單位與小單位乘以倍數，若「秒」滿 60 就進 1 到「分」；「分」滿 60 就進 1 到「時」；「時」滿 24 就進 1 到「日」。<br/>
+            2. <strong>時間的除法</strong>：求「平均每次多久（等分除）」或「是幾倍（包含除）」時，<strong>先統一換算成較小的時間單位</strong>（例如全部換成秒或分）再相除最不容易出錯！
+          </div>
+        </div>
+
+        <div id="nyG5U9Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 在上方輸入框修改「分、秒、倍數」，即時觀察時間直式如何滿 60 進位，以及右側除法逆運算驗證！</div>
+      </div>
+    </section>
+
+    <!-- 南一 5上 第 10 單元：正方體和長方體 -->
+    <section id="ny_g5_unit10" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🍫 【南一版 5上】第 10 單元：正方體和長方體</h2>
+          <p>結合南一版「濃情巧克力學習單」，探索正方體與長方體的 6 個面、12 條邊、8 個頂點、面與面的垂直平行關係、展開圖與表面積計算！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openNyUnitQuiz('5上', 10)">📝 參加南一第10單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">濃情巧克力工廠</span>
+            <span id="nyG5U10TaskText">【濃情巧克力工廠】安安在巧克力工廠看到長 12cm、寬 10cm、高 9cm 的乙容器，加裝 12 條邊防震壓條，並計算 6 個面的包裝紙表面積！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setNyG5U10Preset(12, 10, 9, false, '【學習單乙容器】長 12cm、寬 10cm、高 9cm 的長方體，12條邊防震壓條共 (12+10+9)×4 ＝ 124 公分，表面積 636 平方公分！')">範例1：巧克力乙容器(12×10×9)</button>
+            <button class="btn btn-Amber" onclick="setNyG5U10Preset(10, 10, 10, false, '【學習單甲容器】邊長 10cm 的正方體容器，12 條邊等長共 10×12 ＝ 120 公分，6 個面表面積 10×10×6 ＝ 600 平方公分！')">範例2：正方體甲容器(邊長10)</button>
+            <button class="btn btn-Amber" onclick="setNyG5U10Preset(6, 5, 3, true, '【課前診斷禮盒展開圖】長 6cm、寬 5cm、高 3cm 的長方體展開圖，3 組相對的面全等，總表面積 (30+18+15)×2 ＝ 126 平方公分！')">範例3：禮盒展開圖與表面積</button>
+            <button class="btn btn-primary" onclick="randomNyG5U10Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：正方體與長方體的邊長總和、表面積與面關係</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>邊長總和（12條邊）</strong>：正方體邊長總和 ＝ <strong>邊長 × 12</strong>；長方體邊長總和 ＝ <strong>(長 ＋ 寬 ＋ 高) × 4</strong>。<br/>
+            2. <strong>表面積（6個面的總面積）</strong>：正方體表面積 ＝ <strong>邊長 × 邊長 × 6</strong>；長方體表面積 ＝ <strong>(長×寬 ＋ 寬×高 ＋ 長×高) × 2</strong>。<br/>
+            3. <strong>面與面的關係</strong>：長方體與正方體中，<strong>相對的面互相平行且全等</strong>（共3組）；<strong>相鄰的面互相垂直</strong>！
+          </div>
+        </div>
+
+        <div id="nyG5U10Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 拖動滑桿改變長、寬、高，並點擊「展開成 6 個面展開圖」直觀理解表面積公式！</div>
+      </div>
+    </section>
+
     <!-- ==========================================
          第 10 專區：線上測驗中心 (9單元 × 5份測驗卷 ＝ 45份卷)
          ========================================== -->
@@ -4583,17 +4833,19 @@
 
   <!-- 外部腳本庫 -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="mathml.js?v=20261101_v4"></script>
-  <script src="quiz.js?v=20261101_v4"></script>
-  <script src="quiz_g1.js?v=20261101_v4"></script>
-  <script src="quiz_g2.js?v=20261101_v4"></script>
-  <script src="quiz_g5.js?v=20261101_v4"></script>
-  <script src="quiz_g6.js?v=20261101_v4"></script>
-  <script src="auth.js?v=20261101_v4"></script>
-  <script src="app.js?v=20261101_v4"></script>
-  <script src="app_g1.js?v=20261101_v4"></script>
-  <script src="app_g2.js?v=20261101_v4"></script>
-  <script src="app_g5.js?v=20261101_v4"></script>
-  <script src="app_g6.js?v=20261101_v4"></script>
+  <script src="mathml.js?v=20261109_ny1"></script>
+  <script src="quiz.js?v=20261109_ny1"></script>
+  <script src="quiz_g1.js?v=20261109_ny1"></script>
+  <script src="quiz_g2.js?v=20261109_ny1"></script>
+  <script src="quiz_g5.js?v=20261109_ny1"></script>
+  <script src="quiz_g6.js?v=20261109_ny1"></script>
+  <script src="quiz_nanyi.js?v=20261109_ny1"></script>
+  <script src="auth.js?v=20261109_ny1"></script>
+  <script src="app_nanyi.js?v=20261109_ny1"></script>
+  <script src="app.js?v=20261109_ny1"></script>
+  <script src="app_g1.js?v=20261109_ny1"></script>
+  <script src="app_g2.js?v=20261109_ny1"></script>
+  <script src="app_g5.js?v=20261109_ny1"></script>
+  <script src="app_g6.js?v=20261109_ny1"></script>
 </body>
 </html>
