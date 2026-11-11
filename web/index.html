@@ -6,8 +6,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>木新思達 國小1~6年級數學互動學習樂園（康軒版・南一版雙版本）</title>
-  <link rel="stylesheet" href="styles.css?v=20261109_ny1" />
+  <title>木新思達 國小1~6年級數學互動學習樂園（康軒・南一・翰林三版本）</title>
+  <link rel="stylesheet" href="styles.css?v=20261112_hl1" />
 </head>
 <body>
 
@@ -15,14 +15,17 @@
   <header class="top-header">
     <div class="header-inner">
       <div class="brand-area">
-        <span class="brand-badge" id="brandBadge">木新思達・南一版 1上</span>
-        <h1 class="brand-title" id="brandTitle">🎯 國小一年級 (南一版) 數學互動學習樂園</h1>
+        <span class="brand-badge" id="brandBadge">木新思達・翰林版 1上</span>
+        <h1 class="brand-title" id="brandTitle">🎯 國小一年級 (翰林版) 數學互動學習樂園</h1>
       </div>
 
-      <!-- 出版社版本切換按鈕組 (康軒版 vs 南一版) -->
-      <div class="publisher-switcher" style="display:flex; align-items:center; gap:0.4rem; background:rgba(15,23,42,0.28); padding:0.3rem 0.5rem; border-radius:999px; border:1.5px solid rgba(255,255,255,0.35);">
+      <!-- 出版社版本切換按鈕組 (康軒版 vs 南一版 vs 翰林版) -->
+      <div class="publisher-switcher" style="display:flex; align-items:center; gap:0.4rem; background:rgba(15,23,42,0.28); padding:0.3rem 0.5rem; border-radius:999px; border:1.5px solid rgba(255,255,255,0.35); flex-wrap:wrap;">
         <span style="font-size:0.82rem; font-weight:900; color:#FEF3C7; padding-left:0.35rem;">📚 教材版本：</span>
-        <button id="pubBtnNanyi" class="grade-btn active" onclick="switchPublisher('nanyi')" style="background:#10B981; color:#FFFFFF; font-weight:900; padding:0.32rem 0.85rem; border-radius:999px; border:none; cursor:pointer; box-shadow:0 3px 0 #047857;">
+        <button id="pubBtnHanlin" class="grade-btn active" onclick="switchPublisher('hanlin')" style="background:#EA580C; color:#FFFFFF; font-weight:900; padding:0.32rem 0.85rem; border-radius:999px; border:none; cursor:pointer; box-shadow:0 3px 0 #9A3412;">
+          📙 翰林版 (1上~6上)
+        </button>
+        <button id="pubBtnNanyi" class="grade-btn" onclick="switchPublisher('nanyi')" style="background:rgba(255,255,255,0.15); color:#FFFFFF; font-weight:900; padding:0.32rem 0.85rem; border-radius:999px; border:none; cursor:pointer;">
           📗 南一版 (1上~6上)
         </button>
         <button id="pubBtnKangxuan" class="grade-btn" onclick="switchPublisher('kangxuan')" style="background:rgba(255,255,255,0.15); color:#FFFFFF; font-weight:900; padding:0.32rem 0.85rem; border-radius:999px; border:none; cursor:pointer;">
@@ -54,7 +57,7 @@
           <button class="btn btn-outline" style="padding:0.2rem 0.5rem; border-radius:999px; font-size:0.75rem; color:#FFFFFF; border-color:rgba(255,255,255,0.4);" onclick="logoutUser()">登出</button>
         </div>
 
-        <button id="topQuizCenterBtn" class="btn btn-Amber" style="padding:0.4rem 0.95rem; border-radius:999px; font-size:0.95rem;" onclick="window.activePublisher==='nanyi' ? switchNyUnit(currentGrade || '1上', 99) : switchUnit(10)">📝 南一測驗中心 (280份卷)</button>
+        <button id="topQuizCenterBtn" class="btn btn-Amber" style="padding:0.4rem 0.95rem; border-radius:999px; font-size:0.95rem;" onclick="window.activePublisher==='hanlin' ? switchHlUnit(currentGrade || '1上', 99) : (window.activePublisher==='nanyi' ? switchNyUnit(currentGrade || '1上', 99) : switchUnit(10))">📝 翰林測驗中心 (280份卷)</button>
         <div class="star-counter" title="完成互動挑戰獲得星星！">
           <span>⭐ 學習星星：</span>
           <span id="starCount">0</span>
@@ -4629,6 +4632,245 @@
       </div>
     </section>
 
+    <!-- ==========================================================
+         📙 翰林版 (1上~6上) 專屬獨立單元互動區 (6 大特色單元)
+         ========================================================== -->
+
+    <!-- 翰林 3上 第 7 單元：公斤與公克 -->
+    <section id="hl_g3_unit7" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>⚖️ 【翰林版 3上】第 7 單元：公斤與公克</h2>
+          <p>結合翰林版「你的書包有多重？素養學習單與八格練習卷」，操作 1 公斤與 3 公斤彈簧磅秤指針、掌握 1 公斤＝1000 公克換算與天平推理！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openHlUnitQuiz('3上', 7)">📝 參加翰林第7單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">你的書包有多重？</span>
+            <span id="hlG3U7TaskText">【素養學習單：你的書包有多重】潔雅的書包上限為 2 公斤 900 公克，原本秤出 3 公斤超重了！取出 600 公克的故事書和玩具後變成 2 公斤 400 公克，符合健康標準！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setHlG3U7Preset(3, 3000, '【減重前：書包超重警報】潔雅把書包放上 3 公斤秤，指針指在 3 公斤（3000 公克），比上限 2 公斤 900 公克超重了 100 公克！')">範例1：潔雅書包減重前(3kg)</button>
+            <button class="btn btn-Amber" onclick="setHlG3U7Preset(3, 2400, '【減重後：取出600g故事書】3 公斤(3000g) － 600g ＝ 2400 公克 ＝ 2 公斤 400 公克，符合健康標準！')">範例2：書包減重後(2kg400g)</button>
+            <button class="btn btn-Amber" onclick="setHlG3U7Preset(1, 780, '【八格練習卷：餅乾淨重】連重 220 公克的空盒子放上 1 公斤秤共重 1000 公克，扣掉空盒後餅乾實際重 780 公克！')">範例3：1公斤秤餅乾淨重(780g)</button>
+            <button class="btn btn-primary" onclick="randomHlG3U7Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：秤面刻度判讀、1 公斤 ＝ 1000 公克與複名數加減</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>認識公斤與公克</strong>：<strong>1 公斤 (kg) ＝ 1000 公克 (g)</strong>。1 公斤秤每大格通常是 50g（每小格 10g）；3 公斤秤每大格通常是 100g。<br/>
+            2. <strong>重量換算與加減</strong>：例如 3 公斤 90 公克 ＝ <strong>3090 公克</strong>（百位要補 0）。直式加減時，公克滿 1000 進 1 公斤；不夠減時向公斤借 1 當作 1000 公克。
+          </div>
+        </div>
+
+        <div id="hlG3U7Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 切換「1 公斤秤 / 3 公斤秤」並拖動滑桿改變物品重量，即時觀察指針角度與公斤公克換算！</div>
+      </div>
+    </section>
+
+    <!-- 翰林 3上 第 9 單元：列表與規律 -->
+    <section id="hl_g3_unit9" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>📋 【翰林版 3上】第 9 單元：列表與規律</h2>
+          <p>結合翰林版「早餐吃什麼素養學習單、星光電影院價目表、客運時刻表」，探索二維交叉表格、分類統計表、串珠與階梯方格規律！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openHlUnitQuiz('3上', 9)">📝 參加翰林第9單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">早餐價目表＆數形規律</span>
+            <span id="hlG3U9TaskText">【素養學習單：早餐吃什麼】點選二維早餐價目表的交叉格，查看「餐點＋飲料」總價；並觀察右側串珠循環與階梯方格 (15➔10➔6➔3➔1) 規律！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setHlG3U9Preset(1, 1, 10, '【素養學習單：皮皮買早餐】鮪魚蛋餅(35元) ＋ 小冰奶(15元) ＝ 50 元！第 10 顆珠子是每組(●○○)的第 1 顆，所以是黑珠 ●！')">範例1：鮪魚蛋餅＋小冰奶</button>
+            <button class="btn btn-Amber" onclick="setHlG3U9Preset(0, 0, 8, '【素養學習單：媽媽帶90元】火腿蛋吐司(40元) ＋ 溫豆漿(20元) ＝ 60 元，90 － 60 ＝ 還剩 30 元！')">範例2：火腿蛋吐司＋溫豆漿</button>
+            <button class="btn btn-Amber" onclick="setHlG3U9Preset(3, 2, 12, '【八格練習卷：階梯方格】圖1有15格、圖2有10格(-5)、圖3有6格(-4)、圖4有3格(-3)，圖5再減2格剩下 1 格！')">範例3：階梯方格遞減規律</button>
+            <button class="btn btn-primary" onclick="randomHlG3U9Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：二維交叉表格、圖案週期規律與數形規律</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>二維表格判讀</strong>：先對齊橫列（如餐點或起站）再對齊直行（如飲料或到達站），交會格就是對應的資料；統計表中各橫列合計加總必等於各直行合計加總。<br/>
+            2. <strong>圖案與數形規律</strong>：找出「幾個一組重複循環」的週期，或觀察相鄰兩項的差（如等差數列、階梯遞減 -5, -4, -3, -2）。
+          </div>
+        </div>
+
+        <div id="hlG3U9Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 直接點擊左側表格任一交叉格切換餐點組合，或點擊右側珠子編號檢視循環規律！</div>
+      </div>
+    </section>
+
+    <!-- 翰林 5上 第 9 單元：乘以幾分之一 -->
+    <section id="hl_g5_unit9" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🥮 【翰林版 5上】第 9 單元：乘以幾分之一</h2>
+          <p>結合翰林版「誰的答案正確呢素養學習單與八格練習卷」，掌握分數表示整數相除的結果（a ÷ b ＝ a/b）以及「乘以 1/b 等於除以 b」！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openHlUnitQuiz('5上', 9)">📝 參加翰林第9單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">誰的答案正確呢</span>
+            <span id="hlG5U9TaskText">【素養學習單：誰的答案正確呢】3 個披薩平分給 4 人，每人分得 3 ÷ 4 ＝ 3/4 個；12 個蛋黃酥的 1/4 盒是 12 × 1/4 ＝ 12 ÷ 4 ＝ 3 個！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setHlG5U9Preset(3, 4, 12, 4, '【素養學習單：蛋黃酥進烤箱】一盒蛋黃酥有 12 個，將其中 1/4 盒放進烤箱：12 × 1/4 ＝ 12 ÷ 4 ＝ 3 個！')">範例1：12個蛋黃酥的1/4盒</button>
+            <button class="btn btn-Amber" onclick="setHlG5U9Preset(5, 8, 18, 4, '【素養學習單：18公斤芝麻粉分裝】每 4 公斤裝一包，18 ÷ 4 ＝ 18/4 ＝ 4 又 2/4 包（剩下的 2 公斤還可裝 2/4 包）！')">範例2：18公斤芝麻粉分裝</button>
+            <button class="btn btn-Amber" onclick="setHlG5U9Preset(6, 4, 24, 6, '【八格練習卷：蔥油餅平分】6 個蔥油餅平分給 4 人，每人分到「全部的 1/4」，是 6 × 1/4 ＝ 6/4（1又2/4）個蔥油餅！')">範例3：6個蔥油餅平分4人</button>
+            <button class="btn btn-primary" onclick="randomHlG5U9Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：整數相除用分數表示 (a ÷ b ＝ a/b) 與「乘以 1/b ＝ 除以 b」</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>整數相除化為分數</strong>：<strong>被除數 ÷ 除數 ＝ 被除數(分子) / 除數(分母)</strong>，即 <strong>a ÷ b ＝ a/b</strong>（b 不為 0）。<br/>
+            2. <strong>乘以幾分之一</strong>：求一個整數 A 的 1/b 倍，就是把 A 平分成 b 等份取 1 份，所以 <strong>A × (1/b) ＝ A ÷ b ＝ A/b</strong>！
+          </div>
+        </div>
+
+        <div id="hlG5U9Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 拖動滑桿改變披薩數量、平分人數與整數倍數，直觀驗證「a ÷ b ＝ a × 1/b ＝ a/b」！</div>
+      </div>
+    </section>
+
+    <!-- 翰林 5上 第 10 單元：扇形 -->
+    <section id="hl_g5_unit10" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🪭 【翰林版 5上】第 10 單元：扇形</h2>
+          <p>結合翰林版「拼成一個圓素養學習單與八格練習卷」，認識扇形構成要素（圓心、兩條半徑、弧）、測量圓心角與幾分之幾圓互轉！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openHlUnitQuiz('5上', 10)">📝 參加翰林第10單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">拼成一個圓</span>
+            <span id="hlG5U10TaskText">【素養學習單：拼成一個圓】康華選用半徑都是 5 公分的扇形：ㄅ(1/4圓＝90°)、ㄆ(1/2圓＝180°) 與 2 張 ㄇ(1/8圓＝45°)，剛好湊滿 360° 拼成一個圓！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setHlG5U10Preset(90, ['1/4', '1/2', '1/8', '1/8'], '【素養學習單：康華拼成一個圓】半徑 5cm 的 1/4圓(90°) ＋ 1/2圓(180°) ＋ 1/8圓(45°) ＋ 1/8圓(45°) ＝ 360°（1個完整圓）！')">範例1：康華拼成一個圓</button>
+            <button class="btn btn-Amber" onclick="setHlG5U10Preset(120, ['1/3', '1/3', '1/3'], '【幾分之幾圓】圓心角 120° 是 120/360 ＝ 1/3 圓，3 個 1/3 圓剛好拼成 1 個完整的圓！')">範例2：圓心角120°(1/3圓)</button>
+            <button class="btn btn-Amber" onclick="setHlG5U10Preset(135, ['1/2', '1/4'], '【八格練習卷：剪下扇形】從 360° 的圓剪下圓心角 135°（3/8圓）的扇形後，剩下的扇形圓心角是 360° － 135° ＝ 225°！')">範例3：剪下135°求剩餘圓心角</button>
+            <button class="btn btn-primary" onclick="randomHlG5U10Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：扇形的定義、圓心角與幾分之幾圓</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>認識扇形與圓心角</strong>：由圓的「<strong>兩條半徑</strong>」和「<strong>一段弧</strong>」圍成的圖形叫作扇形，頂點必須在<strong>圓心</strong>上。<br/>
+            2. <strong>幾分之幾圓與角度互轉</strong>：1 個周角 ＝ 2 個平角 ＝ 4 個直角 ＝ <strong>360°</strong>。<strong>1/n 圓的圓心角 ＝ 360° ÷ n</strong>；圓心角 θ° 的扇形則是 <strong>θ / 360 圓</strong>。
+          </div>
+        </div>
+
+        <div id="hlG5U10Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 在左側調整圓心角滑桿觀察幾分之幾圓，並在右側點擊扇形拼塊親手湊滿 360°！</div>
+      </div>
+    </section>
+
+    <!-- 翰林 6上 第 5 單元：兩量關係 -->
+    <section id="hl_g6_unit5" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🍹 【翰林版 6上】第 5 單元：兩量關係</h2>
+          <p>結合翰林版「園遊會酸梅汁素養學習單與八格練習卷」，透過動態倍數線段圖掌握基準量(1)、比較量(比值)、兩量和、兩量差與折扣加成！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openHlUnitQuiz('6上', 5)">📝 參加翰林第5單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">園遊會酸梅汁</span>
+            <span id="hlG6U5TaskText">【素養學習單：園遊會酸梅汁】把酸梅原汁當作基準量(1)，加入原汁 4 倍的水，調配出 4.5 公升酸梅汁：原汁 ＝ 4.5 ÷ (1＋4) ＝ 0.9 公升，水 ＝ 3.6 公升！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setHlG6U5Preset(0.9, 4, '酸梅原汁(基準量)', '開水(4倍比較量)', '公升', '【素養學習單：酸梅汁配方】原汁 0.9 公升(1倍) ＋ 水 3.6 公升(4倍) ＝ 兩量和 0.9 × (1＋4) ＝ 4.5 公升！')">範例1：酸梅汁調配(兩量和)</button>
+            <button class="btn btn-Amber" onclick="setHlG6U5Preset(20, 0.8, '大杯酸梅汁成本', '預計利潤(加八成)', '元', '【素養學習單：酸梅汁定價】大杯成本 20 元，加八成(0.8倍)出售，定價 ＝ 20 × (1＋0.8) ＝ 36 元，每杯賺 16 元！')">範例2：大杯酸梅汁加八成</button>
+            <button class="btn btn-Amber" onclick="setHlG6U5Preset(6, 4, '小水桶容量', '大水桶容量(4倍)', '公升', '【八格練習卷：兩量差問題】大水桶是小水桶的 4 倍，兩桶相差 6 × (4－1) ＝ 18 公升！')">範例3：大小水桶(兩量差)</button>
+            <button class="btn btn-primary" onclick="randomHlG6U5Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：基準量、比較量、兩量和與兩量差三大公式</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>基準量與比較量</strong>：「甲是乙的 r 倍」中，「的」前面的<strong>乙是基準量（當作 1）</strong>，甲是比較量：<strong>比較量 ＝ 基準量 × 比值(r)</strong>；<strong>基準量 ＝ 比較量 ÷ 比值(r)</strong>。<br/>
+            2. <strong>兩量和與兩量差</strong>：<strong>兩量和 ＝ 基準量 × (1 ＋ r)</strong>（如加成定價）；<strong>兩量差 ＝ 基準量 × |r － 1| 或 (1 － r)</strong>（如打折後的售價與差價）。
+          </div>
+        </div>
+
+        <div id="hlG6U5Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 修改上方「基準量」與「比值(倍數)」，即時觀察倍數線段圖如何同步算出比較量、兩量和與兩量差！</div>
+      </div>
+    </section>
+
+    <!-- 翰林 6上 第 8 單元：怎樣解題 -->
+    <section id="hl_g6_unit8" class="unit-section">
+      <div class="unit-banner">
+        <div class="unit-banner-info">
+          <h2>🏃 【翰林版 6上】第 8 單元：怎樣解題</h2>
+          <p>結合翰林版「馬拉松補給站素養學習單、空心多邊形數形規律、香香蛋糕店搭配組合、大小瓶果汁和差問題」，四合一解題策略實驗室！</p>
+        </div>
+        <div class="submode-switcher">
+          <button class="btn btn-Amber" onclick="openHlUnitQuiz('6上', 8)">📝 參加翰林第8單元測驗 (5份卷)</button>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="story-prompt">
+          <div class="story-text">
+            <span class="story-badge">四大解題策略</span>
+            <span id="hlG6U8TaskText">【素養學習單＆八格練習卷】全長 42 公里馬拉松每隔 3 公里設補給站（兩端都不設共 13 站）；每邊 8 個花片的空心正三角形共 21 個花片；蛋糕店 4×3×4＝48 種組合；果汁和 1500mL 差 250mL 求大小瓶！</span>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+            <button class="btn btn-Amber" onclick="setHlG6U8Preset(42, 3, 'none', 3, 8, 4, 3, 4, 1500, 250, '【8-1 馬拉松補給站】42 公里每隔 3 公里設一站，共有 42÷3＝14 個間隔，起點與終點都不設：14 － 1 ＝ 13 個補給站！')">範例1：馬拉松補給站(兩端不設)</button>
+            <button class="btn btn-Amber" onclick="setHlG6U8Preset(42, 6, 'both', 3, 8, 4, 3, 4, 1500, 250, '【8-1 馬拉松醫護站】42 公里兩端都設共 8 個醫護站，有 8－1＝7 個間隔，平均每隔 42÷7 ＝ 6 公里設一站！')">範例2：馬拉松醫護站(兩端都設)</button>
+            <button class="btn btn-Amber" onclick="setHlG6U8Preset(42, 3, 'none', 4, 10, 4, 3, 4, 400, 80, '【8-2 空心正方形＆8-4 姐妹零用錢】每邊 10 個花片的空心正方形有 (10-1)×4＝36 個花片；姐妹共 400 元差 80 元，姐姐 240 元、妹妹 160 元！')">範例3：空心正方形＆和差問題</button>
+            <button class="btn btn-primary" onclick="randomHlG6U8Task()">🎲 隨機出題</button>
+          </div>
+        </div>
+
+        <div class="g6-concept-card" style="margin-bottom:1rem; padding:1rem 1.25rem;">
+          <div class="g6-concept-title" style="font-size:1.05rem; margin-bottom:0.5rem;">💡 核心觀念：間隔問題、空心多邊形規律、乘法原理與和差問題</div>
+          <div style="font-size:0.95rem; color:#334155; line-height:1.7;">
+            1. <strong>間隔問題</strong>：間隔數 ＝ 全長 ÷ 間隔長。兩端都設＝間隔＋1；兩端都不設＝間隔－1；只設一端或封閉圓形＝間隔數。<br/>
+            2. <strong>空心正多邊形與組合</strong>：每邊排 N 個花片的空心正 k 邊形，總花片數 ＝ <strong>(N － 1) × k</strong>。多步驟選擇組合總數 ＝ 各步驟方法數相乘。<br/>
+            3. <strong>和差問題公式</strong>：<strong>大數 ＝ (和 ＋ 差) ÷ 2</strong> ； <strong>小數 ＝ (和 － 差) ÷ 2</strong>。
+          </div>
+        </div>
+
+        <div id="hlG6U8Display" style="margin-bottom:1rem;"></div>
+        <div class="feedback-banner success">💡 在下方四合一解題面板調整全長、每邊花片數、餐點種數或兩數和差，即時驗證解題公式！</div>
+      </div>
+    </section>
+
     <!-- ==========================================
          第 10 專區：線上測驗中心 (9單元 × 5份測驗卷 ＝ 45份卷)
          ========================================== -->
@@ -4833,19 +5075,21 @@
 
   <!-- 外部腳本庫 -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="mathml.js?v=20261109_ny1"></script>
-  <script src="quiz.js?v=20261109_ny1"></script>
-  <script src="quiz_g1.js?v=20261109_ny1"></script>
-  <script src="quiz_g2.js?v=20261109_ny1"></script>
-  <script src="quiz_g5.js?v=20261109_ny1"></script>
-  <script src="quiz_g6.js?v=20261109_ny1"></script>
-  <script src="quiz_nanyi.js?v=20261109_ny1"></script>
-  <script src="auth.js?v=20261109_ny1"></script>
-  <script src="app_nanyi.js?v=20261109_ny1"></script>
-  <script src="app.js?v=20261109_ny1"></script>
-  <script src="app_g1.js?v=20261109_ny1"></script>
-  <script src="app_g2.js?v=20261109_ny1"></script>
-  <script src="app_g5.js?v=20261109_ny1"></script>
-  <script src="app_g6.js?v=20261109_ny1"></script>
+  <script src="mathml.js?v=20261112_hl1"></script>
+  <script src="quiz.js?v=20261112_hl1"></script>
+  <script src="quiz_g1.js?v=20261112_hl1"></script>
+  <script src="quiz_g2.js?v=20261112_hl1"></script>
+  <script src="quiz_g5.js?v=20261112_hl1"></script>
+  <script src="quiz_g6.js?v=20261112_hl1"></script>
+  <script src="quiz_nanyi.js?v=20261112_hl1"></script>
+  <script src="quiz_hanlin.js?v=20261112_hl1"></script>
+  <script src="auth.js?v=20261112_hl1"></script>
+  <script src="app_nanyi.js?v=20261112_hl1"></script>
+  <script src="app_hanlin.js?v=20261112_hl1"></script>
+  <script src="app.js?v=20261112_hl1"></script>
+  <script src="app_g1.js?v=20261112_hl1"></script>
+  <script src="app_g2.js?v=20261112_hl1"></script>
+  <script src="app_g5.js?v=20261112_hl1"></script>
+  <script src="app_g6.js?v=20261112_hl1"></script>
 </body>
 </html>

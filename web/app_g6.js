@@ -54,13 +54,19 @@ function switchG6Unit(unitNum) {
     const tab = document.getElementById(`g6UnitTab${i}`);
     const sec = document.getElementById(`g6_unit${i}`);
     if (tab) tab.classList.toggle('active', i === unitNum);
-    if (sec) sec.classList.toggle('active', i === unitNum);
+    if (sec) {
+      sec.classList.toggle('active', i === unitNum);
+      sec.style.display = (i === unitNum ? 'block' : 'none');
+    }
   }
   const tab10 = document.getElementById('g6UnitTab10');
   if (tab10) tab10.classList.remove('active');
 
   g6State.currentUnit = unitNum;
   initG6Unit(unitNum);
+  if (unitNum >= 1 && unitNum <= 9 && typeof renderUnitPracticeLab === 'function') {
+    renderUnitPracticeLab(`g6_unit${unitNum}`, 'kangxuan', '6上', unitNum);
+  }
 
   if (typeof window.MathMLRenderer !== 'undefined' && typeof window.MathMLRenderer.renderElement === 'function') {
     const sec = document.getElementById(`g6_unit${unitNum}`);

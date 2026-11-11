@@ -159,10 +159,10 @@ function cacheOriginalDOM() {
 }
 
 /* =========================================================
-   出版社版本切換核心控制器 (康軒版 vs 南一版)
+   出版社版本切換核心控制器 (康軒版 vs 南一版 vs 翰林版)
    ========================================================= */
 function switchPublisher(pub) {
-  if (pub !== 'kangxuan' && pub !== 'nanyi') pub = 'kangxuan';
+  if (pub !== 'kangxuan' && pub !== 'nanyi' && pub !== 'hanlin') pub = 'kangxuan';
   activePublisher = pub;
   if (typeof window !== 'undefined') window.activePublisher = pub;
   localStorage.setItem('kx_active_publisher', pub);
@@ -173,6 +173,7 @@ function switchPublisher(pub) {
   // 更新頂部版本切換按鈕樣式
   const btnKx = document.getElementById('pubBtnKangxuan');
   const btnNy = document.getElementById('pubBtnNanyi');
+  const btnHl = document.getElementById('pubBtnHanlin');
   if (btnKx) {
     btnKx.classList.toggle('active', pub === 'kangxuan');
     btnKx.style.background = (pub === 'kangxuan') ? '#F59E0B' : 'rgba(255,255,255,0.15)';
@@ -182,16 +183,26 @@ function switchPublisher(pub) {
   if (btnNy) {
     btnNy.classList.toggle('active', pub === 'nanyi');
     btnNy.style.background = (pub === 'nanyi') ? '#10B981' : 'rgba(255,255,255,0.15)';
-    btnNy.style.color = (pub === 'nanyi') ? '#FFFFFF' : '#FFFFFF';
+    btnNy.style.color = '#FFFFFF';
     btnNy.style.boxShadow = (pub === 'nanyi') ? '0 3px 0 #047857' : 'none';
+  }
+  if (btnHl) {
+    btnHl.classList.toggle('active', pub === 'hanlin');
+    btnHl.style.background = (pub === 'hanlin') ? '#EA580C' : 'rgba(255,255,255,0.15)';
+    btnHl.style.color = '#FFFFFF';
+    btnHl.style.boxShadow = (pub === 'hanlin') ? '0 3px 0 #9A3412' : 'none';
   }
 
   // 更新頂部測驗中心總卷數按鈕文字
   const topQuizBtn = document.getElementById('topQuizCenterBtn');
   if (topQuizBtn) {
-    topQuizBtn.innerHTML = (pub === 'nanyi')
-      ? '📝 南一測驗中心 (280份卷)'
-      : '📝 康軒測驗中心 (285份卷)';
+    if (pub === 'nanyi') {
+      topQuizBtn.innerHTML = '📝 南一測驗中心 (280份卷)';
+    } else if (pub === 'hanlin') {
+      topQuizBtn.innerHTML = '📝 翰林測驗中心 (280份卷)';
+    } else {
+      topQuizBtn.innerHTML = '📝 康軒測驗中心 (285份卷)';
+    }
   }
 
   // 重建六個年級的單元導覽列
@@ -225,6 +236,38 @@ function rebuildAllUnitNavs(pub) {
       }
     });
     restoreAllOriginalBanners();
+    return;
+  }
+
+  if (pub === 'hanlin' && typeof HANLIN_CURRICULUM !== 'undefined') {
+    // 建立翰林版 1上~6上 單元導覽列
+    Object.keys(HANLIN_CURRICULUM).forEach(grade => {
+      const navId = gradeMap[grade];
+      const navEl = document.getElementById(navId);
+      if (!navEl) return;
+      const units = HANLIN_CURRICULUM[grade];
+      const totalPapers = units.length * 5;
+
+      let html = units.map((item, idx) => `
+        <button class="unit-tab ${idx === 0 ? 'active' : ''}" onclick="switchHlUnit('${grade}', ${item.uNum})" id="hl_${grade}_tab${item.uNum}">
+          <span class="unit-num" style="background:#FFF7ED; color:#C2410C;">翰林 第 ${item.uNum} 單元</span>
+          <span class="unit-icon">${item.icon || '📙'}</span>
+          <span class="unit-name">${item.name}</span>
+          <span class="unit-desc">${item.desc}</span>
+        </button>
+      `).join('');
+
+      const quizTabNum = units.length + 1;
+      html += `
+        <button class="unit-tab" onclick="switchHlUnit('${grade}', ${quizTabNum})" id="hl_${grade}_tab${quizTabNum}" style="border-color:#EA580C; background:#FFF7ED;">
+          <span class="unit-num" style="background:#EA580C; color:white;">翰林自動批改評量</span>
+          <span class="unit-icon">📝</span>
+          <span class="unit-name">線上測驗中心</span>
+          <span class="unit-desc">翰林${grade} ${units.length}單元 × 5卷 ＝ ${totalPapers}份卷</span>
+        </button>
+      `;
+      navEl.innerHTML = html;
+    });
     return;
   }
 
@@ -300,6 +343,7 @@ function switchNyUnit(grade, unitNum) {
   // 隱藏所有區段
   if (typeof hideAllGradeSections === 'function') hideAllGradeSections();
   hideAllNyCustomSections();
+  if (typeof hideAllHlCustomSections === 'function') hideAllHlCustomSections();
 
   // 若點擊測驗中心
   if (unitNum === quizTabNum || unitNum >= 99) {
@@ -365,6 +409,11 @@ function switchNyUnit(grade, unitNum) {
         window[item.renderFn]();
       }
     }
+  }
+
+  const activeSecId = item.type === 'custom' ? item.secId : item.refSec;
+  if (activeSecId && typeof renderUnitPracticeLab === 'function') {
+    renderUnitPracticeLab(activeSecId, 'nanyi', grade, item.u);
   }
 
   if (typeof window.MathMLRenderer !== 'undefined' && typeof window.MathMLRenderer.renderElement === 'function') {

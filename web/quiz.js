@@ -3951,6 +3951,9 @@ function getActiveQuizBank() {
   if (pub === 'nanyi' && typeof window !== 'undefined' && window.QUIZ_BANKS_NANYI && window.QUIZ_BANKS_NANYI[g]) {
     return window.QUIZ_BANKS_NANYI[g];
   }
+  if (pub === 'hanlin' && typeof window !== 'undefined' && window.QUIZ_BANKS_HANLIN && window.QUIZ_BANKS_HANLIN[g]) {
+    return window.QUIZ_BANKS_HANLIN[g];
+  }
   if (g === '1上') {
     if (typeof window !== 'undefined' && window.QUIZ_BANK_G1) return window.QUIZ_BANK_G1;
     if (typeof QUIZ_BANK_G1 !== 'undefined') return QUIZ_BANK_G1;
@@ -3976,13 +3979,16 @@ function getActiveUnitTitles() {
   if (pub === 'nanyi' && typeof window !== 'undefined' && window.NANYI_UNIT_TITLES && window.NANYI_UNIT_TITLES[g]) {
     return window.NANYI_UNIT_TITLES[g];
   }
+  if (pub === 'hanlin' && typeof window !== 'undefined' && window.HANLIN_UNIT_TITLES && window.HANLIN_UNIT_TITLES[g]) {
+    return window.HANLIN_UNIT_TITLES[g];
+  }
   return unitTitles[g] || unitTitles['3上'];
 }
 
 function getMaxUnits() {
   const g = quizState.activeGrade || '3上';
   const pub = (typeof window !== 'undefined' && window.activePublisher) ? window.activePublisher : (localStorage.getItem('kx_active_publisher') || 'kangxuan');
-  if (pub === 'nanyi') {
+  if (pub === 'nanyi' || pub === 'hanlin') {
     if (g === '6上') return 8;
     if (g === '2上' || g === '4上' || g === '5上') return 10;
     return 9;
@@ -4058,7 +4064,7 @@ function renderQuizCenter() {
 
   const currentGrade = quizState.activeGrade || '3上';
   const curPub = (typeof window !== 'undefined' && window.activePublisher) ? window.activePublisher : (localStorage.getItem('kx_active_publisher') || 'kangxuan');
-  const pubLabel = (curPub === 'nanyi') ? '南一版' : '康軒版';
+  const pubLabel = (curPub === 'hanlin') ? '翰林版' : ((curPub === 'nanyi') ? '南一版' : '康軒版');
   const maxUnits = getMaxUnits();
   if (quizState.currentUnit > maxUnits) quizState.currentUnit = 1;
 

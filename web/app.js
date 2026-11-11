@@ -60,6 +60,9 @@ function switchUnit(unitNum) {
       sec.style.display = (i === unitNum ? 'block' : 'none');
     }
   }
+  if (unitNum >= 1 && unitNum <= 9 && typeof renderUnitPracticeLab === 'function') {
+    renderUnitPracticeLab(`unit${unitNum}`, 'kangxuan', '3上', unitNum);
+  }
   if (typeof window.MathMLRenderer !== 'undefined' && typeof window.MathMLRenderer.renderElement === 'function') {
     const activeSec = document.getElementById(`unit${unitNum}`);
     if (activeSec) window.MathMLRenderer.renderElement(activeSec);
@@ -2498,6 +2501,9 @@ function hideAllGradeSections() {
   if (typeof hideAllNyCustomSections === 'function') {
     hideAllNyCustomSections();
   }
+  if (typeof hideAllHlCustomSections === 'function') {
+    hideAllHlCustomSections();
+  }
 }
 
 function switchGrade(grade) {
@@ -2512,7 +2518,7 @@ function switchGrade(grade) {
   currentGrade = grade;
   localStorage.setItem('kx_active_grade', grade);
   const curPub = (typeof window !== 'undefined' && window.activePublisher) ? window.activePublisher : (localStorage.getItem('kx_active_publisher') || 'kangxuan');
-  const pubPrefix = (curPub === 'nanyi') ? '南一版' : '康軒版';
+  const pubPrefix = (curPub === 'hanlin') ? '翰林版' : ((curPub === 'nanyi') ? '南一版' : '康軒版');
 
   const btn1 = document.getElementById('gradeBtn1');
   const btn2 = document.getElementById('gradeBtn2');
@@ -2558,9 +2564,13 @@ function switchGrade(grade) {
 
   hideAllGradeSections();
 
-  // 若當前為南一版，交由 switchNyUnit 載入南一版該年級第 1 單元
+  // 若當前為南一版或翰林版，交由對應單元切換器載入該年級第 1 單元
   if (curPub === 'nanyi' && typeof switchNyUnit === 'function') {
     switchNyUnit(grade, 1);
+    return;
+  }
+  if (curPub === 'hanlin' && typeof switchHlUnit === 'function') {
+    switchHlUnit(grade, 1);
     return;
   }
 
@@ -2621,7 +2631,11 @@ function switchG4Unit(unitNum) {
     }
   }
   const tab11 = document.getElementById('g4UnitTab11');
+  if (tab11) tab11.classList.remove('active');
   initG4Unit(unitNum);
+  if (unitNum >= 1 && unitNum <= 10 && typeof renderUnitPracticeLab === 'function') {
+    renderUnitPracticeLab(`g4_unit${unitNum}`, 'kangxuan', '4上', unitNum);
+  }
   if (typeof window.MathMLRenderer !== 'undefined' && typeof window.MathMLRenderer.renderElement === 'function') {
     const sec = document.getElementById(`g4_unit${unitNum}`);
     if (sec) window.MathMLRenderer.renderElement(sec);
@@ -3957,6 +3971,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (pubParam) {
     pubParam = pubParam.trim().toLowerCase();
     if (pubParam === 'nanyi' || pubParam === 'ny' || pubParam === '南一') targetPub = 'nanyi';
+    else if (pubParam === 'hanlin' || pubParam === 'hl' || pubParam === '翰林') targetPub = 'hanlin';
     else if (pubParam === 'kangxuan' || pubParam === 'kx' || pubParam === '康軒') targetPub = 'kangxuan';
   }
 
@@ -3992,6 +4007,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!isNaN(uNum) && uNum >= 1 && uNum <= 11) {
       if (targetPub === 'nanyi' && typeof switchNyUnit === 'function') {
         switchNyUnit(targetGrade, uNum);
+      } else if (targetPub === 'hanlin' && typeof switchHlUnit === 'function') {
+        switchHlUnit(targetGrade, uNum);
       } else {
         if (targetGrade === '1上' && typeof switchG1Unit === 'function') switchG1Unit(uNum);
         else if (targetGrade === '2上' && typeof switchG2Unit === 'function') switchG2Unit(uNum);

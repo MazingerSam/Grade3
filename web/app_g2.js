@@ -78,6 +78,10 @@ function switchG2Unit(unitNum) {
   else if (unitNum === 9) renderG2U9();
   else if (unitNum === 10) renderG2U10();
 
+  if (unitNum >= 1 && unitNum <= 10 && typeof renderUnitPracticeLab === 'function') {
+    renderUnitPracticeLab(`g2_unit${unitNum}`, 'kangxuan', '2上', unitNum);
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
