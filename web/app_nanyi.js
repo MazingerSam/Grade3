@@ -193,6 +193,26 @@ function switchPublisher(pub) {
     btnHl.style.boxShadow = (pub === 'hanlin') ? '0 3px 0 #9A3412' : 'none';
   }
 
+  // 同步更新首頁快速入口列按鈕樣式
+  const qHl = document.getElementById('quickPubHanlin');
+  const qNy = document.getElementById('quickPubNanyi');
+  const qKx = document.getElementById('quickPubKangxuan');
+  if (qHl) {
+    qHl.style.background = (pub === 'hanlin') ? '#EA580C' : '#FFFFFF';
+    qHl.style.color = (pub === 'hanlin') ? '#FFFFFF' : '#C2410C';
+    qHl.style.boxShadow = (pub === 'hanlin') ? '0 2px 0 #9A3412' : 'none';
+  }
+  if (qNy) {
+    qNy.style.background = (pub === 'nanyi') ? '#10B981' : '#FFFFFF';
+    qNy.style.color = (pub === 'nanyi') ? '#FFFFFF' : '#047857';
+    qNy.style.boxShadow = (pub === 'nanyi') ? '0 2px 0 #047857' : 'none';
+  }
+  if (qKx) {
+    qKx.style.background = (pub === 'kangxuan') ? '#F59E0B' : '#FFFFFF';
+    qKx.style.color = (pub === 'kangxuan') ? '#78350F' : '#B45309';
+    qKx.style.boxShadow = (pub === 'kangxuan') ? '0 2px 0 #B45309' : 'none';
+  }
+
   // 更新頂部測驗中心總卷數按鈕文字
   const topQuizBtn = document.getElementById('topQuizCenterBtn');
   if (topQuizBtn) {
@@ -1194,11 +1214,17 @@ function renderNyG5U10() {
   `;
 }
 
+function quickEnterPublisherGrade(pub, grade) {
+  localStorage.setItem('kx_active_grade', grade);
+  switchPublisher(pub);
+}
+
 // 暴露全域介面
 if (typeof window !== 'undefined') {
   window.activePublisher = activePublisher;
   window.NANYI_CURRICULUM = NANYI_CURRICULUM;
   window.switchPublisher = switchPublisher;
+  window.quickEnterPublisherGrade = quickEnterPublisherGrade;
   window.switchNyUnit = switchNyUnit;
   window.openNyUnitQuiz = openNyUnitQuiz;
   window.hideAllNyCustomSections = hideAllNyCustomSections;

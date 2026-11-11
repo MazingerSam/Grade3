@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>木新思達 國小1~6年級數學互動學習樂園（康軒・南一・翰林三版本）</title>
-  <link rel="stylesheet" href="styles.css?v=20261112_hl1" />
+  <link rel="stylesheet" href="styles.css?v=20261112_hl2" />
 </head>
 <body>
 
@@ -66,6 +66,33 @@
       </div>
     </div>
   </header>
+
+  <!-- 三大出版社版本與翰林 1上~6上 首頁快速入口導覽列 -->
+  <div id="publisherQuickEntryBar" style="background:linear-gradient(90deg, #FFF7ED 0%, #FEF3C7 50%, #ECFDF5 100%); border-bottom:2px solid #FDBA74; padding:0.55rem 1rem;">
+    <div style="max-width:1360px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.6rem;">
+      <div style="display:flex; align-items:center; gap:0.45rem; flex-wrap:wrap;">
+        <span style="font-weight:900; color:#9A3412; font-size:0.9rem;">🚀 出版社首頁快速入口：</span>
+        <button id="quickPubHanlin" onclick="switchPublisher('hanlin')" style="background:#EA580C; color:#FFFFFF; font-weight:900; font-size:0.88rem; padding:0.35rem 0.9rem; border-radius:999px; border:2px solid #C2410C; cursor:pointer; box-shadow:0 2px 0 #9A3412;">
+          📙 翰林版 (1上~6上・56單元)
+        </button>
+        <button id="quickPubNanyi" onclick="switchPublisher('nanyi')" style="background:#FFFFFF; color:#047857; font-weight:900; font-size:0.88rem; padding:0.35rem 0.9rem; border-radius:999px; border:2px solid #10B981; cursor:pointer;">
+          📗 南一版 (1上~6上・56單元)
+        </button>
+        <button id="quickPubKangxuan" onclick="switchPublisher('kangxuan')" style="background:#FFFFFF; color:#B45309; font-weight:900; font-size:0.88rem; padding:0.35rem 0.9rem; border-radius:999px; border:2px solid #F59E0B; cursor:pointer;">
+          📘 康軒版 (1上~6上・57單元)
+        </button>
+      </div>
+      <div style="display:flex; align-items:center; gap:0.35rem; flex-wrap:wrap;">
+        <span style="font-weight:900; color:#C2410C; font-size:0.84rem;">📙 翰林各年級直達：</span>
+        <button onclick="quickEnterPublisherGrade('hanlin','1上')" style="background:#FFEDD5; color:#9A3412; border:1.5px solid #FB923C; border-radius:999px; padding:0.22rem 0.65rem; font-weight:900; font-size:0.8rem; cursor:pointer;">翰林 1上</button>
+        <button onclick="quickEnterPublisherGrade('hanlin','2上')" style="background:#FFEDD5; color:#9A3412; border:1.5px solid #FB923C; border-radius:999px; padding:0.22rem 0.65rem; font-weight:900; font-size:0.8rem; cursor:pointer;">翰林 2上</button>
+        <button onclick="quickEnterPublisherGrade('hanlin','3上')" style="background:#FFEDD5; color:#9A3412; border:1.5px solid #FB923C; border-radius:999px; padding:0.22rem 0.65rem; font-weight:900; font-size:0.8rem; cursor:pointer;">翰林 3上</button>
+        <button onclick="quickEnterPublisherGrade('hanlin','4上')" style="background:#FFEDD5; color:#9A3412; border:1.5px solid #FB923C; border-radius:999px; padding:0.22rem 0.65rem; font-weight:900; font-size:0.8rem; cursor:pointer;">翰林 4上</button>
+        <button onclick="quickEnterPublisherGrade('hanlin','5上')" style="background:#FFEDD5; color:#9A3412; border:1.5px solid #FB923C; border-radius:999px; padding:0.22rem 0.65rem; font-weight:900; font-size:0.8rem; cursor:pointer;">翰林 5上</button>
+        <button onclick="quickEnterPublisherGrade('hanlin','6上')" style="background:#FFEDD5; color:#9A3412; border:1.5px solid #FB923C; border-radius:999px; padding:0.22rem 0.65rem; font-weight:900; font-size:0.8rem; cursor:pointer;">翰林 6上</button>
+      </div>
+    </div>
+  </div>
 
   <!-- 一年級 9大單元 + 線上測驗中心主選單 -->
   <nav class="unit-nav" id="unitNavG1" style="display:none;" aria-label="一年級單元選單">
@@ -5075,21 +5102,21 @@
 
   <!-- 外部腳本庫 -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="mathml.js?v=20261112_hl1"></script>
-  <script src="quiz.js?v=20261112_hl1"></script>
-  <script src="quiz_g1.js?v=20261112_hl1"></script>
-  <script src="quiz_g2.js?v=20261112_hl1"></script>
-  <script src="quiz_g5.js?v=20261112_hl1"></script>
-  <script src="quiz_g6.js?v=20261112_hl1"></script>
-  <script src="quiz_nanyi.js?v=20261112_hl1"></script>
-  <script src="quiz_hanlin.js?v=20261112_hl1"></script>
-  <script src="auth.js?v=20261112_hl1"></script>
-  <script src="app_nanyi.js?v=20261112_hl1"></script>
-  <script src="app_hanlin.js?v=20261112_hl1"></script>
-  <script src="app.js?v=20261112_hl1"></script>
-  <script src="app_g1.js?v=20261112_hl1"></script>
-  <script src="app_g2.js?v=20261112_hl1"></script>
-  <script src="app_g5.js?v=20261112_hl1"></script>
-  <script src="app_g6.js?v=20261112_hl1"></script>
+  <script src="mathml.js?v=20261112_hl2"></script>
+  <script src="quiz.js?v=20261112_hl2"></script>
+  <script src="quiz_g1.js?v=20261112_hl2"></script>
+  <script src="quiz_g2.js?v=20261112_hl2"></script>
+  <script src="quiz_g5.js?v=20261112_hl2"></script>
+  <script src="quiz_g6.js?v=20261112_hl2"></script>
+  <script src="quiz_nanyi.js?v=20261112_hl2"></script>
+  <script src="quiz_hanlin.js?v=20261112_hl2"></script>
+  <script src="auth.js?v=20261112_hl2"></script>
+  <script src="app_nanyi.js?v=20261112_hl2"></script>
+  <script src="app_hanlin.js?v=20261112_hl2"></script>
+  <script src="app.js?v=20261112_hl2"></script>
+  <script src="app_g1.js?v=20261112_hl2"></script>
+  <script src="app_g2.js?v=20261112_hl2"></script>
+  <script src="app_g5.js?v=20261112_hl2"></script>
+  <script src="app_g6.js?v=20261112_hl2"></script>
 </body>
 </html>

@@ -3962,11 +3962,15 @@ function initG4App() {
   initG4Unit(1);
 }
 
-// 監聽載入事件（支援 URL 查詢參數 ?pub=nanyi / ?grade=1 / ?unit=2 等直達與 LocalStorage 記憶）
+// 監聽載入事件（支援 URL 查詢參數 ?pub=hanlin / ?pub=nanyi / ?grade=1 / ?unit=2 等直達與 LocalStorage 記憶）
 window.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   let pubParam = urlParams.get('pub') || urlParams.get('publisher') || urlParams.get('v_pub');
-  let targetPub = localStorage.getItem('kx_active_publisher') || 'nanyi';
+  if (!localStorage.getItem('kx_hl_v2_ready')) {
+    localStorage.setItem('kx_active_publisher', 'hanlin');
+    localStorage.setItem('kx_hl_v2_ready', '1');
+  }
+  let targetPub = localStorage.getItem('kx_active_publisher') || 'hanlin';
 
   if (pubParam) {
     pubParam = pubParam.trim().toLowerCase();
